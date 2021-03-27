@@ -1,0 +1,42 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+*{
+    font-family: 'Roboto', sans-serif  !important;
+}
+
+.midnight-blue .calendar-inner{
+    background-color: white;
+    color: black;
+}
+
+.calendar{
+    /* display: flex; */
+}
+#calendar{
+   width: 80%;
+   /* top: 25%;
+   left: 50%;
+   transform: translate(-50%,-25%);
+   position: absolute;
+   align-items: center;
+   justify-content: center; */
+}
+
+/* .day::before {
+    content: "";
+    position: absolute;
+    z-index: -100;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    background-image: linear-gradient(-44deg, #198754 50%, transparent 50% 100%);
+    height: 100%;
+} */
+
+th[colspan="6"]{
+    text-align: left !important;
+    position: relative;
+    font-size: 30px;
+    color: #00adb5;
+}

@@ -1,0 +1,43 @@
+{
+    "code": 200,
+    "status": "OK",
+    "data": {
+        "hijri": {
+            "date": "14-02-1436",
+            "format": "DD-MM-YYYY",
+            "day": "14",
+            "weekday": {
+                "en": "Al Ahad",
+                "ar": "\u0627\u0644\u0627\u062d\u062f"
+            },
+            "month": {
+                "number": 2,
+                "en": "\u1e62afar",
+                "ar": "\u0635\u064e\u0641\u064e\u0631"
+            },
+            "year": "1436",
+            "designation": {
+                "abbreviated": "AH",
+                "expanded": "Anno Hegirae"
+            },
+            "holidays": []
+        },
+        "gregorian": {
+            "date": "07-12-2014",
+            "format": "DD-MM-YYYY",
+            "day": "07",
+            "weekday": {
+                "en": "Sunday"
+            },
+            "month": {
+                "number": 12,
+                "en": "December"
+            },
+            "year": "2014",
+            "designation": {
+                "abbreviated": "AD",
+                "expanded": "Anno Domini"
+            }
+        }
+    }
+}
