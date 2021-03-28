@@ -241,7 +241,7 @@
         var _ = this;
         
         if (!$(_.$elements.calendarEl).hasClass('calendar-initialized')) {
-            $(_.$elements.calendarEl).addClass('evo-calendar calendar-initialized');
+            $(_.$elements.calendarEl).addClass('evo-calendar calendar-initialized event-hide sidebar-hide');
             if (_.windowW <= _.$breakpoints.tablet) { // tablet/mobile
                 _.toggleSidebar(false);
                 _.toggleEventList(false);
@@ -585,7 +585,7 @@
             markup += '<div class="calendar-events">'+
                             '<div class="event-header"><p></p><span id="islDate"></span></div>'+
                             '<div class="event-list"></div>'+
-                        ' <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="add_event">ADD</button> <button>edit</button> <button>delete</button></div>';
+                        ' <div class="action_btns mt-3"><button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="add_event">Inquiry</button><button  type="button" class="btn btn-success"style="margin-left:5px" data-bs-toggle="modal" data-bs-target="#booking_modal" id="add_event">Booking</button></div></div>';
 
             // --- Finally, build it now! --- //
             _.$elements.calendarEl.html(markup);
@@ -674,7 +674,8 @@
         if (event_data.badge) markup += '<span>'+event_data.badge+'</span>';
         markup += '</p>'
         if (event_data.description) markup += '<p class="event-desc">'+event_data.description+'</p>';
-        markup += '</div>';
+        markup += ' <button type="button" class="btn btn-success" id="'+(event_data.id)+'">Edit</button>';
+        markup += ' <button type="button" class="btn btn-warning" id="'+(event_data.id)+'">Delete</button></div>';
         markup += '</div>';
         eventListEl.append(markup);
 
@@ -1016,7 +1017,7 @@
             $(_.$elements.calendarEl).toggleClass('sidebar-hide');
             _.$UI.hasSidebar = !_.$UI.hasSidebar;
         } else {
-            if(event) {
+            if(!event) {
                 $(_.$elements.calendarEl).removeClass('sidebar-hide');
                 _.$UI.hasSidebar = true;
             } else {
@@ -1038,7 +1039,7 @@
             $(_.$elements.calendarEl).toggleClass('event-hide');
             _.$UI.hasEvent = !_.$UI.hasEvent;
         } else {
-            if(event) {
+            if(!event) {
                 $(_.$elements.calendarEl).removeClass('event-hide');
                 _.$UI.hasEvent = true;
             } else {
