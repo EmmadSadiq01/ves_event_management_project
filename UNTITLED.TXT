@@ -325,7 +325,7 @@
       let calendarEvents = [];
 
       // $(document).ready(function() {
-      let url = "http://localhost/API_Inquery/api-fetch-all.php";
+      let url = "http://localhost/API/api-fetch.php";
       fetch(url)
         .then((res) => res.json())
         .then((out) => {
@@ -344,16 +344,14 @@
           monthsArray[11] = "December";
           for (let i = 0; i < out.length; i++) {
             eventdate = out[i].inquery_date;
-            console.log(eventdate)
             changeFormat = eventdate.split("-");
             let year = changeFormat[0];
-            // let getMonth = new Date(eventdate).getMonth();
-            let month = changeFormat[1]-1;
+            let getMonth = new Date(eventdate).getMonth();
+            let month = changeFormat[1];
             let date = changeFormat[2];
-            console.log(month)
-            // let more_split_date = date.split(" ");
+            let more_split_date = date.split(" ");
             after_split =
-              monthsArray[month] + "/" + date + "/" + year;
+              monthsArray[getMonth] + "/" + more_split_date[0] + "/" + year;
             console.log("in then", after_split);
 
             pushEnvents = {
@@ -367,13 +365,13 @@
                 "</br>Cost: " +
                 out[i].estimated_cost +
                 "</br>Conact:" +
-                out[i].personContact,
+                out[i].estimated_cost,
               everyYear: false,
               color: "red",
             };
             myEvents.push(pushEnvents);
           }
-          // console.log(newEnvents);
+          console.log(newEnvents);
           // myEvents = [
           //   {
           //     id: "1", // Event's ID (required)
@@ -391,7 +389,6 @@
             // settingName: settingValue
             calendarEvents: myEvents,
           });
-          console.log(out)
         })
         // .then(() => {
         //
@@ -436,10 +433,10 @@
 
       function eventHandler() {
         let date = document.getElementById("On_event_date").value;
-        let event_name = document.getElementById("event_name").value;
+        let name = document.getElementById("event_name").value;
         let event_cost = document.getElementById("event_cost").value;
         let event_number_guest = document.getElementById("event_number_guest").value;
-        let party_contact = document.getElementById("guest_contact").value;
+        let guest_contact = document.getElementById("guest_contact").value;
         let hall = "";
         let hall_select = document.getElementsByName("hall");
         for (i = 0; i < hall_select.length; i++) {
@@ -448,28 +445,16 @@
           }
         }
         let push_data = {
-          idate: date,
-          ihijtidate:"HIJRI DATE",
-          iname: "hello Name",
-          iaddress:"ADDREESS",
-          icontact:party_contact,
-          icnic:"421010-49239482-4",
-          iemail:"EMMADSADIQ@GMAIL.COM",
-          iportion: hall,
-          ievent:event_name,
-          icost: event_cost,
-          iguest: event_number_guest
+          id: 3,
+          name: name,
+          date: date,
+          color: "pink",
+          hall: hall,
+          event_cost: event_cost,
+          event_number_guest: event_number_guest,
+          guest_contact: guest_contact,
         };
         console.log("data=>",push_data);
-         fetch("http://localhost/API_Inquery/api-insert.php",{
-          method:"POST",
-          body: JSON.stringify(push_data)
-        }).then((result)=>{result.json()})
-        .then((json)=>{
-          console.log(json)
-        }).catch((err)=>{
-          throw err
-        })
 
        
 
