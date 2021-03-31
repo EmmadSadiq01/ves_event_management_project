@@ -154,16 +154,113 @@
                   type="text"
                   name="number_guest"
                   class="form-control"
-                  id="guest_contact"
+                  id="contact"
                 />
               </div>
-              <button
-                type="button"
-                class="btn btn-primary"
-                onclick="eventHandler()"
-              >
-                Save
-              </button>
+              <button type="button" class="btn btn-primary"  onclick="eventHandler()">Save</button>
+
+              <!-- <button type="button" class="btn btn-primary">Booking</button> -->
+            </div>
+            <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="Submit" class="btn btn-primary">Save changes</button>
+      </div> -->
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- edit inquiry modal -->
+    <div
+      class="modal fade"
+      id="editModal"
+      tabindex="-1"
+      aria-labelledby="editModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Inquiry</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <form action="">
+            <div class="modal-body">
+              <div class="mb-3">
+                <input type="hidden" id="edit_id">
+                <label for="editDate" class="form-label">Date</label>
+                <input
+                  type="date"
+                  name="event_date"
+                  class="form-control"
+                  id="Edit_On_event_date"
+                />
+                <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+              </div>
+              <div class="mb-3">
+                <small>Select Hall</small>
+                <label for="edit_hall" class="form-label">A</label>
+                <input
+                  type="radio"
+                  name="edit_hall"
+                  value="a"
+                  id="edit_a"
+                  class="form-label"
+                />
+                <label for="edit_hall" class="form-label">B</label>
+                <input
+                  type="radio"
+                  name="edit_hall"
+                  value="b"
+                  id="edit_b"
+                  class="form-label"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="edit_event_name" class="form-label">Event Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  class="form-control"
+                  id="edit_event_name"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="edit_event_cost" class="form-label"
+                  >Estimated Cost Rs.</label
+                >
+                <input
+                  type="number"
+                  name="cost"
+                  class="form-control"
+                  id="edit_event_cost"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="edit_event_number_guest" class="form-label"
+                  >No. of Guest</label
+                >
+                <input
+                  type="number"
+                  name="number_guest"
+                  class="form-control"
+                  id="edit_event_number_guest"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="edit_contact" class="form-label">Contact</label>
+                <input
+                  type="text"
+                  name="number_guest"
+                  class="form-control"
+                  id="edit_contact"
+                />
+              </div>
+              <button type="button" class="btn btn-primary" onclick="editEventHandler()">Update</button>
 
               <!-- <button type="button" class="btn btn-primary">Booking</button> -->
             </div>
@@ -344,17 +441,16 @@
           monthsArray[11] = "December";
           for (let i = 0; i < out.length; i++) {
             eventdate = out[i].inquery_date;
-            console.log(eventdate)
+            // console.log(eventdate)
             changeFormat = eventdate.split("-");
             let year = changeFormat[0];
             // let getMonth = new Date(eventdate).getMonth();
-            let month = changeFormat[1]-1;
+            let month = changeFormat[1] - 1;
             let date = changeFormat[2];
-            console.log(month)
+            // console.log(month)
             // let more_split_date = date.split(" ");
-            after_split =
-              monthsArray[month] + "/" + date + "/" + year;
-            console.log("in then", after_split);
+            after_split = monthsArray[month] + "/" + date + "/" + year;
+            // console.log("in then", after_split);
 
             pushEnvents = {
               id: out[i].iquery_id,
@@ -391,7 +487,7 @@
             // settingName: settingValue
             calendarEvents: myEvents,
           });
-          console.log(out)
+          // console.log(out)
         })
         // .then(() => {
         //
@@ -438,8 +534,9 @@
         let date = document.getElementById("On_event_date").value;
         let event_name = document.getElementById("event_name").value;
         let event_cost = document.getElementById("event_cost").value;
-        let event_number_guest = document.getElementById("event_number_guest").value;
-        let party_contact = document.getElementById("guest_contact").value;
+        let event_number_guest = document.getElementById("event_number_guest")
+          .value;
+        let party_contact = document.getElementById("contact").value;
         let hall = "";
         let hall_select = document.getElementsByName("hall");
         for (i = 0; i < hall_select.length; i++) {
@@ -449,32 +546,72 @@
         }
         let push_data = {
           idate: date,
-          ihijtidate:"HIJRI DATE",
+          ihijtidate: "HIJRI DATE",
           iname: "hello Name",
-          iaddress:"ADDREESS",
-          icontact:party_contact,
-          icnic:"421010-49239482-4",
-          iemail:"EMMADSADIQ@GMAIL.COM",
+          iaddress: "ADDREESS",
+          icontact: party_contact,
+          icnic: "421010-49239482-4",
+          iemail: "EMMADSADIQ@GMAIL.COM",
           iportion: hall,
-          ievent:event_name,
+          ievent: event_name,
           icost: event_cost,
-          iguest: event_number_guest
+          iguest: event_number_guest,
         };
-        console.log("data=>",push_data);
-         fetch("http://localhost/API_Inquery/api-insert.php",{
-          method:"POST",
-          body: JSON.stringify(push_data)
-        }).then((result)=>{result.json()})
-        .then((json)=>{
-          console.log(json)
-        }).catch((err)=>{
-          throw err
+        // console.log("data=>",push_data);
+        fetch("http://localhost/API_Inquery/api-insert.php", {
+          method: "POST",
+          body: JSON.stringify(push_data),
         })
-
-       
+          .then((result) => {
+            result.json();
+          })
+          .catch((err) => {
+            throw err;
+          });
 
         // console.log(myEvents);
       }
+     const  editEventHandler = () =>{
+       let date = $('#Edit_On_event_date').val()
+       let event_name = $('#edit_event_name').val()
+       let event_cost = $('#edit_event_cost').val()
+       let total_guest = $('#edit_event_number_guest').val()
+       let contact = $('#edit_contact').val()
+       let edit_id = $('#edit_id').val()
+       let hall_select = document.getElementsByName("edit_hall");
+        for (i = 0; i < hall_select.length; i++) {
+          if (hall_select[i].checked) {
+            hall = hall_select[i].value;
+          }
+        }
+        console.log(hall)
+       let editDataObj = {
+          inqid: edit_id,
+          idate: date,
+          ihijtidate: "HIJRI DATE",
+          iname: "hello Name",
+          iaddress: "ADDREESS",
+          icontact: contact,
+          icnic: "421010-49239482-4",
+          iemail: "EMMADSADIQ@GMAIL.COM",
+          iportion: hall,
+          ievent: event_name,
+          icost: event_cost,
+          iguest: total_guest,
+       }
+       fetch("http://localhost/API_Inquery/api-update.php", {
+          method: "POST",
+          body: JSON.stringify(editDataObj),
+        })
+          .then((result) => {
+            result.json();
+          })
+          .catch((err) => {
+            throw err;
+          });
+
+
+     }
     </script>
   </body>
 </html>
