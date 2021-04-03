@@ -48,18 +48,54 @@
 
   <body>
     <section class="calendar">
-      <div class="row">
-        <div class="col-8 p-0">
+      <div class="my_row">
+        <div class="calendar_section">
           <div id="calendar" class="event-hide sidebar-hide"></div>
         </div>
-        <div class="col-4 p-0">
+        <div class="bookings_section">
           <div class="bookings">
             <div class="booking_container">
               <div class="booking_header">
-                <p>March 27 2021</p>
+                <p id="booking_event_date"></p>
               </div>
-              <div class="booking-empty">
+              <!-- <div class="booking-empty">
                 <p>No event for today.. so take a rest! :)</p>
+              </div> -->
+              <div id="booking_view">
+                <div
+                  class="event-container"
+                  role="button"
+                  data-event-index="19"
+                >
+                  <!-- <div class="event-icon">
+                  <div
+                    class="event-bullet-19"
+                    style="background-color: red"
+                  ></div>
+                </div>
+                <div class="event-info">
+                  <p class="event-title">valima</p>
+                  <p class="event-desc">
+                    Hall: a<br />Cost: 200000<br />Conact:0303003030
+                  </p>
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    id="19"
+                    onclick="editEvent(this.id)"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-warning"
+                    id="19"
+                    onclick="deleteEvent(this.id)"
+                  >
+                    Delete
+                  </button>
+                </div> -->
+                </div>
               </div>
             </div>
           </div>
@@ -97,6 +133,56 @@
                   id="On_event_date"
                 />
                 <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+              </div>
+              <div class="mb-3">
+                <label for="islDate" class="form-label">Islamic Date</label>
+                <input
+                  type="text"
+                  name="islDate"
+                  class="form-control"
+                  id="islDateInput"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="partyName" class="form-label">Party Name</label>
+                <input
+                  type="text"
+                  name="partyName"
+                  class="form-control"
+                  id="partyName"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <textarea
+                  name="address"
+                  class="form-control"
+                  id="address"
+                  cols="30"
+                  rows="10"
+                ></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="guest_contact" class="form-label">Contact</label>
+                <input
+                  type="text"
+                  name="number_guest"
+                  class="form-control"
+                  id="contact"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="cnic" class="form-label">CNIC</label>
+                <input type="text" name="cnic" class="form-control" id="cnic" />
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  class="form-control"
+                  id="email"
+                />
               </div>
               <div class="mb-3">
                 <small>Select Hall</small>
@@ -148,16 +234,14 @@
                   id="event_number_guest"
                 />
               </div>
-              <div class="mb-3">
-                <label for="guest_contact" class="form-label">Contact</label>
-                <input
-                  type="text"
-                  name="number_guest"
-                  class="form-control"
-                  id="contact"
-                />
-              </div>
-              <button type="button" class="btn btn-primary"  onclick="eventHandler()">Save</button>
+
+              <button
+                type="button"
+                class="btn btn-primary"
+                onclick="eventHandler()"
+              >
+                Save
+              </button>
 
               <!-- <button type="button" class="btn btn-primary">Booking</button> -->
             </div>
@@ -191,7 +275,7 @@
           <form action="">
             <div class="modal-body">
               <div class="mb-3">
-                <input type="hidden" id="edit_id">
+                <input type="hidden" id="edit_id" />
                 <label for="editDate" class="form-label">Date</label>
                 <input
                   type="date"
@@ -199,7 +283,62 @@
                   class="form-control"
                   id="Edit_On_event_date"
                 />
-                <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+              </div>
+              <div class="mb-3">
+                <input type="hidden" id="edit_id" />
+                <label for="editIslDate" class="form-label">Islamic Date</label>
+                <input
+                  type="text"
+                  name="isl_event_date"
+                  class="form-control"
+                  id="editIslDate"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="editPartyName" class="form-label">Party Name</label>
+                <input
+                  type="text"
+                  name="editPartyName"
+                  class="form-control"
+                  id="editPartyName"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="editAddress" class="form-label">Address</label>
+                <textarea
+                  name="editAddress"
+                  class="form-control"
+                  id="editAddress"
+                  cols="30"
+                  rows="10"
+                ></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="cnic" class="form-label">CNIC</label>
+                <input
+                  type="text"
+                  name="cnic"
+                  class="form-control"
+                  id="editCnic"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="editemail" class="form-label">Email</label>
+                <input
+                  type="email"
+                  name="editemail"
+                  class="form-control"
+                  id="editemail"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="edit_contact" class="form-label">Contact</label>
+                <input
+                  type="text"
+                  name="number_guest"
+                  class="form-control"
+                  id="edit_contact"
+                />
               </div>
               <div class="mb-3">
                 <small>Select Hall</small>
@@ -221,7 +360,9 @@
                 />
               </div>
               <div class="mb-3">
-                <label for="edit_event_name" class="form-label">Event Name</label>
+                <label for="edit_event_name" class="form-label"
+                  >Event Name</label
+                >
                 <input
                   type="text"
                   name="name"
@@ -251,16 +392,13 @@
                   id="edit_event_number_guest"
                 />
               </div>
-              <div class="mb-3">
-                <label for="edit_contact" class="form-label">Contact</label>
-                <input
-                  type="text"
-                  name="number_guest"
-                  class="form-control"
-                  id="edit_contact"
-                />
-              </div>
-              <button type="button" class="btn btn-primary" onclick="editEventHandler()">Update</button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                onclick="editEventHandler()"
+              >
+                Update
+              </button>
 
               <!-- <button type="button" class="btn btn-primary">Booking</button> -->
             </div>
@@ -296,16 +434,33 @@
               <div class="row">
                 <div class="col">
                   <small>Booking Date</small>
-                  <input type="date" class="form-control" />
+                  <input type="date" class="form-control" id="booking_date" />
                 </div>
                 <div class="col">
                   <small>Program Date</small>
-                  <input type="date" class="form-control" />
+                  <input
+                    type="date"
+                    id="booking_program_date"
+                    class="form-control"
+                  />
                 </div>
                 <div class="col">
                   <small>Day</small>
-                  <input type="text" class="form-control" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="booking_program_day"
+                  />
                 </div>
+              </div>
+              <div class="mb-3">
+                <label for="bookIslDate" class="form-label">Islamic Date</label>
+                <input
+                  type="text"
+                  name="bookIslDate"
+                  class="form-control"
+                  id="bookIslDate"
+                />
               </div>
               <div class="mb-3">
                 <small>Shift</small>
@@ -328,7 +483,12 @@
               </div>
               <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" name="name" class="form-control" id="name" />
+                <input
+                  type="text"
+                  name="name"
+                  class="form-control"
+                  id="booking_party_name"
+                />
               </div>
               <div class="mb-3">
                 <label for="address" class="form-label">Address</label>
@@ -336,7 +496,7 @@
                   type="number"
                   name="address"
                   class="form-control"
-                  id="address"
+                  id="booking_address"
                   cols="30"
                   rows="1"
                 ></textarea>
@@ -345,36 +505,87 @@
                 <label for="cell_no" class="form-label">Cell No</label>
                 <input
                   type="text"
-                  name="cell_no"
+                  name="booking_cell_no"
                   class="form-control"
-                  id="cell_no"
+                  id="booking_cell_no"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="bookingcnic" class="form-label">CNIC</label>
+                <input
+                  type="text"
+                  name="bookingcnic"
+                  class="form-control"
+                  id="bookingcnic"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="bookingEmail" class="form-label">Email</label>
+                <input
+                  type="email"
+                  name="bookingEmail"
+                  class="form-control"
+                  id="bookingEmail"
                 />
               </div>
               <div class="mb-3">
                 <label for="event_name" class="form-label">Event Name</label>
                 <input
                   type="text"
-                  name="event_name"
+                  name="booking_event_name"
                   class="form-control"
-                  id="event_name"
+                  id="booking_event_name"
+                />
+              </div>
+              <div class="mb-3">
+                <small>Select Hall</small>
+                <label for="book_hall" class="form-label">A</label>
+                <input
+                  type="radio"
+                  name="book_hall"
+                  value="a"
+                  id="book_a"
+                  class="form-label"
+                />
+                <label for="book_hall" class="form-label">B</label>
+                <input
+                  type="radio"
+                  name="book_hall"
+                  value="b"
+                  id="book_b"
+                  class="form-label"
+                />
+              </div>
+
+              <div class="mb-3">
+                <label for="bookAmnt" class="form-label">Book Amount</label>
+                <input
+                  type="number"
+                  name="bookAmnt"
+                  class="form-control"
+                  id="bookAmnt"
+                  onchange="balanceCal(this.value)"
+
                 />
               </div>
               <div class="mb-3">
                 <label for="advance" class="form-label">Advance</label>
                 <input
-                  type="text"
-                  name="advance"
+                  type="number"
+                  name="booking_advance"
                   class="form-control"
-                  id="advance"
+                  id="booking_advance"
+                  onchange="balanceCal(this.value)"
+
                 />
               </div>
               <div class="mb-3">
                 <label for="balance" class="form-label">Balance</label>
                 <input
-                  type="text"
-                  name="balance"
+                  type="number"
+                  name="booking_balance"
                   class="form-control"
-                  id="balance"
+                  id="booking_balance"
                 />
               </div>
               <div class="mb-3">
@@ -382,13 +593,19 @@
                   >No. of Guest</label
                 >
                 <input
-                  type="text"
+                  type="number"
                   name="booking_no_of_guests"
                   class="form-control"
                   id="booking_no_of_guests"
                 />
               </div>
-              <button type="button" class="btn btn-primary">Book</button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                onsubmit="BookingSubmissionHandler()"
+              >
+                Book
+              </button>
             </div>
             <!-- <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -398,12 +615,219 @@
         </div>
       </div>
     </div>
-    <!-- <a
-      class="btn btn-primary"
-      data-bs-toggle="modal"
-      data-bs-target="#booking_modal"
-      >Open #modal</a
-    > -->
+    <!--Booking Edit Modal -->
+    <div
+      class="modal fade"
+      id="editBookingModal"
+      tabindex="-1"
+      aria-labelledby="editBookingModal"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Booking</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <form>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col">
+                  <input type="hidden" id="edit_booking_id" />
+                  <small>Booking Date</small>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="booking_edit_date"
+                  />
+                </div>
+                <div class="col">
+                  <small>Program Date</small>
+                  <input
+                    type="date"
+                    id="booking_edit_program_date"
+                    class="form-control"
+                  />
+                </div>
+                <div class="col">
+                  <small>Day</small>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="booking_edit_program_day"
+                  />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="editbookIslDate" class="form-label"
+                  >Islamic Date</label
+                >
+                <input
+                  type="text"
+                  name="bookIslDate"
+                  class="form-control"
+                  id="editbookIslDate"
+                />
+              </div>
+              <div class="mb-3">
+                <small>Shift</small>
+                <label for="morning" class="form-label">Morning</label>
+                <input
+                  type="radio"
+                  name="editshift"
+                  value="morning"
+                  id="editmorning"
+                  class="form-label"
+                />
+                <label for="evening" class="form-label">Evening</label>
+                <input
+                  type="radio"
+                  name="editshift"
+                  value="evening"
+                  id="editevening"
+                  class="form-label"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  class="form-control"
+                  id="edit_booking_party_name"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <textarea
+                  type="number"
+                  name="address"
+                  class="form-control"
+                  id="edit_booking_address"
+                  cols="30"
+                  rows="1"
+                ></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="cell_no" class="form-label">Cell No</label>
+                <input
+                  type="text"
+                  name="booking_cell_no"
+                  class="form-control"
+                  id="edit_booking_cell_no"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="bookingcnic" class="form-label">CNIC</label>
+                <input
+                  type="text"
+                  name="bookingcnic"
+                  class="form-control"
+                  id="editbookingcnic"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="bookingEmail" class="form-label">Email</label>
+                <input
+                  type="email"
+                  name="bookingEmail"
+                  class="form-control"
+                  id="editbookingEmail"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="event_name" class="form-label">Event Name</label>
+                <input
+                  type="text"
+                  name="booking_event_name"
+                  class="form-control"
+                  id="edit_booking_event_name"
+                />
+              </div>
+              <div class="mb-3">
+                <small>Select Hall</small>
+                <label for="book_hall" class="form-label">A</label>
+                <input
+                  type="radio"
+                  name="edit_book_hall"
+                  value="a"
+                  id="edit_book_a"
+                  class="form-label"
+                />
+                <label for="book_hall" class="form-label">B</label>
+                <input
+                  type="radio"
+                  name="edit_book_hall"
+                  value="b"
+                  id="edit_book_b"
+                  class="form-label"
+                />
+              </div>
+
+              <div class="mb-3">
+                <label for="bookAmnt" class="form-label">Book Amount</label>
+                <input
+                  type="number"
+                  name="editbookAmnt"
+                  class="form-control"
+                  id="editbookAmnt"
+                  onchange="editBalanceCal()"
+
+                />
+              </div>
+              <div class="mb-3">
+                <label for="advance" class="form-label">Advance</label>
+                <input
+                  type="number"
+                  name="editbooking_advance"
+                  class="form-control"
+                  id="edit_booking_advance"
+                  onchange="editBalanceCal()"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="edit_booking_balance" class="form-label"
+                  >Balance</label
+                >
+                <input
+                  type="number"
+                  name="edit_booking_balance"
+                  class="form-control"
+                  id="edit_booking_balance"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="edit_booking_no_of_guests" class="form-label"
+                  >No. of Guest</label
+                >
+                <input
+                  type="number"
+                  name="edit_booking_no_of_guests"
+                  class="form-control"
+                  id="edit_booking_no_of_guests"
+                />
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                onsubmit="BookingEditSubmissionHandler()"
+              >
+                Update
+              </button>
+            </div>
+            <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="Submit" class="btn btn-primary">Save changes</button>
+      </div> -->
+          </form>
+        </div>
+      </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
     <script
@@ -532,6 +956,11 @@
 
       function eventHandler() {
         let date = document.getElementById("On_event_date").value;
+        let islDate = document.getElementById("islDateInput").value;
+        let partyName = document.getElementById("partyName").value;
+        let address = document.getElementById("address").value;
+        let cnic = document.getElementById("cnic").value;
+        let email = document.getElementById("email").value;
         let event_name = document.getElementById("event_name").value;
         let event_cost = document.getElementById("event_cost").value;
         let event_number_guest = document.getElementById("event_number_guest")
@@ -546,12 +975,12 @@
         }
         let push_data = {
           idate: date,
-          ihijtidate: "HIJRI DATE",
-          iname: "hello Name",
-          iaddress: "ADDREESS",
+          ihijtidate: islDate,
+          iname: partyName,
+          iaddress: address,
           icontact: party_contact,
-          icnic: "421010-49239482-4",
-          iemail: "EMMADSADIQ@GMAIL.COM",
+          icnic: cnic,
+          iemail: email,
           iportion: hall,
           ievent: event_name,
           icost: event_cost,
@@ -571,35 +1000,40 @@
 
         // console.log(myEvents);
       }
-     const  editEventHandler = () =>{
-       let date = $('#Edit_On_event_date').val()
-       let event_name = $('#edit_event_name').val()
-       let event_cost = $('#edit_event_cost').val()
-       let total_guest = $('#edit_event_number_guest').val()
-       let contact = $('#edit_contact').val()
-       let edit_id = $('#edit_id').val()
-       let hall_select = document.getElementsByName("edit_hall");
+      const editEventHandler = () => {
+        let date = $("#Edit_On_event_date").val();
+        let islDate = $("#editIslDate").val();
+        let editPartyName = $("#editPartyName").val();
+        let event_name = $("#edit_event_name").val();
+        let editAddress = $("#editAddress").val();
+        let editCnic = $("#editCnic").val();
+        let editemail = $("#editemail").val();
+        let event_cost = $("#edit_event_cost").val();
+        let total_guest = $("#edit_event_number_guest").val();
+        let contact = $("#edit_contact").val();
+        let edit_id = $("#edit_id").val();
+        let hall_select = document.getElementsByName("edit_hall");
         for (i = 0; i < hall_select.length; i++) {
           if (hall_select[i].checked) {
             hall = hall_select[i].value;
           }
         }
-        console.log(hall)
-       let editDataObj = {
+        // console.log(hall);
+        let editDataObj = {
           inqid: edit_id,
           idate: date,
-          ihijtidate: "HIJRI DATE",
-          iname: "hello Name",
-          iaddress: "ADDREESS",
+          ihijtidate: islDate,
+          iname: editPartyName,
+          iaddress: editAddress,
           icontact: contact,
-          icnic: "421010-49239482-4",
-          iemail: "EMMADSADIQ@GMAIL.COM",
+          icnic: editCnic,
+          iemail: editemail,
           iportion: hall,
           ievent: event_name,
           icost: event_cost,
           iguest: total_guest,
-       }
-       fetch("http://localhost/API_Inquery/api-update.php", {
+        };
+        fetch("http://localhost/API_Inquery/api-update.php", {
           method: "POST",
           body: JSON.stringify(editDataObj),
         })
@@ -609,9 +1043,54 @@
           .catch((err) => {
             throw err;
           });
-
-
-     }
+      };
+      const BookingSubmissionHandler = () => {
+        let hallShift = "";
+        let shiftOption = document.getElementsByName("shift");
+        for (i = 0; i < shiftOption.length; i++) {
+          if (shiftOption[i].checked) {
+            hallShift = shiftOption[i].value;
+          }
+        }
+        let hall = "";
+        let hall_select = document.getElementsByName("book_hall");
+        for (i = 0; i < hall_select.length; i++) {
+          if (hall_select[i].checked) {
+            hall = hall_select[i].value;
+          }
+        }
+        let PushBookObj = {
+          bokdate: $("#booking_date").val(),
+          bhijtidate: $("#bookIslDate").val(),
+          beventdate: $("#booking_program_date").val(),
+          beventday: $("#booking_program_day").val(),
+          bpname: $("#booking_party_name").val(),
+          bpaddress: $("#booking_address").val(),
+          bpcontact: $("#booking_cell_no").val(),
+          bpcnic: $("#bookingcnic").val(),
+          bpemail: $("#bookingEmail").val(),
+          beventshift: hallShift,
+          bportion: hall,
+          beventname: $("#booking_event_name").val(),
+          bamount: $("#bookAmnt").val(),
+          badvance: $("#booking_advance").val(),
+          // console.log($('#booking_balance').val())
+          bguest: $("#booking_no_of_guests").val(),
+          btotal: 0,
+        };
+        console.log("pushObj=>", PushBookObj);
+        fetch("http://localhost/API_Inquery/api-insert-booking.php", {
+          method: "POST",
+          body: JSON.stringify(PushBookObj),
+        })
+          .then((result) => {
+            result.json();
+          })
+          .then(() => console.log("sent successfull"))
+          .catch((err) => {
+            throw err;
+          });
+      };
     </script>
   </body>
 </html>
