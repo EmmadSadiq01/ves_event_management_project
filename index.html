@@ -122,7 +122,7 @@
               aria-label="Close"
             ></button>
           </div>
-          <form action="">
+          <form action="" onsubmit="eventHandler()">
             <div class="modal-body">
               <div class="mb-3">
                 <label for="date" class="form-label">Date</label>
@@ -236,9 +236,8 @@
               </div>
 
               <button
-                type="button"
+                type="submit"
                 class="btn btn-primary"
-                onclick="eventHandler()"
               >
                 Save
               </button>
@@ -272,7 +271,7 @@
               aria-label="Close"
             ></button>
           </div>
-          <form action="">
+          <form action="" onclick="editEventHandler()">
             <div class="modal-body">
               <div class="mb-3">
                 <input type="hidden" id="edit_id" />
@@ -393,9 +392,8 @@
                 />
               </div>
               <button
-                type="button"
+                type="submit"
                 class="btn btn-primary"
-                onclick="editEventHandler()"
               >
                 Update
               </button>
@@ -429,7 +427,7 @@
               aria-label="Close"
             ></button>
           </div>
-          <form>
+          <form onsubmit="BookingSubmissionHandler()">
             <div class="modal-body">
               <div class="row">
                 <div class="col">
@@ -601,8 +599,7 @@
               </div>
               <button
                 type="submit"
-                class="btn btn-primary"
-                onsubmit="BookingSubmissionHandler()"
+                class="btn btn-primary"                
               >
                 Book
               </button>
@@ -634,7 +631,7 @@
               aria-label="Close"
             ></button>
           </div>
-          <form>
+          <form onsubmit="BookingEditSubmissionHandler()">
             <div class="modal-body">
               <div class="row">
                 <div class="col">
@@ -815,7 +812,6 @@
               <button
                 type="submit"
                 class="btn btn-primary"
-                onsubmit="BookingEditSubmissionHandler()"
               >
                 Update
               </button>
@@ -907,7 +903,7 @@
           //   }
           // ];
           $("#calendar").evoCalendar({
-            theme: "Midnight Blue",
+            theme: 'Royal Navy',
             // settingName: settingValue
             calendarEvents: myEvents,
           });
@@ -1078,7 +1074,7 @@
           bguest: $("#booking_no_of_guests").val(),
           btotal: 0,
         };
-        console.log("pushObj=>", PushBookObj);
+        // console.log("pushObj=>", PushBookObj);
         fetch("http://localhost/API_Inquery/api-insert-booking.php", {
           method: "POST",
           body: JSON.stringify(PushBookObj),

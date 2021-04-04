@@ -905,7 +905,7 @@
       // if: _.options.sidebarToggler
       if (_.options.sidebarToggler) {
         $(_.$elements.sidebarEl).append(
-          '<span id="sidebarToggler" role="button" aria-pressed title="' +
+          '<span id="sidebarToggler" onclick="togglemonthsSidebar()" role="button" aria-pressed title="' +
             _.initials.dates[_.options.language].closeSidebarText +
             '"><button class="icon-button"><span class="bars"></span></button></span>'
         );
@@ -916,7 +916,7 @@
       }
       if (_.options.eventListToggler) {
         $(_.$elements.calendarEl).append(
-          '<span id="eventListToggler" role="button" aria-pressed title="' +
+          '<span id="eventListToggler" onclick="toggleSideBar()" role="button" aria-pressed title="' +
             _.initials.dates[_.options.language].closeEventListText +
             '"><button class="icon-button"><span class="chevron-arrow-right"></span></button></span>'
         );
@@ -1223,6 +1223,7 @@
           _.options.format
         );
       }
+      // console.log("type-bullet=>",$(".type-bullet").length)
       appendDot(event_date);
     }
 
@@ -1303,6 +1304,8 @@
 
     for (var i = 0; i < _.options.calendarEvents.length; i++) {
       _.addEventIndicator(_.options.calendarEvents[i]);
+      // console.log(_.options.calendarEvents[i].date)
+      
     }
   };
 
@@ -1972,6 +1975,34 @@ window.onload = () => {
     d.getFullYear();
   console.log(output);
   hello(output);
+  fetch("http://localhost/API_Inquery/api-fetch-all-booking.php")
+      .then((result) => {
+        return result.json();
+      }).then((data)=>{
+        for(let i=0;i<data.length;i++){
+          // console.log(data[i].eventDate," ",data[i].hallportion)
+          let split_date = data[i].eventDate
+          let mySplit = split_date.split("-")
+          let year = mySplit[0]
+          let month = mySplit[1]
+          let date = mySplit[2]
+          let change_format = month+"-"+date+"-"+year;
+          if(data[i].hallportion==='a'){
+            $("#"+change_format).addClass("confirm-booking-a")
+            // console.log("added at",change_format)
+          }
+          if(data[i].hallportion==='b'){
+            $("#"+change_format).addClass("confirm-booking-b")
+            // console.log("added at",change_format)
+          }
+          // console.log(change_format)
+        }
+        // console.log(data)
+      })
+      .catch((err) => {
+        throw err;
+      });
+
 };
 
 const balanceCal = () => {
@@ -1984,3 +2015,12 @@ const editBalanceCal = () => {
   let advAmnt = $("#edit_booking_advance").val();
   $("#edit_booking_balance").val(bookingAmnt - advAmnt);
 };
+
+// document.getElementById("booking_event_date").on("click", toggleSideBar);
+function toggleSideBar(){
+  $('#calendar').addClass("sidebar-hide")
+}
+function togglemonthsSidebar(){
+  $('#calendar').addClass("event-hide")
+}
+
