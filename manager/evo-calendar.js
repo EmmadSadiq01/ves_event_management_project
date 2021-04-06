@@ -886,7 +886,7 @@
         '<div class="calendar-events">' +
         '<div class="event-header"><p></p><span id="islDate"></span></div>' +
         '<div class="event-list"></div>' +
-        ' <div class="action_btns mt-3"><button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="add_event">Inquiry</button><button  type="button" class="btn btn-success"style="margin-left:5px" data-bs-toggle="modal" data-bs-target="#booking_modal" id="add_event" onclick="BookingEventHandler()">Booking</button></div></div>';
+        ' <div class="action_btns mt-3"><button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTargetModal" id="addTarget">Add Target</button></div></div>';
 
       // --- Finally, build it now! --- //
       _.$elements.calendarEl.html(markup);
@@ -1027,14 +1027,14 @@
     markup += "</p>";
     if (event_data.description)
       markup += '<p class="event-desc">' + event_data.description + "</p>";
-    markup +=
-      ' <button type="button" class="btn btn-success" id="' +
-      event_data.id +
-      '" onclick="editInquiryEvent(this.id)">Edit</button>';
-    markup +=
-      ' <button type="button" class="btn btn-warning" id="' +
-      event_data.id +
-      '" onclick="deleteInquiryEvent(this.id)">Delete</button></div>';
+    // markup +=
+    //   ' <button type="button" class="btn btn-success" id="' +
+    //   event_data.id +
+    //   '" onclick="editInquiryEvent(this.id)">Edit</button>';
+    // markup +=
+    //   ' <button type="button" class="btn btn-warning" id="' +
+    //   event_data.id +
+    //   '" onclick="deleteInquiryEvent(this.id)">Delete</button></div>';
     markup += "</div>";
     eventListEl.append(markup);
 
@@ -1727,15 +1727,15 @@ const showBookings = (selectDate) => {
             " <br />Conact:" +
             personContact +
             "</p>";
-          html +=
-            "<button type='button' class='btn btn-success ' style='margin-right:10px' id='" +
-            booking_id +
-            "' onclick='bookEditEvent(this.id)'>Edit </button>";
+          // html +=
+          //   "<button type='button' class='btn btn-success ' style='margin-right:10px' id='" +
+          //   booking_id +
+          //   "' onclick='bookEditEvent(this.id)'>Edit </button>";
 
-          html +=
-            "<button type='button' class='btn btn-warning' id='" +
-            booking_id +
-            "' onclick='bookDeleteEvent(this.id)'>Delete </button> </div></div>";
+          // html +=
+          //   "<button type='button' class='btn btn-warning' id='" +
+          //   booking_id +
+          //   "' onclick='bookDeleteEvent(this.id)'>Delete </button> </div></div>";
           $("#booking_view").html(html);
         }
       } else {
@@ -1750,68 +1750,67 @@ const showBookings = (selectDate) => {
     });
 };
 
-const deleteInquiryEvent = (delId) => {
-  console.log(delId);
-  let delIdObj = {
-    inqid: delId,
-  };
-  if (confirm("do you want to delete?")) {
-    fetch("http://localhost/API_Inquery/api-delete.php", {
-      method: "POST",
-      body: JSON.stringify(delIdObj),
-    })
-      .then((result) => {
-        result.json();
-      })
-      .catch((err) => {
-        throw err;
-      });
-    location.reload();
-  }
-};
+// const deleteInquiryEvent = (delId) => {
+//   console.log(delId);
+//   let delIdObj = {
+//     inqid: delId,
+//   };
+//   if (confirm("do you want to delete?")) {
+//     fetch("http://localhost/API_Inquery/api-delete.php", {
+//       method: "POST",
+//       body: JSON.stringify(delIdObj),
+//     })
+//       .then((result) => {
+//         result.json();
+//       })
+//       .catch((err) => {
+//         throw err;
+//       });
+//     location.reload();
+//   }
+// };
 
-const editInquiryEvent = (editId) => {
-  console.log(editId);
-  let editIdObj = {
-    inqid: editId,
-  };
-  $("#edit_id").val(editId);
-  fetch("http://localhost/API_Inquery/api-fetch.php", {
-    method: "POST",
-    body: JSON.stringify(editIdObj),
-  })
-    .then((result) => {
-      return result.json();
-      // console.log(editData);
-    })
-    .then((data) => {
-      $("#Edit_On_event_date").val(data[0].inquery_date);
-      $("#editIslDate").val(data[0].hijridate);
-      $("#editPartyName").val(data[0].personName);
-      $("#editAddress").val(data[0].personAddress);
-      $("#edit_contact").val(data[0].personContact);
-      $("#editCnic").val(data[0].personCinc);
-      $("#editemail").val(data[0].personEmail);
-      $("#edit_event_name").val(data[0].event_name);
-      $("#edit_event_cost").val(data[0].estimated_cost);
-      $("#edit_event_number_guest").val(data[0].totalGuest);
-      $("#editModal").modal("show");
-      if (data[0].hallportion === "a") {
-        $("#edit_b").prop("checked", false);
-        $("#edit_a").prop("checked", true);
-        // console.log("hello a");
-      } else {
-        $("#edit_a").prop("checked", false);
-        $("#edit_b").prop("checked", true);
-        // console.log("hello b");
-      }
-    })
-    .catch((err) => {
-      throw err;
-    });
-};
-
-const BookingEventHandler = () => {
+// const editInquiryEvent = (editId) => {
+//   console.log(editId);
+//   let editIdObj = {
+//     inqid: editId,
+//   };
+//   $("#edit_id").val(editId);
+//   fetch("http://localhost/API_Inquery/api-fetch.php", {
+//     method: "POST",
+//     body: JSON.stringify(editIdObj),
+//   })
+//     .then((result) => {
+//       return result.json();
+//       // console.log(editData);
+//     })
+//     .then((data) => {
+//       $("#Edit_On_event_date").val(data[0].inquery_date);
+//       $("#editIslDate").val(data[0].hijridate);
+//       $("#editPartyName").val(data[0].personName);
+//       $("#editAddress").val(data[0].personAddress);
+//       $("#edit_contact").val(data[0].personContact);
+//       $("#editCnic").val(data[0].personCinc);
+//       $("#editemail").val(data[0].personEmail);
+//       $("#edit_event_name").val(data[0].event_name);
+//       $("#edit_event_cost").val(data[0].estimated_cost);
+//       $("#edit_event_number_guest").val(data[0].totalGuest);
+//       $("#editModal").modal("show");
+//       if (data[0].hallportion === "a") {
+//         $("#edit_b").prop("checked", false);
+//         $("#edit_a").prop("checked", true);
+//         // console.log("hello a");
+//       } else {
+//         $("#edit_a").prop("checked", false);
+//         $("#edit_b").prop("checked", true);
+//         // console.log("hello b");
+//       }
+//     })
+//     .catch((err) => {
+//       throw err;
+//     });
+// };
+// ===========================set todat date 
   var d = new Date();
   var month = d.getMonth() + 1;
   var day = d.getDate();
@@ -1823,63 +1822,61 @@ const BookingEventHandler = () => {
     "-" +
     (day < 10 ? "0" : "") +
     day;
-  $("#booking_date").val(output);
-  // $("#booking_program_date").val(output);
+  $("#todayDate").val(output);
 
-  console.log("2021-03-31", output);
-};
+  // console.log("2021-03-31", output);
 
-const bookEditEvent = (editId) => {
-  console.log(editId);
-  let editBookingIdObj = {
-    bookId: editId,
-  };
-  $("#edit_id").val(editBookingIdObj);
-  fetch("http://localhost/API_Inquery/api-fetchId-booking.php", {
-    method: "POST",
-    body: JSON.stringify(editBookingIdObj),
-  })
-    .then((result) => {
-      return result.json();
-      // console.log(editData);
-    })
-    .then((data) => {
-      $("#edit_booking_id").val(data[0].booking_id);
-      $("#booking_edit_date").val(data[0].bookingDate);
-      $("#booking_edit_program_date").val(data[0].eventDate);
-      $("#booking_edit_program_day").val(data[0].eventDay);
-      $("#editbookIslDate").val(data[0].hijriDate);
-      $("#edit_booking_party_name").val(data[0].personName);
-      $("#edit_booking_address").val(data[0].personAddress);
-      $("#edit_booking_cell_no").val(data[0].personContact);
-      $("#editbookingcnic").val(data[0].personCinc);
-      $("#editbookingEmail").val(data[0].personEmail);
-      $("#edit_booking_event_name").val(data[0].eventName);
-      $("#editbookAmnt").val(data[0].bookingAmount);
-      $("#edit_booking_advance").val(data[0].advanceAmount);
-      $("#edit_booking_no_of_guests").val(data[0].totalGuest);
-      if (data[0].hallportion === "a") {
-        $("#edit_book_b").prop("checked", false);
-        $("#edit_book_a").prop("checked", true);
-      } else {
-        $("#edit_book_a").prop("checked", false);
-        $("#edit_book_b").prop("checked", true);
-      }
-      if (data[0].eventShift === "morning") {
-        $("#editevening").prop("checked", false);
-        $("#editmorning").prop("checked", true);
-      } else {
-        $("#editmorning").prop("checked", false);
-        $("#editevening").prop("checked", true);
-      }
-      editBalanceCal()
-      $("#editBookingModal").modal("show");
-      // console.log(data[0])
-    })
-    .catch((err) => {
-      throw err;
-    });
-};
+// const bookEditEvent = (editId) => {
+//   console.log(editId);
+//   let editBookingIdObj = {
+//     bookId: editId,
+//   };
+//   $("#edit_id").val(editBookingIdObj);
+//   fetch("http://localhost/API_Inquery/api-fetchId-booking.php", {
+//     method: "POST",
+//     body: JSON.stringify(editBookingIdObj),
+//   })
+//     .then((result) => {
+//       return result.json();
+//       // console.log(editData);
+//     })
+//     .then((data) => {
+//       $("#edit_booking_id").val(data[0].booking_id);
+//       $("#booking_edit_date").val(data[0].bookingDate);
+//       $("#booking_edit_program_date").val(data[0].eventDate);
+//       $("#booking_edit_program_day").val(data[0].eventDay);
+//       $("#editbookIslDate").val(data[0].hijriDate);
+//       $("#edit_booking_party_name").val(data[0].personName);
+//       $("#edit_booking_address").val(data[0].personAddress);
+//       $("#edit_booking_cell_no").val(data[0].personContact);
+//       $("#editbookingcnic").val(data[0].personCinc);
+//       $("#editbookingEmail").val(data[0].personEmail);
+//       $("#edit_booking_event_name").val(data[0].eventName);
+//       $("#editbookAmnt").val(data[0].bookingAmount);
+//       $("#edit_booking_advance").val(data[0].advanceAmount);
+//       $("#edit_booking_no_of_guests").val(data[0].totalGuest);
+//       if (data[0].hallportion === "a") {
+//         $("#edit_book_b").prop("checked", false);
+//         $("#edit_book_a").prop("checked", true);
+//       } else {
+//         $("#edit_book_a").prop("checked", false);
+//         $("#edit_book_b").prop("checked", true);
+//       }
+//       if (data[0].eventShift === "morning") {
+//         $("#editevening").prop("checked", false);
+//         $("#editmorning").prop("checked", true);
+//       } else {
+//         $("#editmorning").prop("checked", false);
+//         $("#editevening").prop("checked", true);
+//       }
+//       editBalanceCal()
+//       $("#editBookingModal").modal("show");
+//       // console.log(data[0])
+//     })
+//     .catch((err) => {
+//       throw err;
+//     });
+// };
 
 const BookingEditSubmissionHandler = () => {
   let hallAorB = "";
@@ -1944,24 +1941,24 @@ const BookingEditSubmissionHandler = () => {
       throw err;
     });
 };
-const bookDeleteEvent = (delId) => {
-  let DelBookingObj = {
-    bokid: delId,
-  };
-  if (confirm("do you want to delete?")) {
-    fetch("http://localhost/API_Inquery/api-update-booking.php", {
-      method: "POST",
-      body: JSON.stringify(DelBookingObj),
-    })
-      .then((result) => {
-        result.json();
-      })
-      .catch((err) => {
-        throw err;
-      });
-    location.reload();
-  }
-};
+// const bookDeleteEvent = (delId) => {
+//   let DelBookingObj = {
+//     bokid: delId,
+//   };
+//   if (confirm("do you want to delete?")) {
+//     fetch("http://localhost/API_Inquery/api-update-booking.php", {
+//       method: "POST",
+//       body: JSON.stringify(DelBookingObj),
+//     })
+//       .then((result) => {
+//         result.json();
+//       })
+//       .catch((err) => {
+//         throw err;
+//       });
+//     location.reload();
+//   }
+// };
 
 window.onload = () => {
   var d = new Date();
@@ -2029,5 +2026,9 @@ function togglemonthsSidebar(){
 function showEventsBar(){
   $('#calendar').removeClass("event-hide")
 
+}
+
+const addTargetHandler =()=>{
+  
 }
 

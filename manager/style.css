@@ -19,6 +19,12 @@
 .booking_container {
   padding: 1.7rem;
 }
+.event-container{
+  border: 1px solid #54acb5;
+  box-shadow: 0 5px 20px -4px rgb(51 47 47 / 65%) !important;
+  transition: 0.4s all ease-in-out;
+}
+
 
 .event-container:hover{
   background-color: #393e4675;
@@ -126,6 +132,11 @@ th[colspan="6"] {
 
 }
 .event-container>.event-info>p{color: #fff !important;}
+.calendar-events .event-container>.event-info>p{color: black !important;}
+.event-container:hover .calendar-events .event-container>.event-info>p {
+  color: white !important;
+}
+.event-container:hover
 td.hijri_date {
   text-align: right;
   font-size: 14px;

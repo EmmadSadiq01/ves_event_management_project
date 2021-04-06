@@ -50,12 +50,13 @@
     <section class="calendar">
       <div class="my_row">
         <div class="calendar_section">
-          <div id="calendar" class="event-hide sidebar-hide"></div>
+          <div id="calendar" class="sidebar-hide"></div>
         </div>
         <div class="bookings_section">
           <div class="bookings">
             <div class="booking_container">
               <div class="booking_header">
+                <h3>Booking Info:</h3>
                 <p id="booking_event_date"></p>
               </div>
               <!-- <div class="booking-empty">
@@ -185,6 +186,17 @@
                 />
               </div>
               <div class="mb-3">
+                <label for="event_number_guest" class="form-label"
+                  >No. of Guest</label
+                >
+                <input
+                  type="number"
+                  name="number_guest"
+                  class="form-control"
+                  id="event_number_guest"
+                />
+              </div>
+              <div class="mb-3">
                 <small>Select Hall</small>
                 <label for="hall" class="form-label">A</label>
                 <input
@@ -202,7 +214,16 @@
                   id="hall"
                   class="form-label"
                 />
+                <label for="hall" class="form-label">Full</label>
+                <input
+                  type="radio"
+                  name="hall"
+                  value="b"
+                  id="hall"
+                  class="form-label"
+                />
               </div>
+
               <div class="mb-3">
                 <label for="event_name" class="form-label">Event Name</label>
                 <input
@@ -223,24 +244,8 @@
                   id="event_cost"
                 />
               </div>
-              <div class="mb-3">
-                <label for="event_number_guest" class="form-label"
-                  >No. of Guest</label
-                >
-                <input
-                  type="number"
-                  name="number_guest"
-                  class="form-control"
-                  id="event_number_guest"
-                />
-              </div>
 
-              <button
-                type="submit"
-                class="btn btn-primary"
-              >
-                Save
-              </button>
+              <button type="submit" class="btn btn-primary">Save</button>
 
               <!-- <button type="button" class="btn btn-primary">Booking</button> -->
             </div>
@@ -391,12 +396,7 @@
                   id="edit_event_number_guest"
                 />
               </div>
-              <button
-                type="submit"
-                class="btn btn-primary"
-              >
-                Update
-              </button>
+              <button type="submit" class="btn btn-primary">Update</button>
 
               <!-- <button type="button" class="btn btn-primary">Booking</button> -->
             </div>
@@ -563,7 +563,6 @@
                   class="form-control"
                   id="bookAmnt"
                   onchange="balanceCal(this.value)"
-
                 />
               </div>
               <div class="mb-3">
@@ -574,7 +573,6 @@
                   class="form-control"
                   id="booking_advance"
                   onchange="balanceCal(this.value)"
-
                 />
               </div>
               <div class="mb-3">
@@ -597,12 +595,7 @@
                   id="booking_no_of_guests"
                 />
               </div>
-              <button
-                type="submit"
-                class="btn btn-primary"                
-              >
-                Book
-              </button>
+              <button type="submit" class="btn btn-primary">Book</button>
             </div>
             <!-- <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -774,7 +767,6 @@
                   class="form-control"
                   id="editbookAmnt"
                   onchange="editBalanceCal()"
-
                 />
               </div>
               <div class="mb-3">
@@ -809,12 +801,7 @@
                   id="edit_booking_no_of_guests"
                 />
               </div>
-              <button
-                type="submit"
-                class="btn btn-primary"
-              >
-                Update
-              </button>
+              <button type="submit" class="btn btn-primary">Update</button>
             </div>
             <!-- <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -903,7 +890,7 @@
           //   }
           // ];
           $("#calendar").evoCalendar({
-            theme: 'Royal Navy',
+            theme: "Royal Navy",
             // settingName: settingValue
             calendarEvents: myEvents,
           });
