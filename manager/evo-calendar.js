@@ -399,8 +399,8 @@
           if (!_.options.calendarEvents[i].id) {
             console.log(
               '%c Event named: "' +
-                _.options.calendarEvents[i].name +
-                "\" doesn't have a unique ID ",
+              _.options.calendarEvents[i].name +
+              "\" doesn't have a unique ID ",
               "color:white;font-weight:bold;background-color:#e21d1d;"
             );
           }
@@ -430,10 +430,10 @@
             : this.year,
         date: _.formatDate(
           _.initials.dates[_.defaults.language].months[new Date().getMonth()] +
-            " " +
-            new Date().getDate() +
-            " " +
-            new Date().getFullYear(),
+          " " +
+          new Date().getDate() +
+          " " +
+          new Date().getFullYear(),
           _.options.format
         ),
       };
@@ -855,7 +855,7 @@
         markup +=
           '<li class="month" role="button" data-month-val="' +
           i +
-          '">' +
+          '" onclick="monthChange()">' +
           _.initials.dates[_.options.language].months[i] +
           "</li>";
       }
@@ -906,8 +906,8 @@
       if (_.options.sidebarToggler) {
         $(_.$elements.sidebarEl).append(
           '<span id="sidebarToggler" onclick="togglemonthsSidebar()" role="button" aria-pressed title="' +
-            _.initials.dates[_.options.language].closeSidebarText +
-            '"><button class="icon-button"><span class="bars"></span></button></span>'
+          _.initials.dates[_.options.language].closeSidebarText +
+          '"><button class="icon-button"><span class="bars"></span></button></span>'
         );
         if (!_.$elements.sidebarToggler)
           _.$elements.sidebarToggler = $(_.$elements.sidebarEl).find(
@@ -917,8 +917,8 @@
       if (_.options.eventListToggler) {
         $(_.$elements.calendarEl).append(
           '<span id="eventListToggler" onclick="toggleSideBar()" role="button" aria-pressed title="' +
-            _.initials.dates[_.options.language].closeEventListText +
-            '"><button class="icon-button"><span class="chevron-arrow-right"></span></button></span>'
+          _.initials.dates[_.options.language].closeEventListText +
+          '"><button class="icon-button"><span class="chevron-arrow-right"></span></button></span>'
         );
         if (!_.$elements.eventListToggler)
           _.$elements.eventListToggler = $(_.$elements.calendarEl).find(
@@ -1146,9 +1146,9 @@
             thisDay +
             '" id="' +
             thisDay +
-            '" onclick="hello(this.id)">' +
+            '" onclick="hello(this.id)"><div class="data_show"><span class="iconb" id="moonb' + thisDay + '"></span>' +
             day +
-            "</div>";
+            "</div><span class='moon_icon' id='moon" + thisDay + "'></span></div>";
 
           day++;
         } else {
@@ -1196,99 +1196,99 @@
 
   // v1.0.0 - Add event indicator/s (dots)
   EvoCalendar.prototype.addEventIndicator = function (event) {
-    var _ = this,
-      htmlToAppend,
-      thisDate;
-    var event_date = event.date;
-    var type = _.stringCheck(event.type);
+    //   var _ = this,
+    //     htmlToAppend,
+    //     thisDate;
+    //   var event_date = event.date;
+    //   var type = _.stringCheck(event.type);
 
-    if (event_date instanceof Array) {
-      if (event.everyYear) {
-        for (var x = 0; x < event_date.length; x++) {
-          event_date[x] = _.formatDate(
-            new Date(event_date[x]).setFullYear(_.$active.year),
-            _.options.format
-          );
-        }
-      }
-      var active_date = _.getBetweenDates(event_date);
+    //   if (event_date instanceof Array) {
+    //     if (event.everyYear) {
+    //       for (var x = 0; x < event_date.length; x++) {
+    //         event_date[x] = _.formatDate(
+    //           new Date(event_date[x]).setFullYear(_.$active.year),
+    //           _.options.format
+    //         );
+    //       }
+    //     }
+    //     var active_date = _.getBetweenDates(event_date);
 
-      for (var i = 0; i < active_date.length; i++) {
-        appendDot(active_date[i]);
-      }
-    } else {
-      if (event.everyYear) {
-        event_date = _.formatDate(
-          new Date(event_date).setFullYear(_.$active.year),
-          _.options.format
-        );
-      }
-      // console.log("type-bullet=>",$(".type-bullet").length)
-      appendDot(event_date);
-    }
+    //     for (var i = 0; i < active_date.length; i++) {
+    //       appendDot(active_date[i]);
+    //     }
+    //   } else {
+    //     if (event.everyYear) {
+    //       event_date = _.formatDate(
+    //         new Date(event_date).setFullYear(_.$active.year),
+    //         _.options.format
+    //       );
+    //     }
+    //     // console.log("type-bullet=>",$(".type-bullet").length)
+    //     appendDot(event_date);
+    //   }
 
-    function appendDot(date) {
-      thisDate = _.$elements.innerEl.find('[data-date-val="' + date + '"]');
+    //   function appendDot(date) {
+    //     thisDate = _.$elements.innerEl.find('[data-date-val="' + date + '"]');
 
-      if (thisDate.find("span.event-indicator").length === 0) {
-        thisDate.append('<span class="event-indicator"></span>');
-      }
+    //     if (thisDate.find("span.event-indicator").length === 0) {
+    //       thisDate.append('<span class="event-indicator"></span>');
+    //     }
 
-      if (
-        thisDate.find("span.event-indicator > .type-bullet > .type-" + type)
-          .length === 0
-      ) {
-        htmlToAppend = '<div class="type-bullet"><div ';
+    //     if (
+    //       thisDate.find("span.event-indicator > .type-bullet > .type-" + type)
+    //         .length === 0
+    //     ) {
+    //       htmlToAppend = '<div class="type-bullet"><div ';
 
-        htmlToAppend += 'class="type-' + event.type + '"';
-        if (event.color) {
-          htmlToAppend += 'style="background-color:' + event.color + '"';
-        }
-        htmlToAppend += "></div></div>";
-        thisDate.find(".event-indicator").append(htmlToAppend);
-      }
-    }
-  };
+    //       htmlToAppend += 'class="type-' + event.type + '"';
+    //       if (event.color) {
+    //         htmlToAppend += 'style="background-color:' + event.color + '"';
+    //       }
+    //       htmlToAppend += "></div></div>";
+    //       thisDate.find(".event-indicator").append(htmlToAppend);
+    //     }
+    //   }
+    // };
 
-  // v1.0.0 - Remove event indicator/s (dots)
-  EvoCalendar.prototype.removeEventIndicator = function (event) {
-    var _ = this;
-    var event_date = event.date;
-    var type = _.stringCheck(event.type);
+    // // v1.0.0 - Remove event indicator/s (dots)
+    // EvoCalendar.prototype.removeEventIndicator = function (event) {
+    //   var _ = this;
+    //   var event_date = event.date;
+    //   var type = _.stringCheck(event.type);
 
-    if (event_date instanceof Array) {
-      var active_date = _.getBetweenDates(event_date);
+    //   if (event_date instanceof Array) {
+    //     var active_date = _.getBetweenDates(event_date);
 
-      for (var i = 0; i < active_date.length; i++) {
-        removeDot(active_date[i]);
-      }
-    } else {
-      removeDot(event_date);
-    }
+    //     for (var i = 0; i < active_date.length; i++) {
+    //       removeDot(active_date[i]);
+    //     }
+    //   } else {
+    //     removeDot(event_date);
+    //   }
 
-    function removeDot(date) {
-      // Check if no '.event-indicator', 'cause nothing to remove
-      if (
-        _.$elements.innerEl.find(
-          '[data-date-val="' + date + '"] span.event-indicator'
-        ).length === 0
-      ) {
-        return;
-      }
+    //   function removeDot(date) {
+    //     // Check if no '.event-indicator', 'cause nothing to remove
+    //     if (
+    //       _.$elements.innerEl.find(
+    //         '[data-date-val="' + date + '"] span.event-indicator'
+    //       ).length === 0
+    //     ) {
+    //       return;
+    //     }
 
-      // // If has no type of event, then delete
-      if (!_.hasSameDayEventType(date, type)) {
-        _.$elements.innerEl
-          .find(
-            '[data-date-val="' +
-              date +
-              '"] span.event-indicator > .type-bullet > .type-' +
-              type
-          )
-          .parent()
-          .remove();
-      }
-    }
+    //     // // If has no type of event, then delete
+    //     if (!_.hasSameDayEventType(date, type)) {
+    //       _.$elements.innerEl
+    //         .find(
+    //           '[data-date-val="' +
+    //             date +
+    //             '"] span.event-indicator > .type-bullet > .type-' +
+    //             type
+    //         )
+    //         .parent()
+    //         .remove();
+    //     }
+    //   }
   };
 
   /****************
@@ -1643,7 +1643,7 @@ function hello(selectDate) {
   let dayName = weekday[a.getDay()];
   // $("#booking_event_date").html(selectDate);
   let url =
-    "http://api.aladhan.com/v1/gToH?date=" + date + "-" + month + "-" + year;
+    "https://api.aladhan.com/v1/gToH?date=" + date + "-" + month + "-" + year;
 
   fetch(url)
     .then((res) => res.json())
@@ -1976,7 +1976,6 @@ window.onload = () => {
     })
     .then((data) => {
       for (let i = 0; i < data.length; i++) {
-        // console.log(data[i].eventDate," ",data[i].hallportion)
         let split_date = data[i].eventDate;
         let mySplit = split_date.split("-");
         let year = mySplit[0];
@@ -1984,12 +1983,23 @@ window.onload = () => {
         let date = mySplit[2];
         let change_format = month + "-" + date + "-" + year;
         if (data[i].hallportion === "a") {
-          var moonIcon = "\f186"
-          $("#" + change_format).attr('data-content', moonIcon);
+          if (data[i].eventShift === "morning") {
+            $('#moon' + change_format).append('<i class="fas fa-sun"></i>')
+
+          } else if (data[i].eventShift === "evening") {
+
+            $('#moon' + change_format).append('<i class="fas fa-moon"></i>')
+          }
           $("#" + change_format).addClass("confirm-booking-a");
-          // console.log("added at",change_format)
         }
         if (data[i].hallportion === "b") {
+          if (data[i].eventShift === "morning") {
+            $('#moonb' + change_format).append('<i class="fas fa-sun"></i>')
+            console.log('#moonb' + change_format + "=>b is morning")
+          } else if (data[i].eventShift === "evening") {
+            console.log("b is evening")
+            $('#moonb' + change_format).append('<i class="fas fa-moon"></i>')
+          }
           $("#" + change_format).addClass("confirm-booking-b");
           // console.log("added at",change_format)
         }
@@ -2001,6 +2011,63 @@ window.onload = () => {
       throw err;
     });
 };
+
+const monthChange =()=>{
+  console.log("hello ")
+  var d = new Date();
+  var month = d.getMonth() + 1;
+  var day = d.getDate();
+  var output =
+    (month < 10 ? "0" : "") +
+    month +
+    "-" +
+    (day < 10 ? "0" : "") +
+    day +
+    "-" +
+    d.getFullYear();
+  // console.log(output);
+  hello(output);
+  fetch("http://localhost/mhs_api/ves_api/api-fetch-all-booking.php")
+    .then((result) => {
+      return result.json();
+    })
+    .then((data) => {
+      for (let i = 0; i < data.length; i++) {
+        let split_date = data[i].eventDate;
+        let mySplit = split_date.split("-");
+        let year = mySplit[0];
+        let month = mySplit[1];
+        let date = mySplit[2];
+        let change_format = month + "-" + date + "-" + year;
+        if (data[i].hallportion === "a") {
+          if (data[i].eventShift === "morning") {
+            $('#moon' + change_format).append('<i class="fas fa-sun"></i>')
+
+          } else if (data[i].eventShift === "evening") {
+
+            $('#moon' + change_format).append('<i class="fas fa-moon"></i>')
+          }
+          $("#" + change_format).addClass("confirm-booking-a");
+        }
+        if (data[i].hallportion === "b") {
+          if (data[i].eventShift === "morning") {
+            $('#moonb' + change_format).append('<i class="fas fa-sun"></i>')
+            console.log('#moonb' + change_format + "=>b is morning")
+          } else if (data[i].eventShift === "evening") {
+            console.log("b is evening")
+            $('#moonb' + change_format).append('<i class="fas fa-moon"></i>')
+          }
+          $("#" + change_format).addClass("confirm-booking-b");
+          // console.log("added at",change_format)
+        }
+        // console.log(change_format)
+      }
+      // console.log(data)
+    })
+    .catch((err) => {
+      throw err;
+    });
+}
 
 const balanceCal = () => {
   let bookingAmnt = $("#bookAmnt").val();

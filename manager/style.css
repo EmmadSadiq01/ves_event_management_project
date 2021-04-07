@@ -83,7 +83,7 @@ tr.calendar-body .calendar-day .day i {
 /* } */
 
 .confirm-booking-a::before {
-    content: attr(data-content);
+    content: "A";
     font-size: 10px;
     text-align: right;
     position: absolute;
@@ -91,7 +91,7 @@ tr.calendar-body .calendar-day .day i {
     top: 0px;
     left: 0px;
     width: 100%;
-    background-image: linear-gradient(-44deg, #32c2e0 50%, transparent 50% 100%);
+    background-image: linear-gradient(-44deg, #b9b0b0cf 50%, transparent 50% 100%);
     height: 100%;
     /* padding-top: 23px; */
     color: white;
@@ -106,6 +106,25 @@ tr.calendar-body .calendar-day .day{
   border-radius: 0px !important;
   font-weight: bolder;
   border: 1px solid black !important;
+}
+.fa-sun{
+  color: #ffff6c !important;
+}
+tr.calendar-body .calendar-day .day .moon_icon {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+tr.calendar-body .calendar-day .day .iconb {
+  position: absolute;
+  top: -10%;
+  left: 10px;
+}
+tr.calendar-body .calendar-day .day i {
+  padding: 3px;
+  color: white;
+  margin: 1px;
+  font-size: 8px;
 }
 tr.calendar-body .calendar-day .day:hover{
   background-color: transparent;
@@ -122,7 +141,7 @@ tr.calendar-body .calendar-day .day:hover{
   width: 100%;
   background-image: linear-gradient(
 136deg
-, #7d9abf 50%, transparent 50% 100%);
+, #95999e 50%, transparent 50% 100%);
   height: 100%;
   color: white;
   padding-top: 5px;
@@ -146,10 +165,11 @@ th[colspan="6"] {
 .event-container:hover .calendar-events .event-container>.event-info>p {
   color: white !important;
 }
-.event-container:hover
+/* .event-container:hover */
 td.hijri_date {
   text-align: right;
   font-size: 14px;
+  width: 15%;
 }
 
 .booking_header p {

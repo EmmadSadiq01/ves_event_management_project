@@ -399,8 +399,8 @@
           if (!_.options.calendarEvents[i].id) {
             console.log(
               '%c Event named: "' +
-                _.options.calendarEvents[i].name +
-                "\" doesn't have a unique ID ",
+              _.options.calendarEvents[i].name +
+              "\" doesn't have a unique ID ",
               "color:white;font-weight:bold;background-color:#e21d1d;"
             );
           }
@@ -430,10 +430,10 @@
             : this.year,
         date: _.formatDate(
           _.initials.dates[_.defaults.language].months[new Date().getMonth()] +
-            " " +
-            new Date().getDate() +
-            " " +
-            new Date().getFullYear(),
+          " " +
+          new Date().getDate() +
+          " " +
+          new Date().getFullYear(),
           _.options.format
         ),
       };
@@ -906,8 +906,8 @@
       if (_.options.sidebarToggler) {
         $(_.$elements.sidebarEl).append(
           '<span id="sidebarToggler" onclick="togglemonthsSidebar()" role="button" aria-pressed title="' +
-            _.initials.dates[_.options.language].closeSidebarText +
-            '"><button class="icon-button"><span class="bars"></span></button></span>'
+          _.initials.dates[_.options.language].closeSidebarText +
+          '"><button class="icon-button"><span class="bars"></span></button></span>'
         );
         if (!_.$elements.sidebarToggler)
           _.$elements.sidebarToggler = $(_.$elements.sidebarEl).find(
@@ -917,8 +917,8 @@
       if (_.options.eventListToggler) {
         $(_.$elements.calendarEl).append(
           '<span id="eventListToggler" onclick="toggleSideBar()" role="button" aria-pressed title="' +
-            _.initials.dates[_.options.language].closeEventListText +
-            '"><button class="icon-button"><span class="chevron-arrow-right"></span></button></span>'
+          _.initials.dates[_.options.language].closeEventListText +
+          '"><button class="icon-button"><span class="chevron-arrow-right"></span></button></span>'
         );
         if (!_.$elements.eventListToggler)
           _.$elements.eventListToggler = $(_.$elements.calendarEl).find(
@@ -1281,9 +1281,9 @@
         _.$elements.innerEl
           .find(
             '[data-date-val="' +
-              date +
-              '"] span.event-indicator > .type-bullet > .type-' +
-              type
+            date +
+            '"] span.event-indicator > .type-bullet > .type-' +
+            type
           )
           .parent()
           .remove();
@@ -1305,7 +1305,7 @@
     for (var i = 0; i < _.options.calendarEvents.length; i++) {
       _.addEventIndicator(_.options.calendarEvents[i]);
       // console.log(_.options.calendarEvents[i].date)
-      
+
     }
   };
 
@@ -1978,32 +1978,32 @@ window.onload = () => {
   console.log(output);
   hello(output);
   fetch("http://localhost/mhs_api/ves_api/api-fetch-all-booking.php")
-      .then((result) => {
-        return result.json();
-      }).then((data)=>{
-        for(let i=0;i<data.length;i++){
-          // console.log(data[i].eventDate," ",data[i].hallportion)
-          let split_date = data[i].eventDate
-          let mySplit = split_date.split("-")
-          let year = mySplit[0]
-          let month = mySplit[1]
-          let date = mySplit[2]
-          let change_format = month+"-"+date+"-"+year;
-          if(data[i].hallportion==='a'){
-            $("#"+change_format).addClass("confirm-booking-a")
-            // console.log("added at",change_format)
-          }
-          if(data[i].hallportion==='b'){
-            $("#"+change_format).addClass("confirm-booking-b")
-            // console.log("added at",change_format)
-          }
-          // console.log(change_format)
+    .then((result) => {
+      return result.json();
+    }).then((data) => {
+      for (let i = 0; i < data.length; i++) {
+        // console.log(data[i].eventDate," ",data[i].hallportion)
+        let split_date = data[i].eventDate
+        let mySplit = split_date.split("-")
+        let year = mySplit[0]
+        let month = mySplit[1]
+        let date = mySplit[2]
+        let change_format = month + "-" + date + "-" + year;
+        if (data[i].hallportion === 'a') {
+          $("#" + change_format).addClass("confirm-booking-a")
+          // console.log("added at",change_format)
         }
-        // console.log(data)
-      })
-      .catch((err) => {
-        throw err;
-      });
+        if (data[i].hallportion === 'b') {
+          $("#" + change_format).addClass("confirm-booking-b")
+          // console.log("added at",change_format)
+        }
+        // console.log(change_format)
+      }
+      // console.log(data)
+    })
+    .catch((err) => {
+      throw err;
+    });
 
 };
 
@@ -2019,14 +2019,14 @@ const editBalanceCal = () => {
 };
 
 // document.getElementById("booking_event_date").on("click", toggleSideBar);
-function toggleSideBar(){
+function toggleSideBar() {
   $('#calendar').addClass("sidebar-hide")
 }
-function togglemonthsSidebar(){
+function togglemonthsSidebar() {
   $('#calendar').addClass("event-hide")
 }
 
-function showEventsBar(){
+function showEventsBar() {
   $('#calendar').removeClass("event-hide")
 
 }
