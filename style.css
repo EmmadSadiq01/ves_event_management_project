@@ -21,7 +21,8 @@
 }
 
 .event-container:hover{
-  background-color: #393e4675;
+  background-color: #699696;
+  box-shadow: -1px 1px 20px -4px black;
 }
 
 ::-webkit-scrollbar {
@@ -152,3 +153,7 @@ td.hijri_date {
   text-decoration: underline;
 }
 
+
+.event-container{
+  background-color: #699696;
+}

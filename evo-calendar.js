@@ -1740,7 +1740,7 @@ const showBookings = (selectDate) => {
         }
       } else {
         html += "<div class='booking-empty'>";
-        html += "<p>No event for today.. so take a rest! :)</p>";
+        html += "<p>No Booking for today.. so take a rest! :)</p>";
         html += "</div>";
         $("#booking_view").html(html);
       }

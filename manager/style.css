@@ -1,8 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
 
+
+
 * {
   font-family: "Roboto", sans-serif !important;
   /* overflow-x: hidden; */
+}
+.fas {
+  font-family: 'Font Awesome 5 Free' !important;
+}
+
+tr.calendar-body .calendar-day .day i {
+  font-size: 0.6rem;
 }
 /* section.calendar {
   overflow-x: hidden;
@@ -74,7 +83,7 @@
 /* } */
 
 .confirm-booking-a::before {
-    content: "A";
+    content: attr(data-content);
     font-size: 10px;
     text-align: right;
     position: absolute;
@@ -90,6 +99,7 @@
     align-items: center;
     justify-content: center;
     padding-left: 25px;
+    font-family: 'Font Awesome 5 Free';
 }
 
 tr.calendar-body .calendar-day .day{

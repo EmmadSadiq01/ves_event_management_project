@@ -32,18 +32,7 @@
       integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
       crossorigin="anonymous"
     />
-    <link
-      rel="stylesheet"
-      href="https://pro.fontawesome.com/releases/v5.10.0/css/duotone.css"
-      integrity="sha384-R3QzTxyukP03CMqKFe0ssp5wUvBPEyy9ZspCB+Y01fEjhMwcXixTyeot+S40+AjZ"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://pro.fontawesome.com/releases/v5.10.0/css/fontawesome.css"
-      integrity="sha384-eHoocPgXsiuZh+Yy6+7DsKAerLXyJmu2Hadh4QYyt+8v86geixVYwFqUvMU8X90l"
-      crossorigin="anonymous"
-    />
+    <link href="../fontawesome/fontawesome-free-5.15.3-web/css/all.css" rel="stylesheet"> 
   </head>
 
   <body>
@@ -104,41 +93,324 @@
       </div>
     </section>
 
+    <!-- add target Modal -->
+    <div
+      class="modal fade"
+      id="addTargetModal"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="addTarget"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Add Target</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <form>
+            <div class="modal-body">
+              <div class="input-group mb-3">
+                <span class="input-group-text">Today Date</span>
+                <input type="date" id="todayDate" class="form-control" />
+                <input type="hidden" id="hallId" class="form-control"value="1" />
+                <input type="hidden" id="ownerid" class="form-control" value = "2"/>
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text">Target Date</span>
+                <input type="date" id="targetDate" class="form-control" />
+              </div>
+              
+              <div class="mb-3">
+                <span class="mr-5 ">Select Shift: </span>
+                <label for="morning" class="form-label">Morning</label>
+                <input
+                  type="radio"
+                  name="targetShift"
+                  value="morning"
+                  id="morning"
+                  class="form-label"
+                />
+                <label for="evening" class="form-label">Evening</label>
+                <input
+                  type="radio"
+                  name="targetShift"
+                  value="evening"
+                  id="evening"
+                  class="form-label"
+                />
+              </div>
+              <div class="mb-3">
+                <span class="mr-5 ">Select Hall: </span>
+                <label for="morning" class="form-label">Hall A</label>
+                <input
+                  type="radio"
+                  name="targetHall"
+                  value="a"
+                  id="targetHall_a"
+                  class="form-label"
+                />
+                <label for="evening" class="form-label">Hall B</label>
+                <input
+                  type="radio"
+                  name="targetHall"
+                  value="b"
+                  id="targetHall_b"
+                  class="form-label"
 
-<!-- Modal -->
-<div class="modal fade" id="addTargetModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addTarget" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Add Target</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form>
-      <div class="modal-body">
+                />
+              </div>
 
-        <div class="input-group   mb-3">
-          <span class="input-group-text">Today Date</span>
-          <input type="date" id="todayDate" class="form-control">
-          <input type="hidden" id="hallId" class="form-control">
-          <input type="hidden" id="ownerid" class="form-control">
-        </div>
-        <div class="input-group mb-3">
-          <span class="input-group-text">Target Date</span>
-          <input type="date" id="targetDate" class="form-control">
-        </div>
-        <div class="input-group  mb-3">
-          <span class="input-group-text">Target Price</span>
-          <input type="number" id="targetPrice" class="form-control">
+              <div class="input-group mb-3">
+                <span class="input-group-text">Target Price</span>
+                <input type="number" id="targetPrice" class="form-control" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-primary"
+                onclick="addTargetHandler()"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="addTargetHandler()">Submit</button>
-      </div>
-    </form>
     </div>
-  </div>
-</div>
+    <!-- view bo0king modal  -->
+    <div
+    class="modal fade"
+    id="editBookingModal"
+    tabindex="-1"
+    aria-labelledby="editBookingModal"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Booking</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <form onsubmit="BookingEditSubmissionHandler()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col">
+                <input type="hidden" id="edit_booking_id" />
+                <small>Booking Date</small>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="booking_edit_date"
+                  disabled
+                />
+              </div>
+              <div class="col">
+                <small>Program Date</small>
+                <input
+                  type="date"
+                  id="booking_edit_program_date"
+                  class="form-control"
+                  disabled
+                />
+              </div>
+              <div class="col">
+                <small>Day</small>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="booking_edit_program_day"
+                  disabled
+                />
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="editbookIslDate" class="form-label"
+                >Islamic Date</label
+              >
+              <input
+                type="text"
+                name="bookIslDate"
+                class="form-control"
+                id="editbookIslDate"
+                disabled
+              />
+            </div>
+            <div class="mb-3">
+              <small>Shift</small>
+              <input
+                type="radio"
+                name="editshift"
+                value="morning"
+                id="editmorning"
+                class="form-label"
+                disabled
+              />
+              <label for="morning" class="form-label">Morning</label>
+              <input
+                type="radio"
+                name="editshift"
+                value="evening"
+                id="editevening"
+                class="form-label"
+                disabled
+              />
+              <label for="evening" class="form-label">Evening</label>
+            </div>
+            <div class="mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input
+                type="text"
+                name="name"
+                class="form-control"
+                id="edit_booking_party_name"
+                disabled
+              />
+            </div>
+            <div class="mb-3">
+              <label for="address" class="form-label">Address</label>
+              <textarea
+                type="number"
+                name="address"
+                class="form-control"
+                id="edit_booking_address"
+                cols="30"
+                rows="1"
+                disabled
+              ></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="cell_no" class="form-label">Cell No</label>
+              <input
+                type="text"
+                name="booking_cell_no"
+                class="form-control"
+                id="edit_booking_cell_no"
+                disabled
+              />
+            </div>
+            <div class="mb-3">
+              <label for="bookingcnic" class="form-label">CNIC</label>
+              <input
+                type="text"
+                name="bookingcnic"
+                class="form-control"
+                id="editbookingcnic"
+                disabled
+              />
+            </div>
+            <div class="mb-3">
+              <label for="bookingEmail" class="form-label">Email</label>
+              <input
+                type="email"
+                name="bookingEmail"
+                class="form-control"
+                id="editbookingEmail"
+                disabled
+              />
+            </div>
+            <div class="mb-3">
+              <label for="event_name" class="form-label">Event Name</label>
+              <input
+                type="text"
+                name="booking_event_name"
+                class="form-control"
+                id="edit_booking_event_name"
+                disabled
+              />
+            </div>
+            <div class="mb-3">
+              <small>Select Hall</small>
+              <input
+                type="radio"
+                name="edit_book_hall"
+                value="a"
+                id="edit_book_a"
+                class="form-label"
+                disabled
+              />
+              <label for="book_hall" class="form-label">A</label>
+              <input
+                type="radio"
+                name="edit_book_hall"
+                value="b"
+                id="edit_book_b"
+                class="form-label"
+                disabled
+              />
+              <label for="book_hall" class="form-label">B</label>
+            </div>
 
+            <div class="mb-3">
+              <label for="bookAmnt" class="form-label">Book Amount</label>
+              <input
+                type="number"
+                name="editbookAmnt"
+                class="form-control"
+                id="editbookAmnt"
+                onchange="editBalanceCal()"
+                disabled
+              />
+            </div>
+            <div class="mb-3">
+              <label for="advance" class="form-label">Advance</label>
+              <input
+                type="number"
+                name="editbooking_advance"
+                class="form-control"
+                id="edit_booking_advance"
+                onchange="editBalanceCal()"
+                disabled
+              />
+            </div>
+            <div class="mb-3">
+              <label for="edit_booking_balance" class="form-label"
+                >Balance</label
+              >
+              <input
+                type="number"
+                name="edit_booking_balance"
+                class="form-control"
+                id="edit_booking_balance"
+                disabled
+              />
+            </div>
+            <div class="mb-3">
+              <label for="edit_booking_no_of_guests" class="form-label"
+                >No. of Guest</label
+              >
+              <input
+                type="number"
+                name="edit_booking_no_of_guests"
+                class="form-control"
+                id="edit_booking_no_of_guests"
+                disabled
+              />
+            </div>
+            <!-- <button type="submit" class="btn btn-primary">Update</button> -->
+          </div>
+          <!-- <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="Submit" class="btn btn-primary">Save changes</button>
+    </div> -->
+        </form>
+      </div>
+    </div>
+    </div>
+
+    <!-- view Inquiry Modal -->
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
     <script
@@ -264,7 +536,6 @@
       // });
       // console.log(myEvents);
       // console.log("format date =>", after_split);
-
     </script>
   </body>
 </html>

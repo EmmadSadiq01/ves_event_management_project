@@ -1027,14 +1027,14 @@
     markup += "</p>";
     if (event_data.description)
       markup += '<p class="event-desc">' + event_data.description + "</p>";
-    // markup +=
-    //   ' <button type="button" class="btn btn-success" id="' +
-    //   event_data.id +
-    //   '" onclick="editInquiryEvent(this.id)">Edit</button>';
-    // markup +=
-    //   ' <button type="button" class="btn btn-warning" id="' +
-    //   event_data.id +
-    //   '" onclick="deleteInquiryEvent(this.id)">Delete</button></div>';
+    markup +=
+      ' <button type="button" class="btn btn-success" id="' +
+      event_data.id +
+      '" onclick="editInquiryEvent(this.id)">Edit</button>';
+    markup +=
+      ' <button type="button" class="btn btn-warning" id="' +
+      event_data.id +
+      '" onclick="deleteInquiryEvent(this.id)">Delete</button></div>';
     markup += "</div>";
     eventListEl.append(markup);
 
@@ -1305,7 +1305,6 @@
     for (var i = 0; i < _.options.calendarEvents.length; i++) {
       _.addEventIndicator(_.options.calendarEvents[i]);
       // console.log(_.options.calendarEvents[i].date)
-      
     }
   };
 
@@ -1638,6 +1637,8 @@ function hello(selectDate) {
     "Saturday",
   ];
   dayDate = month + "-" + date + "-" + year;
+  console.log(dayDate);
+  $("#targetDate").val(year + "-" + month + "-" + date);
   let a = new Date(dayDate);
   let dayName = weekday[a.getDay()];
   // $("#booking_event_date").html(selectDate);
@@ -1669,8 +1670,7 @@ function hello(selectDate) {
     });
 
   showBookings(selectDate);
-  showEventsBar()
-
+  showEventsBar();
 }
 
 const showBookings = (selectDate) => {
@@ -1727,20 +1727,17 @@ const showBookings = (selectDate) => {
             " <br />Conact:" +
             personContact +
             "</p>";
-          // html +=
-          //   "<button type='button' class='btn btn-success ' style='margin-right:10px' id='" +
-          //   booking_id +
-          //   "' onclick='bookEditEvent(this.id)'>Edit </button>";
+          html +=
+            "<button type='button' class='btn btn-success ' style='margin-right:10px' id='" +
+            booking_id +
+            "' onclick='bookEditEvent(this.id)'>View</button>";
 
-          // html +=
-          //   "<button type='button' class='btn btn-warning' id='" +
-          //   booking_id +
-          //   "' onclick='bookDeleteEvent(this.id)'>Delete </button> </div></div>";
+          html += " </div></div>";
           $("#booking_view").html(html);
         }
       } else {
         html += "<div class='booking-empty'>";
-        html += "<p>No event for today.. so take a rest! :)</p>";
+        html += "<p>No Booking for today.. so take a rest! :)</p>";
         html += "</div>";
         $("#booking_view").html(html);
       }
@@ -1810,137 +1807,136 @@ const showBookings = (selectDate) => {
 //       throw err;
 //     });
 // };
-// ===========================set todat date 
-  var d = new Date();
-  var month = d.getMonth() + 1;
-  var day = d.getDate();
-  var output =
-    d.getFullYear() +
-    "-" +
-    (month < 10 ? "0" : "") +
-    month +
-    "-" +
-    (day < 10 ? "0" : "") +
-    day;
-  $("#todayDate").val(output);
 
-  // console.log("2021-03-31", output);
+// ===========================set todat date
+var d = new Date();
+var month = d.getMonth() + 1;
+var day = d.getDate();
+var output =
+  d.getFullYear() +
+  "-" +
+  (month < 10 ? "0" : "") +
+  month +
+  "-" +
+  (day < 10 ? "0" : "") +
+  day;
+$("#todayDate").val(output);
 
-// const bookEditEvent = (editId) => {
-//   console.log(editId);
-//   let editBookingIdObj = {
-//     bookId: editId,
-//   };
-//   $("#edit_id").val(editBookingIdObj);
-//   fetch("http://localhost/API_Inquery/api-fetchId-booking.php", {
-//     method: "POST",
-//     body: JSON.stringify(editBookingIdObj),
-//   })
-//     .then((result) => {
-//       return result.json();
-//       // console.log(editData);
-//     })
-//     .then((data) => {
-//       $("#edit_booking_id").val(data[0].booking_id);
-//       $("#booking_edit_date").val(data[0].bookingDate);
-//       $("#booking_edit_program_date").val(data[0].eventDate);
-//       $("#booking_edit_program_day").val(data[0].eventDay);
-//       $("#editbookIslDate").val(data[0].hijriDate);
-//       $("#edit_booking_party_name").val(data[0].personName);
-//       $("#edit_booking_address").val(data[0].personAddress);
-//       $("#edit_booking_cell_no").val(data[0].personContact);
-//       $("#editbookingcnic").val(data[0].personCinc);
-//       $("#editbookingEmail").val(data[0].personEmail);
-//       $("#edit_booking_event_name").val(data[0].eventName);
-//       $("#editbookAmnt").val(data[0].bookingAmount);
-//       $("#edit_booking_advance").val(data[0].advanceAmount);
-//       $("#edit_booking_no_of_guests").val(data[0].totalGuest);
-//       if (data[0].hallportion === "a") {
-//         $("#edit_book_b").prop("checked", false);
-//         $("#edit_book_a").prop("checked", true);
-//       } else {
-//         $("#edit_book_a").prop("checked", false);
-//         $("#edit_book_b").prop("checked", true);
-//       }
-//       if (data[0].eventShift === "morning") {
-//         $("#editevening").prop("checked", false);
-//         $("#editmorning").prop("checked", true);
-//       } else {
-//         $("#editmorning").prop("checked", false);
-//         $("#editevening").prop("checked", true);
-//       }
-//       editBalanceCal()
-//       $("#editBookingModal").modal("show");
-//       // console.log(data[0])
-//     })
-//     .catch((err) => {
-//       throw err;
-//     });
-// };
-
-const BookingEditSubmissionHandler = () => {
-  let hallAorB = "";
-  let EvenOrMorn = "";
-  let booking_current_date = $("#booking_edit_date").val();
-  let date = $("#booking_edit_program_date").val();
-  let islDate = $("#editbookIslDate").val();
-  let editPartyName = $("#edit_booking_party_name").val();
-  let event_name = $("#edit_booking_event_name").val();
-  let editAddress = $("#edit_booking_address").val();
-  let editCnic = $("#editbookingcnic").val();
-  let editemail = $("#editbookingEmail").val();
-  let editbookAmnt = $("#editbookAmnt").val();
-  let editAdvance = $("#edit_booking_advance").val();
-  let no_of_guests = $("#edit_booking_no_of_guests").val();
-  let contact = $("#edit_booking_cell_no").val();
-  let edit_book_id = $("#edit_booking_id").val();
-  let hall_shift = document.getElementsByName("editshift");
-  let edit_book_hall = document.getElementsByName("edit_book_hall");
-  for (i = 0; i < edit_book_hall.length; i++) {
-    if (edit_book_hall[i].checked) {
-      hallAorB = edit_book_hall[i].value;
-      console.log(edit_book_hall[i].value);
-    }
-  }
-  console.log("hall Shift=>", hall_shift[0]);
-  for (i = 0; i < hall_shift.length; i++) {
-    if (hall_shift[i].checked) {
-      EvenOrMorn = hall_shift[i].value;
-      console.log("shift=>", hall_shift[i].value);
-    }
-  }
-  // console.log(hallAorB)
-  // console.log(EvenOrMorn)
-  let editbookingObj = {
-    bokid: edit_book_id,
-    bokdate: booking_current_date,
-    beventdate: date,
-    bhijtidate: islDate,
-    bpname: editPartyName,
-    bpaddress: editAddress,
-    bpcontact: contact,
-    bpcnic: editCnic,
-    bpemail: editemail,
-    beventshift: EvenOrMorn,
-    bportion: hallAorB,
-    bamount: editbookAmnt,
-    badvance: editAdvance,
-    beventname: event_name,
-    bguest: no_of_guests,
+const bookEditEvent = (editId) => {
+  console.log(editId);
+  let editBookingIdObj = {
+    bookId: editId,
   };
-  console.log(editbookingObj);
-  fetch("http://localhost/API_Inquery/api-update-booking.php", {
+  $("#edit_id").val(editBookingIdObj);
+  fetch("http://localhost/API_Inquery/api-fetchId-booking.php", {
     method: "POST",
-    body: JSON.stringify(editbookingObj),
+    body: JSON.stringify(editBookingIdObj),
   })
     .then((result) => {
-      result.json();
+      return result.json();
+      // console.log(editData);
     })
-    .then(() => console.log("sent successfull"))
+    .then((data) => {
+      $("#edit_booking_id").val(data[0].booking_id);
+      $("#booking_edit_date").val(data[0].bookingDate);
+      $("#booking_edit_program_date").val(data[0].eventDate);
+      $("#booking_edit_program_day").val(data[0].eventDay);
+      $("#editbookIslDate").val(data[0].hijriDate);
+      $("#edit_booking_party_name").val(data[0].personName);
+      $("#edit_booking_address").val(data[0].personAddress);
+      $("#edit_booking_cell_no").val(data[0].personContact);
+      $("#editbookingcnic").val(data[0].personCinc);
+      $("#editbookingEmail").val(data[0].personEmail);
+      $("#edit_booking_event_name").val(data[0].eventName);
+      $("#editbookAmnt").val(data[0].bookingAmount);
+      $("#edit_booking_advance").val(data[0].advanceAmount);
+      $("#edit_booking_no_of_guests").val(data[0].totalGuest);
+      if (data[0].hallportion === "a") {
+        $("#edit_book_b").prop("checked", false);
+        $("#edit_book_a").prop("checked", true);
+      } else {
+        $("#edit_book_a").prop("checked", false);
+        $("#edit_book_b").prop("checked", true);
+      }
+      if (data[0].eventShift === "morning") {
+        $("#editevening").prop("checked", false);
+        $("#editmorning").prop("checked", true);
+      } else {
+        $("#editmorning").prop("checked", false);
+        $("#editevening").prop("checked", true);
+      }
+      editBalanceCal();
+      $("#editBookingModal").modal("show");
+      // console.log(data[0])
+    })
     .catch((err) => {
       throw err;
     });
 };
+
+// const BookingEditSubmissionHandler = () => {
+//   let hallAorB = "";
+//   let EvenOrMorn = "";
+//   let booking_current_date = $("#booking_edit_date").val();
+//   let date = $("#booking_edit_program_date").val();
+//   let islDate = $("#editbookIslDate").val();
+//   let editPartyName = $("#edit_booking_party_name").val();
+//   let event_name = $("#edit_booking_event_name").val();
+//   let editAddress = $("#edit_booking_address").val();
+//   let editCnic = $("#editbookingcnic").val();
+//   let editemail = $("#editbookingEmail").val();
+//   let editbookAmnt = $("#editbookAmnt").val();
+//   let editAdvance = $("#edit_booking_advance").val();
+//   let no_of_guests = $("#edit_booking_no_of_guests").val();
+//   let contact = $("#edit_booking_cell_no").val();
+//   let edit_book_id = $("#edit_booking_id").val();
+//   let hall_shift = document.getElementsByName("editshift");
+//   let edit_book_hall = document.getElementsByName("edit_book_hall");
+//   for (i = 0; i < edit_book_hall.length; i++) {
+//     if (edit_book_hall[i].checked) {
+//       hallAorB = edit_book_hall[i].value;
+//       console.log(edit_book_hall[i].value);
+//     }
+//   }
+//   console.log("hall Shift=>", hall_shift[0]);
+//   for (i = 0; i < hall_shift.length; i++) {
+//     if (hall_shift[i].checked) {
+//       EvenOrMorn = hall_shift[i].value;
+//       console.log("shift=>", hall_shift[i].value);
+//     }
+//   }
+//   // console.log(hallAorB)
+//   // console.log(EvenOrMorn)
+//   let editbookingObj = {
+//     bokid: edit_book_id,
+//     bokdate: booking_current_date,
+//     beventdate: date,
+//     bhijtidate: islDate,
+//     bpname: editPartyName,
+//     bpaddress: editAddress,
+//     bpcontact: contact,
+//     bpcnic: editCnic,
+//     bpemail: editemail,
+//     beventshift: EvenOrMorn,
+//     bportion: hallAorB,
+//     bamount: editbookAmnt,
+//     badvance: editAdvance,
+//     beventname: event_name,
+//     bguest: no_of_guests,
+//   };
+//   console.log(editbookingObj);
+//   fetch("http://localhost/API_Inquery/api-update-booking.php", {
+//     method: "POST",
+//     body: JSON.stringify(editbookingObj),
+//   })
+//     .then((result) => {
+//       result.json();
+//     })
+//     .then(() => console.log("sent successfull"))
+//     .catch((err) => {
+//       throw err;
+//     });
+// };
 // const bookDeleteEvent = (delId) => {
 //   let DelBookingObj = {
 //     bokid: delId,
@@ -1972,36 +1968,38 @@ window.onload = () => {
     day +
     "-" +
     d.getFullYear();
-  console.log(output);
+  // console.log(output);
   hello(output);
   fetch("http://localhost/API_Inquery/api-fetch-all-booking.php")
-      .then((result) => {
-        return result.json();
-      }).then((data)=>{
-        for(let i=0;i<data.length;i++){
-          // console.log(data[i].eventDate," ",data[i].hallportion)
-          let split_date = data[i].eventDate
-          let mySplit = split_date.split("-")
-          let year = mySplit[0]
-          let month = mySplit[1]
-          let date = mySplit[2]
-          let change_format = month+"-"+date+"-"+year;
-          if(data[i].hallportion==='a'){
-            $("#"+change_format).addClass("confirm-booking-a")
-            // console.log("added at",change_format)
-          }
-          if(data[i].hallportion==='b'){
-            $("#"+change_format).addClass("confirm-booking-b")
-            // console.log("added at",change_format)
-          }
-          // console.log(change_format)
+    .then((result) => {
+      return result.json();
+    })
+    .then((data) => {
+      for (let i = 0; i < data.length; i++) {
+        // console.log(data[i].eventDate," ",data[i].hallportion)
+        let split_date = data[i].eventDate;
+        let mySplit = split_date.split("-");
+        let year = mySplit[0];
+        let month = mySplit[1];
+        let date = mySplit[2];
+        let change_format = month + "-" + date + "-" + year;
+        if (data[i].hallportion === "a") {
+          var moonIcon = "\f186"
+          $("#" + change_format).attr('data-content', moonIcon);
+          $("#" + change_format).addClass("confirm-booking-a");
+          // console.log("added at",change_format)
         }
-        // console.log(data)
-      })
-      .catch((err) => {
-        throw err;
-      });
-
+        if (data[i].hallportion === "b") {
+          $("#" + change_format).addClass("confirm-booking-b");
+          // console.log("added at",change_format)
+        }
+        // console.log(change_format)
+      }
+      // console.log(data)
+    })
+    .catch((err) => {
+      throw err;
+    });
 };
 
 const balanceCal = () => {
@@ -2016,19 +2014,57 @@ const editBalanceCal = () => {
 };
 
 // document.getElementById("booking_event_date").on("click", toggleSideBar);
-function toggleSideBar(){
-  $('#calendar').addClass("sidebar-hide")
+function toggleSideBar() {
+  $("#calendar").addClass("sidebar-hide");
 }
-function togglemonthsSidebar(){
-  $('#calendar').addClass("event-hide")
-}
-
-function showEventsBar(){
-  $('#calendar').removeClass("event-hide")
-
+function togglemonthsSidebar() {
+  $("#calendar").addClass("event-hide");
 }
 
-const addTargetHandler =()=>{
-  
+function showEventsBar() {
+  $("#calendar").removeClass("event-hide");
 }
 
+const addTargetHandler = () => {
+  let selectedShift = "";
+  let selectedHall = "";
+  let targetDate = $("#targetDate").val();
+  let targetPrice = $("#targetPrice").val();
+  let ownerid = $("#ownerid").val();
+  let hallId = $("#hallId").val();
+  let targetShift = document.getElementsByName("targetShift");
+  let targetHall = document.getElementsByName("targetHall");
+  for (i = 0; i < targetShift.length; i++) {
+    if (targetShift[i].checked) {
+      selectedShift = targetShift[i].value;
+    }
+  }
+  for (i = 0; i < targetHall.length; i++) {
+    if (targetHall[i].checked) {
+      selectedHall = targetHall[i].value;
+    }
+  }
+
+  // console.log(selectedHall);
+  // console.log(selectedShift);
+
+  let PushTargetData = {
+    targetPrice: targetDate,
+    targetDate: targetPrice,
+    ownerId: ownerid,
+    hallCode: hallId,
+    targetHall: selectedHall,
+    targetshift: selectedShift,
+  };
+
+  fetch("http://localhost/API_Inquery/api-target-insert.php", {
+    method: "POST",
+    body: JSON.stringify(PushTargetData),
+  })
+    .then((result) => {
+      return result.json();
+    })
+    .catch((err) => {
+      throw err;
+    });
+};
