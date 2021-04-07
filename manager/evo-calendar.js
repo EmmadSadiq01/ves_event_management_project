@@ -1682,7 +1682,7 @@ const showBookings = (selectDate) => {
   let FetchEventObj = {
     eventDate: convertDate,
   };
-  fetch("http://localhost/API_Inquery/api-fetch-booking.php", {
+  fetch("http://localhost/mhs_api/ves_api/api-fetch-booking.php", {
     method: "POST",
     body: JSON.stringify(FetchEventObj),
   })
@@ -1753,7 +1753,7 @@ const showBookings = (selectDate) => {
 //     inqid: delId,
 //   };
 //   if (confirm("do you want to delete?")) {
-//     fetch("http://localhost/API_Inquery/api-delete.php", {
+//     fetch("http://localhost/mhs_api/ves_api/api-delete.php", {
 //       method: "POST",
 //       body: JSON.stringify(delIdObj),
 //     })
@@ -1773,7 +1773,7 @@ const showBookings = (selectDate) => {
 //     inqid: editId,
 //   };
 //   $("#edit_id").val(editId);
-//   fetch("http://localhost/API_Inquery/api-fetch.php", {
+//   fetch("http://localhost/mhs_api/ves_api/api-fetch.php", {
 //     method: "POST",
 //     body: JSON.stringify(editIdObj),
 //   })
@@ -1828,7 +1828,7 @@ const bookEditEvent = (editId) => {
     bookId: editId,
   };
   $("#edit_id").val(editBookingIdObj);
-  fetch("http://localhost/API_Inquery/api-fetchId-booking.php", {
+  fetch("http://localhost/mhs_api/ves_api/api-fetchId-booking.php", {
     method: "POST",
     body: JSON.stringify(editBookingIdObj),
   })
@@ -1925,7 +1925,7 @@ const bookEditEvent = (editId) => {
 //     bguest: no_of_guests,
 //   };
 //   console.log(editbookingObj);
-//   fetch("http://localhost/API_Inquery/api-update-booking.php", {
+//   fetch("http://localhost/mhs_api/ves_api/api-update-booking.php", {
 //     method: "POST",
 //     body: JSON.stringify(editbookingObj),
 //   })
@@ -1942,7 +1942,7 @@ const bookEditEvent = (editId) => {
 //     bokid: delId,
 //   };
 //   if (confirm("do you want to delete?")) {
-//     fetch("http://localhost/API_Inquery/api-update-booking.php", {
+//     fetch("http://localhost/mhs_api/ves_api/api-update-booking.php", {
 //       method: "POST",
 //       body: JSON.stringify(DelBookingObj),
 //     })
@@ -1970,7 +1970,7 @@ window.onload = () => {
     d.getFullYear();
   // console.log(output);
   hello(output);
-  fetch("http://localhost/API_Inquery/api-fetch-all-booking.php")
+  fetch("http://localhost/mhs_api/ves_api/api-fetch-all-booking.php")
     .then((result) => {
       return result.json();
     })
@@ -2057,7 +2057,7 @@ const addTargetHandler = () => {
     targetshift: selectedShift,
   };
 
-  fetch("http://localhost/API_Inquery/api-target-insert.php", {
+  fetch("http://localhost/mhs_api/ves_api/api-target-insert.php", {
     method: "POST",
     body: JSON.stringify(PushTargetData),
   })

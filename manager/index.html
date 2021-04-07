@@ -1,21 +1,3 @@
-<!-- <?php
-
-// $server =  "localhost";
-// $username = "root";
-// $password = "";
-// $database = "ves_mhs";
-
-// $connection = mysqli_connect($server, $username, $password, $database);
-
-
-// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-//   $query = "INSERT INTO inquery";
-//   $result = mysqli_query($query, $connection);
-// }
-
-?> -->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -429,7 +411,7 @@
       let calendarEvents = [];
 
       // $(document).ready(function() {
-      let url = "http://localhost/API_Inquery/api-fetch-all.php";
+      let url = "http://localhost/mhs_api/ves_api/api-fetch-all.php";
       fetch(url)
         .then((res) => res.json())
         .then((out) => {

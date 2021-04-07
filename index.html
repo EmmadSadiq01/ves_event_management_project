@@ -829,7 +829,7 @@
       let calendarEvents = [];
 
       // $(document).ready(function() {
-      let url = "http://localhost/API_Inquery/api-fetch-all.php";
+      let url = "http://localhost/mhs_api/ves_api/api-fetch-all.php";
       fetch(url)
         .then((res) => res.json())
         .then((out) => {
@@ -970,7 +970,7 @@
           iguest: event_number_guest,
         };
         // console.log("data=>",push_data);
-        fetch("http://localhost/API_Inquery/api-insert.php", {
+        fetch("http://localhost/mhs_api/ves_api/api-insert.php", {
           method: "POST",
           body: JSON.stringify(push_data),
         })
@@ -1016,7 +1016,7 @@
           icost: event_cost,
           iguest: total_guest,
         };
-        fetch("http://localhost/API_Inquery/api-update.php", {
+        fetch("http://localhost/mhs_api/ves_api/api-update.php", {
           method: "POST",
           body: JSON.stringify(editDataObj),
         })
@@ -1062,7 +1062,7 @@
           btotal: 0,
         };
         // console.log("pushObj=>", PushBookObj);
-        fetch("http://localhost/API_Inquery/api-insert-booking.php", {
+        fetch("http://localhost/mhs_api/ves_api/api-insert-booking.php", {
           method: "POST",
           body: JSON.stringify(PushBookObj),
         })
