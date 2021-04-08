@@ -855,7 +855,7 @@
         markup +=
           '<li class="month" role="button" data-month-val="' +
           i +
-          '">' +
+          '" onclick="monthChange()">' +
           _.initials.dates[_.options.language].months[i] +
           "</li>";
       }
@@ -1146,9 +1146,9 @@
             thisDay +
             '" id="' +
             thisDay +
-            '" onclick="hello(this.id)">' +
+            '" onclick="hello(this.id)"><div class="data_show"><span class="iconb" id="moonb' + thisDay + '"></span>' +
             day +
-            "</div>";
+            "</div><span class='moon_icon' id='moon" + thisDay + "'></span></div>";
 
           day++;
         } else {
@@ -1196,58 +1196,58 @@
 
   // v1.0.0 - Add event indicator/s (dots)
   EvoCalendar.prototype.addEventIndicator = function (event) {
-    var _ = this,
-      htmlToAppend,
-      thisDate;
-    var event_date = event.date;
-    var type = _.stringCheck(event.type);
+    // var _ = this,
+    //   htmlToAppend,
+    //   thisDate;
+    // var event_date = event.date;
+    // var type = _.stringCheck(event.type);
 
-    if (event_date instanceof Array) {
-      if (event.everyYear) {
-        for (var x = 0; x < event_date.length; x++) {
-          event_date[x] = _.formatDate(
-            new Date(event_date[x]).setFullYear(_.$active.year),
-            _.options.format
-          );
-        }
-      }
-      var active_date = _.getBetweenDates(event_date);
+    // if (event_date instanceof Array) {
+    //   if (event.everyYear) {
+    //     for (var x = 0; x < event_date.length; x++) {
+    //       event_date[x] = _.formatDate(
+    //         new Date(event_date[x]).setFullYear(_.$active.year),
+    //         _.options.format
+    //       );
+    //     }
+    //   }
+    //   var active_date = _.getBetweenDates(event_date);
 
-      for (var i = 0; i < active_date.length; i++) {
-        appendDot(active_date[i]);
-      }
-    } else {
-      if (event.everyYear) {
-        event_date = _.formatDate(
-          new Date(event_date).setFullYear(_.$active.year),
-          _.options.format
-        );
-      }
-      // console.log("type-bullet=>",$(".type-bullet").length)
-      appendDot(event_date);
-    }
+    //   for (var i = 0; i < active_date.length; i++) {
+    //     appendDot(active_date[i]);
+    //   }
+    // } else {
+    //   if (event.everyYear) {
+    //     event_date = _.formatDate(
+    //       new Date(event_date).setFullYear(_.$active.year),
+    //       _.options.format
+    //     );
+    //   }
+    //   // console.log("type-bullet=>",$(".type-bullet").length)
+    //   appendDot(event_date);
+    // }
 
-    function appendDot(date) {
-      thisDate = _.$elements.innerEl.find('[data-date-val="' + date + '"]');
+    // function appendDot(date) {
+    //   thisDate = _.$elements.innerEl.find('[data-date-val="' + date + '"]');
 
-      if (thisDate.find("span.event-indicator").length === 0) {
-        thisDate.append('<span class="event-indicator"></span>');
-      }
+    //   if (thisDate.find("span.event-indicator").length === 0) {
+    //     thisDate.append('<span class="event-indicator"></span>');
+    //   }
 
-      if (
-        thisDate.find("span.event-indicator > .type-bullet > .type-" + type)
-          .length === 0
-      ) {
-        htmlToAppend = '<div class="type-bullet"><div ';
+    //   if (
+    //     thisDate.find("span.event-indicator > .type-bullet > .type-" + type)
+    //       .length === 0
+    //   ) {
+    //     htmlToAppend = '<div class="type-bullet"><div ';
 
-        htmlToAppend += 'class="type-' + event.type + '"';
-        if (event.color) {
-          htmlToAppend += 'style="background-color:' + event.color + '"';
-        }
-        htmlToAppend += "></div></div>";
-        thisDate.find(".event-indicator").append(htmlToAppend);
-      }
-    }
+    //     htmlToAppend += 'class="type-' + event.type + '"';
+    //     if (event.color) {
+    //       htmlToAppend += 'style="background-color:' + event.color + '"';
+    //     }
+    //     htmlToAppend += "></div></div>";
+    //     thisDate.find(".event-indicator").append(htmlToAppend);
+    //   }
+    // }
   };
 
   // v1.0.0 - Remove event indicator/s (dots)
@@ -1728,14 +1728,16 @@ const showBookings = (selectDate) => {
             personContact +
             "</p>";
           html +=
-            "<button type='button' class='btn btn-success ' style='margin-right:10px' id='" +
+            "<button type='button' class='btn btn-success ' id='" +
             booking_id +
             "' onclick='bookEditEvent(this.id)'>Edit </button>";
 
           html +=
             "<button type='button' class='btn btn-warning' id='" +
             booking_id +
-            "' onclick='bookDeleteEvent(this.id)'>Delete </button> </div></div>";
+            "' onclick='bookDeleteEvent(this.id)'>Delete </button> <button type='button' class='btn btn-primary' id='" +
+            booking_id +
+            "' onclick='balancePayment(this.id)'>Add Balance</button></div></div>";
           $("#booking_view").html(html);
         }
       } else {
@@ -1830,7 +1832,6 @@ const BookingEventHandler = () => {
 };
 
 const bookEditEvent = (editId) => {
-  console.log(editId);
   let editBookingIdObj = {
     bookId: editId,
   };
@@ -1962,6 +1963,120 @@ const bookDeleteEvent = (delId) => {
     location.reload();
   }
 };
+const taodayDate = () => {
+  var d = new Date();
+  var month = d.getMonth() + 1;
+  var day = d.getDate();
+  var output =
+    d.getFullYear() +
+    "-" +
+    (month < 10 ? "0" : "") +
+    month +
+    "-" +
+    (day < 10 ? "0" : "") +
+    day;
+  return output
+}
+const balancePayment = (balId) => {
+  let html = "";
+  let total_payment = 0;
+
+  let editBookingIdObj = {
+    bookId: balId,
+  };
+  $("#edit_id").val(editBookingIdObj);
+  fetch("http://localhost/mhs_api/ves_api/api-fetchId-booking.php", {
+    method: "POST",
+    body: JSON.stringify(editBookingIdObj),
+  })
+    .then((result) => {
+      return result.json();
+      // console.log(editData);
+    })
+
+    .then((data) => {
+      let currentDate = taodayDate()
+      $("#balBookId").val(data[0].booking_id);
+      $("#balProgramDate").val(data[0].eventDate);
+      $("#balPaymentDate").val(currentDate)
+      $("#balBookAmnt").val(data[0].bookingAmount);
+
+    })
+    .catch((err) => {
+      throw err;
+    });
+
+  let fetchPaymentObj = {
+    bookId: balId
+  }
+  fetch("http://localhost/mhs_api/ves_api/api-fetchpayments-booking.php", {
+    method: "POST",
+    body: JSON.stringify(fetchPaymentObj),
+  })
+    .then((result) => {
+      return result.json();
+    })
+    .then((data) => {
+      html += '<thead><tr>'
+      html += ' <th scope="col">#</th>'
+      html += '<th scope="col">Date</th>'
+      html += '<th scope="col">Amount</th>'
+      html += '</tr>'
+      html += '</thead>'
+      html += '<tbody>'
+      for (var i = 0; i < data.length; i++) {
+        let split_date = data[i].payment_date.split(" ")
+        html += '<tr>'
+        html += '<th scope="row">' + (i + 1) + '</th>'
+        html += '<td>' + split_date[0] + '</td>'
+        html += '<td>' + data[i].partial_payments + '</td>'
+        html += '</tr>'
+        total_payment += parseFloat(data[i].partial_payments)
+      }
+      html += ' <tr><th scope="col" colspan="2" class="text-center ">Previous Balance</th><th scope="col" id="total_payment">' + total_payment + '</th></tr>'
+      html += '</tbody>'
+      $(".table").html(html)
+    })
+    .catch((err) => {
+      throw err;
+    });
+
+  $("#balPayment").modal("show");
+
+}
+
+const changePayment=()=>{
+  let balPaymentAmnt = $("#balPaymentAmnt").val()
+  let balBookAmnt = $("#balBookAmnt").val()
+  let total_payment_val = parseInt($("#total_payment").html())
+
+  $("#balcurrentBal").val(balBookAmnt-balPaymentAmnt-total_payment_val)
+
+
+}
+
+const addPayment = () => {
+  let balBookId = $("#balBookId").val();
+  let balPaymentDate = $("#balPaymentDate").val();
+  let balPayment = $("#balPaymentAmnt").val();
+
+  let addPaymentObj = {
+    balBookId: balBookId,
+    balPaymentDate: balPaymentDate,
+    balPayment: balPayment,
+  }
+
+  fetch("http://localhost/mhs_api/ves_api/api-addpayments-booking.php", {
+    method: "POST",
+    body: JSON.stringify(addPaymentObj),
+  })
+    .then((result) => {
+      result.json();
+    })
+    .catch((err) => {
+      throw err;
+    });
+}
 
 window.onload = () => {
   var d = new Date();
@@ -1990,10 +2105,24 @@ window.onload = () => {
         let date = mySplit[2]
         let change_format = month + "-" + date + "-" + year;
         if (data[i].hallportion === 'a') {
+          if (data[i].eventShift === "morning") {
+            $('#moon' + change_format).append('<i class="fas fa-sun"></i>')
+
+          } else if (data[i].eventShift === "evening") {
+
+            $('#moon' + change_format).append('<i class="fas fa-moon"></i>')
+          }
           $("#" + change_format).addClass("confirm-booking-a")
           // console.log("added at",change_format)
         }
         if (data[i].hallportion === 'b') {
+          if (data[i].eventShift === "morning") {
+            $('#moonb' + change_format).append('<i class="fas fa-sun"></i>')
+            console.log('#moonb' + change_format + "=>b is morning")
+          } else if (data[i].eventShift === "evening") {
+            console.log("b is evening")
+            $('#moonb' + change_format).append('<i class="fas fa-moon"></i>')
+          }
           $("#" + change_format).addClass("confirm-booking-b")
           // console.log("added at",change_format)
         }
@@ -2006,6 +2135,63 @@ window.onload = () => {
     });
 
 };
+const monthChange = () => {
+  console.log("hello ")
+  var d = new Date();
+  var month = d.getMonth() + 1;
+  var day = d.getDate();
+  var output =
+    (month < 10 ? "0" : "") +
+    month +
+    "-" +
+    (day < 10 ? "0" : "") +
+    day +
+    "-" +
+    d.getFullYear();
+  // console.log(output);
+  hello(output);
+  fetch("http://localhost/mhs_api/ves_api/api-fetch-all-booking.php")
+    .then((result) => {
+      return result.json();
+    })
+    .then((data) => {
+      for (let i = 0; i < data.length; i++) {
+        let split_date = data[i].eventDate;
+        let mySplit = split_date.split("-");
+        let year = mySplit[0];
+        let month = mySplit[1];
+        let date = mySplit[2];
+        let change_format = month + "-" + date + "-" + year;
+        if (data[i].hallportion === "a") {
+          if (data[i].eventShift === "morning") {
+            $('#moon' + change_format).append('<i class="fas fa-sun"></i>')
+
+          } else if (data[i].eventShift === "evening") {
+
+            $('#moon' + change_format).append('<i class="fas fa-moon"></i>')
+          }
+          $("#" + change_format).addClass("confirm-booking-a");
+        }
+        if (data[i].hallportion === "b") {
+          if (data[i].eventShift === "morning") {
+            $('#moonb' + change_format).append('<i class="fas fa-sun"></i>')
+            console.log('#moonb' + change_format + "=>b is morning")
+          } else if (data[i].eventShift === "evening") {
+            console.log("b is evening")
+            $('#moonb' + change_format).append('<i class="fas fa-moon"></i>')
+          }
+          $("#" + change_format).addClass("confirm-booking-b");
+          // console.log("added at",change_format)
+        }
+        // console.log(change_format)
+      }
+      // console.log(data)
+    })
+    .catch((err) => {
+      throw err;
+    });
+}
+
 
 const balanceCal = () => {
   let bookingAmnt = $("#bookAmnt").val();
