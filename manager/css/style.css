@@ -98,7 +98,7 @@ tr.calendar-body .calendar-day .day i {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-left: 25px;
+    padding-left: 40px;
     font-family: 'Font Awesome 5 Free';
 }
 
@@ -154,7 +154,7 @@ th[colspan="6"] {
 }
 
 .bookings {
-    background-color: #141317;
+    background-color: #8773c1;
     width: 100%;
     height: 582px;
     overflow-x:hidden;
@@ -199,10 +199,16 @@ td.hijri_date {
   margin: 5px !important;
 }
 .targetBookingBorder {
-  border: 1px solid red !important;
+  border: 2px solid #4b26bd !important;
 }
 #OwnerTargetBox td,#OwnerTargetBox th {
-  border: 1px solid;
-  padding: 3px;
+  /* border: 1px solid; */
+  padding: 5px 15px;
   font-size: 12px;
+}
+table#OwnerTargetBox h3 {
+  color: #8673c0;
+  font-weight: 900;
+  font-size: 22px;
+  font-family: sans-serif;
 }

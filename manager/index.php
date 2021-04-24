@@ -511,6 +511,55 @@
       </div>
     </div>
   </div>
+  <!--Add Packages Modal -->
+  <div class="modal fade" id="addPackages" tabindex="-1" aria-labelledby="addPackagesModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Packages</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form onsubmit="">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col">
+                <input type="hidden" id="balBookId" />
+                <small>Program Date</small>
+                <input type="date" class="form-control" id="balProgramDate" disabled />
+              </div>
+              <div class="col">
+                <small>Payment Date</small>
+                <input type="date" id="balPaymentDate" class="form-control" />
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="bookAmnt" class="form-label">Book Amount</label>
+              <input type="number" name="balBookAmnt" class="form-control" id="balBookAmnt" onchange="editBalanceCal()"
+                disabled />
+            </div>
+            <div class="my-3 container">
+              <table class="table" id="partial_payment_table">
+              </table>
+            </div>
+            <div class="mb-3" id="balpayment">
+              <label for="bookAmnt" class="form-label">Payment</label>
+              <input type="number" name="balPayment" class="form-control" id="balPaymentAmnt"
+                onchange="changePayment()" />
+            </div>
+            <div class="mb-3" id="balBalance">
+              <label for="bookAmnt" class="form-label">Balance</label>
+              <input type="number" name="currentBal" class="form-control" id="balcurrentBal" disabled />
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" id="addBalance">Add</button>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
@@ -527,7 +576,7 @@
     let calendarEvents = [];
 
     // $(document).ready(function() {
-    let url = "http://localhost/mhs_api/ves_api/api-fetch-all.php";
+    let url = "https://vesapi.ves-engr.com/api-fetch-all.php";
     fetch(url)
       .then((res) => res.json())
       .then((out) => {
@@ -546,16 +595,11 @@
         monthsArray[11] = "December";
         for (let i = 0; i < out.length; i++) {
           eventdate = out[i].inquery_date;
-          // console.log(eventdate)
           changeFormat = eventdate.split("-");
           let year = changeFormat[0];
-          // let getMonth = new Date(eventdate).getMonth();
           let month = changeFormat[1] - 1;
           let date = changeFormat[2];
-          // console.log(month)
-          // let more_split_date = date.split(" ");
           after_split = monthsArray[month] + "/" + date + "/" + year;
-          // console.log("in then", after_split);
 
           pushEnvents = {
             id: out[i].iquery_id,
@@ -574,66 +618,14 @@
           };
           myEvents.push(pushEnvents);
         }
-        // console.log(newEnvents);
-        // myEvents = [
-        //   {
-        //     id: "1", // Event's ID (required)
-        //     name: "Emmad Function", // Event name (required)
-        //     date: after_split, // Event date (required)
-        //     type: "A", // Event type (required)
-        //     description:
-        //       "Hall: A </br>Cost: 25,000 </br>Guest: 300 </br>Conact: 03412725048 ",
-        //     everyYear: false, // Same event every year (optional)
-        //     color: "red",
-        //   }
-        // ];
         $("#calendar").evoCalendar({
           theme: "Royal Navy",
-          // settingName: settingValue
           calendarEvents: myEvents,
         });
-        // console.log(out)
       })
-      // .then(() => {
-      //
-      // })
       .catch((err) => {
         throw err;
       });
-    // let calendarEvents = [];
-    // myEvents = [
-    //   {
-    //     id: "1", // Event's ID (required)
-    //     name: "Emmad Function", // Event name (required)
-    //     date: after_split, // Event date (required)
-    //     type: "A", // Event type (required)
-    //     description:
-    //       "Hall: A </br>Cost: 25,000 </br>Guest: 300 </br>Conact: 03412725048 ",
-    //     everyYear: false, // Same event every year (optional)
-    //     color: "red",
-    //   },
-    //   {
-    //     id: "2", // Event's ID (required)
-    //     name: "Hasnain Function", // Event name (required)
-    //     date: "march/01/2021", // Event date (required)
-    //     type: "B", // Event type (required)
-    //     description:
-    //       "Hall: B </br>Cost: 57,000 </br>Guest: 300 </br>Conact: 03412725048 ",
-    //     everyYear: false, // Same event every year (optional)
-    //     color: "blue",
-    //   },
-    // ];
-    // $("#calendar").evoCalendar({
-    //   theme: "Midnight Blue",
-    //   // settingName: settingValue
-    //   calendarEvents: myEvents,
-    // });
-    // console.log($("#calendar").evoCalendar())
-
-    // console.log(myEvents[0].name);
-    // });
-    // console.log(myEvents);
-    // console.log("format date =>", after_split);
 
     function eventHandler() {
       let date = document.getElementById("On_event_date").value;
@@ -676,7 +668,7 @@
         iguest: event_number_guest,
       };
       // console.log("data=>",push_data);
-      fetch("http://localhost/mhs_api/ves_api/api-insert.php", {
+      fetch("https://vesapi.ves-engr.com/api-insert.php", {
         method: "POST",
         body: JSON.stringify(push_data),
       })
@@ -735,7 +727,7 @@
 
       console.log(editDataObj)
 
-      fetch("http://localhost/mhs_api/ves_api/api-update.php", {
+      fetch("https://vesapi.ves-engr.com/api-update.php", {
         method: "POST",
         body: JSON.stringify(editDataObj),
       })
@@ -797,7 +789,7 @@
         btotal: 0,
       };
       // console.log("pushObj=>", PushBookObj);
-      fetch("http://localhost/mhs_api/ves_api/api-insert-booking.php", {
+      fetch("https://vesapi.ves-engr.com/api-insert-booking.php", {
         method: "POST",
         body: JSON.stringify(PushBookObj),
       })
@@ -844,7 +836,7 @@
         btotal: 0,
       };
       // console.log("pushObj=>", PushBookObj);
-      fetch("http://localhost/mhs_api/ves_api/api-insert-booking.php", {
+      fetch("https://vesapi.ves-engr.com/api-insert-booking.php", {
         method: "POST",
         body: JSON.stringify(PushBookObj),
       })

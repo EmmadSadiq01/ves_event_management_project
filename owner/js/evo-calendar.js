@@ -11,7 +11,7 @@
  *
  */
 
-(function(factory) {
+(function (factory) {
     "use strict";
     if (typeof define === "function" && define.amd) {
         define(["jquery"], factory);
@@ -20,11 +20,11 @@
     } else {
         factory(jQuery);
     }
-})(function($) {
+})(function ($) {
     "use strict";
     var EvoCalendar = window.EvoCalendar || {};
 
-    EvoCalendar = (function() {
+    EvoCalendar = (function () {
         var instanceUid = 0;
 
         function EvoCalendar(element, settings) {
@@ -429,7 +429,7 @@
 
             // ACTIVE
             _.$active = {
-                month: _.$current.month,
+                month: (localStorage.getItem("monthIndex") === null) ? _.$current.month : localStorage.getItem("monthIndex"),
                 year: _.$current.year,
                 date: _.$current.date,
                 event_date: _.$current.date,
@@ -490,7 +490,7 @@
     })();
 
     // v1.0.0 - Initialize plugin
-    EvoCalendar.prototype.init = function(init) {
+    EvoCalendar.prototype.init = function (init) {
         var _ = this;
 
         if (!$(_.$elements.calendarEl).hasClass("calendar-initialized")) {
@@ -513,7 +513,7 @@
         }
     };
     // v1.0.0 - Destroy plugin
-    EvoCalendar.prototype.destroy = function() {
+    EvoCalendar.prototype.destroy = function () {
         var _ = this;
         // code here
         _.destroyEventListener();
@@ -529,7 +529,7 @@
     };
 
     // v1.0.0 - Limit title (...)
-    EvoCalendar.prototype.limitTitle = function(title, limit) {
+    EvoCalendar.prototype.limitTitle = function (title, limit) {
         var newTitle = [];
         limit = limit === undefined ? 18 : limit;
         if (title.split(" ").join("").length > limit) {
@@ -546,12 +546,12 @@
     };
 
     // v1.1.2 - Check and filter strings
-    EvoCalendar.prototype.stringCheck = function(d) {
+    EvoCalendar.prototype.stringCheck = function (d) {
         return d.replace(/[^\w]/g, "\\$&");
     };
 
     // v1.0.0 - Parse format (date)
-    EvoCalendar.prototype.parseFormat = function(format) {
+    EvoCalendar.prototype.parseFormat = function (format) {
         var _ = this;
         if (
             typeof format.toValue === "function" &&
@@ -572,7 +572,7 @@
     };
 
     // v1.0.0 - Format date
-    EvoCalendar.prototype.formatDate = function(date, format, language) {
+    EvoCalendar.prototype.formatDate = function (date, format, language) {
         var _ = this;
         if (!date) return "";
         language = language ? language : _.defaults.language;
@@ -607,7 +607,7 @@
     };
 
     // v1.0.0 - Get dates between two dates
-    EvoCalendar.prototype.getBetweenDates = function(dates) {
+    EvoCalendar.prototype.getBetweenDates = function (dates) {
         var _ = this,
             betweenDates = [];
         for (var x = 0; x < _.monthLength; x++) {
@@ -623,7 +623,7 @@
     };
 
     // v1.0.0 - Check if date is between the passed calendar date
-    EvoCalendar.prototype.isBetweenDates = function(active_date, dates) {
+    EvoCalendar.prototype.isBetweenDates = function (active_date, dates) {
         var sd, ed;
         if (dates instanceof Array) {
             sd = new Date(dates[0]);
@@ -639,7 +639,7 @@
     };
 
     // v1.0.0 - Check if event has the same event type in the same date
-    EvoCalendar.prototype.hasSameDayEventType = function(date, type) {
+    EvoCalendar.prototype.hasSameDayEventType = function (date, type) {
         var _ = this,
             eventLength = 0;
 
@@ -668,7 +668,7 @@
     };
 
     // v1.0.0 - Set calendar theme
-    EvoCalendar.prototype.setTheme = function(themeName) {
+    EvoCalendar.prototype.setTheme = function (themeName) {
         var _ = this;
         var prevTheme = _.options.theme;
         _.options.theme = themeName.toLowerCase().split(" ").join("-");
@@ -679,7 +679,7 @@
     };
 
     // v1.0.0 - Called in every resize
-    EvoCalendar.prototype.resize = function() {
+    EvoCalendar.prototype.resize = function () {
         var _ = this;
         _.windowW = $(window).width();
 
@@ -709,7 +709,7 @@
     };
 
     // v1.0.0 - Initialize event listeners
-    EvoCalendar.prototype.initEventListener = function() {
+    EvoCalendar.prototype.initEventListener = function () {
         var _ = this;
 
         // resize
@@ -751,7 +751,7 @@
     };
 
     // v1.0.0 - Destroy event listeners
-    EvoCalendar.prototype.destroyEventListener = function() {
+    EvoCalendar.prototype.destroyEventListener = function () {
         var _ = this;
 
         $(window).off("resize.evocalendar.evo-" + _.instanceUid);
@@ -784,7 +784,7 @@
     };
 
     // v1.0.0 - Calculate days (incl. monthLength, startingDays based on :firstDayOfWeekName)
-    EvoCalendar.prototype.calculateDays = function() {
+    EvoCalendar.prototype.calculateDays = function () {
         var _ = this,
             nameDays,
             weekStart,
@@ -814,7 +814,7 @@
     };
 
     // v1.0.0 - Build the bones! (incl. sidebar, inner, events), called once in every initialization
-    EvoCalendar.prototype.buildTheBones = function() {
+    EvoCalendar.prototype.buildTheBones = function () {
         var _ = this;
         _.calculateDays();
 
@@ -844,7 +844,7 @@
                 markup +=
                     '<li class="month" role="button" data-month-val="' +
                     i +
-                    '" onclick="monthChange()">' +
+                    '" onclick="monthChange(' + i + ')">' +
                     _.initials.dates[_.options.language].months[i] +
                     "</li>";
             }
@@ -872,10 +872,27 @@
 
             // events
             markup +=
-                '<div class="calendar-events"> <div class="inquiry-box">' +
-                '<div class="event-header"><p></p><span id="islDate"></span></div>' +
+            '<div class="calendar-events"><div class="target-box"  ><table class="target" id="OwnerTargetBox">'
+            markup +='<tr><td colspan="6"><h3>BOOKING TARGET</h3></td></tr>'
+            markup +='<tr>'
+            markup +='<th rowspan="2">A</th>'
+            markup +='<td><i class="fas fa-sun"></i></td>'
+            markup +='<td id="mor_target_a">0</td>'
+            markup +='<th rowspan="2">B</th>'
+            markup +='<td><i class="fas fa-sun"></i></td>'
+            markup +='<td id="mor_target_b">0</td>'
+            markup +='</tr>'
+            markup +='<tr>'
+            markup +='<td><i class="fas fa-moon"></i></td>'
+            markup +='<td id="eve_target_a" >0</td>'
+            markup +='<td><i class="fas fa-moon"></i></td>'
+            markup +='<td id="eve_target_b" >0</td>'
+            markup +=' </tr>'
+            markup +='</table></div>' 
+            markup +=
+                ' <div class="event-header"><p></p><span id="islDate"></span></div>' +
                 '<div class="event-list"></div>' +
-                ' <div class="action_btns mt-3"><button  type="button" class="btn btn-primary" id="addTarget" onclick="fetchTarget()">Add Target</button></div></div><div class="target-box" id="OwnerTargetBox" ></div></div>';
+                ' <div class="action_btns mt-3"><button  type="button" class="btn btn-primary" id="addTarget" onclick="fetchTarget()">Add Target</button></div>';
 
             // --- Finally, build it now! --- //
             _.$elements.calendarEl.html(markup);
@@ -926,7 +943,7 @@
     };
 
     // v1.0.0 - Build Event: Event list
-    EvoCalendar.prototype.buildEventList = function() {
+    EvoCalendar.prototype.buildEventList = function () {
         var _ = this,
             markup,
             hasEventToday = false;
@@ -992,7 +1009,7 @@
     };
 
     // v1.0.0 - Add single event to event list
-    EvoCalendar.prototype.addEventList = function(event_data) {
+    EvoCalendar.prototype.addEventList = function (event_data) {
         var _ = this,
             markup;
         var eventListEl = _.$elements.eventEl.find(".event-list");
@@ -1030,7 +1047,7 @@
             .on("click.evocalendar", _.selectEvent);
     };
     // v1.0.0 - Remove single event to event list
-    EvoCalendar.prototype.removeEventList = function(event_data) {
+    EvoCalendar.prototype.removeEventList = function (event_data) {
         var _ = this,
             markup;
         var eventListEl = _.$elements.eventEl.find(".event-list");
@@ -1055,14 +1072,14 @@
     };
 
     // v1.0.0 - Build Sidebar: Year text
-    EvoCalendar.prototype.buildSidebarYear = function() {
+    EvoCalendar.prototype.buildSidebarYear = function () {
         var _ = this;
 
         _.$elements.sidebarEl.find(".calendar-year > p").text(_.$active.year);
     };
 
     // v1.0.0 - Build Sidebar: Months list text
-    EvoCalendar.prototype.buildSidebarMonths = function() {
+    EvoCalendar.prototype.buildSidebarMonths = function () {
         var _ = this;
 
         _.$elements.sidebarEl
@@ -1074,7 +1091,7 @@
     };
 
     // v1.0.0 - Build Calendar: Title, Days
-    EvoCalendar.prototype.buildCalendar = function() {
+    EvoCalendar.prototype.buildCalendar = function () {
         var _ = this,
             markup,
             title;
@@ -1186,7 +1203,7 @@
     };
 
     // v1.0.0 - Add event indicator/s (dots)
-    EvoCalendar.prototype.addEventIndicator = function(event) {
+    EvoCalendar.prototype.addEventIndicator = function (event) {
         //   var _ = this,
         //     htmlToAppend,
         //     thisDate;
@@ -1276,7 +1293,7 @@
      ****************/
 
     // v1.0.0 - Build event indicator on each date
-    EvoCalendar.prototype.buildEventIndicator = function() {
+    EvoCalendar.prototype.buildEventIndicator = function () {
         var _ = this;
 
         // prevent duplication
@@ -1289,12 +1306,12 @@
     };
 
     // v1.0.0 - Select event
-    EvoCalendar.prototype.selectEvent = function(event) {
+    EvoCalendar.prototype.selectEvent = function (event) {
         var _ = this;
         var el = $(event.target).closest(".event-container");
         var id = $(el).data("eventIndex").toString();
         var index = _.options.calendarEvents
-            .map(function(event) {
+            .map(function (event) {
                 return event.id.toString();
             })
             .indexOf(id);
@@ -1308,7 +1325,7 @@
     };
 
     // v1.0.0 - Select year
-    EvoCalendar.prototype.selectYear = function(event) {
+    EvoCalendar.prototype.selectYear = function (event) {
         var _ = this;
         var el, yearVal;
 
@@ -1340,7 +1357,7 @@
     };
 
     // v1.0.0 - Select month
-    EvoCalendar.prototype.selectMonth = function(event) {
+    EvoCalendar.prototype.selectMonth = function (event) {
         var _ = this;
 
         if (typeof event === "string" || typeof event === "number") {
@@ -1368,7 +1385,7 @@
     };
 
     // v1.0.0 - Select specific date
-    EvoCalendar.prototype.selectDate = function(event) {
+    EvoCalendar.prototype.selectDate = function (event) {
         var _ = this;
         var oldDate = _.$active.date;
         var date, year, month, activeDayEl, isSameDate;
@@ -1406,19 +1423,19 @@
     };
 
     // v1.0.0 - Return active date
-    EvoCalendar.prototype.getActiveDate = function() {
+    EvoCalendar.prototype.getActiveDate = function () {
         var _ = this;
         return _.$active.date;
     };
 
     // v1.0.0 - Return active events
-    EvoCalendar.prototype.getActiveEvents = function() {
+    EvoCalendar.prototype.getActiveEvents = function () {
         var _ = this;
         return _.$active.events;
     };
 
     // v1.0.0 - Hide Sidebar/Event List if clicked outside
-    EvoCalendar.prototype.toggleOutside = function(event) {
+    EvoCalendar.prototype.toggleOutside = function (event) {
         var _ = this,
             isInnerClicked;
 
@@ -1429,7 +1446,7 @@
     };
 
     // v1.0.0 - Toggle Sidebar
-    EvoCalendar.prototype.toggleSidebar = function(event) {
+    EvoCalendar.prototype.toggleSidebar = function (event) {
         var _ = this;
 
         if (event === undefined || event.originalEvent) {
@@ -1451,7 +1468,7 @@
     };
 
     // v1.0.0 - Toggle Event list
-    EvoCalendar.prototype.toggleEventList = function(event) {
+    EvoCalendar.prototype.toggleEventList = function (event) {
         var _ = this;
 
         if (event === undefined || event.originalEvent) {
@@ -1473,7 +1490,7 @@
     };
 
     // v1.0.0 - Add Calendar Event(s)
-    EvoCalendar.prototype.addCalendarEvent = function(arr) {
+    EvoCalendar.prototype.addCalendarEvent = function (arr) {
         var _ = this;
 
         function addEvent(data) {
@@ -1531,13 +1548,13 @@
     };
 
     // v1.0.0 - Remove Calendar Event(s)
-    EvoCalendar.prototype.removeCalendarEvent = function(arr) {
+    EvoCalendar.prototype.removeCalendarEvent = function (arr) {
         var _ = this;
 
         function deleteEvent(data) {
             // Array index
             var index = _.options.calendarEvents
-                .map(function(event) {
+                .map(function (event) {
                     return event.id;
                 })
                 .indexOf(data);
@@ -1569,11 +1586,11 @@
     };
 
     // v1.0.0 - Check if date is valid
-    EvoCalendar.prototype.isValidDate = function(d) {
+    EvoCalendar.prototype.isValidDate = function (d) {
         return new Date(d) && !isNaN(new Date(d).getTime());
     };
 
-    $.fn.evoCalendar = function() {
+    $.fn.evoCalendar = function () {
         var _ = this,
             opt = arguments[0],
             args = Array.prototype.slice.call(arguments, 1),
@@ -1658,64 +1675,123 @@ function hello(selectDate) {
         ' <table class="table text-center"><tr><th scope="col">Hall</th><th scope="col">Shift</th>';
     html_setTarget += ' <th scope="col">Amount</th>';
     html_setTarget += "  </tr>";
-    fetch("http://localhost/mhs_api/ves_api/api-target-fetch.php", {
-            method: "POST",
-            body: JSON.stringify(pushTargetDateObj),
-        })
+    fetch("https://vesapi.ves-engr.com/api-target-fetch.php", {
+        method: "POST",
+        body: JSON.stringify(pushTargetDateObj),
+    })
         .then((result) => {
             return result.json();
         })
+        // .then((data) => {
+        //     if (data.length > 0) {
+        //         for (let i = 0; i < data.length; i++) {
+        //             console.log(i, "=> data");
+        //             if (data[i].selectHall === "a" && data[i].selectShift === "morning") {
+        //                 html_setTarget += "<tr>";
+        //                 html_setTarget += '<td scope="col">A</td>';
+        //                 html_setTarget += '<td scope="col"><i class="fas fa-sun"></i></td>';
+        //                 html_setTarget +=
+        //                     '<td scope="col">' + data[i].target_price + "</td>";
+        //                 html_setTarget += "</tr>";
+        //             } else if (
+        //                 data[i].selectHall === "a" &&
+        //                 data[i].selectShift === "evening"
+        //             ) {
+        //                 html_setTarget += "<tr>";
+        //                 html_setTarget += '<td scope="col">A</td>';
+        //                 html_setTarget +=
+        //                     '<td scope="col"><i class="fas fa-moon"></i></td>';
+        //                 html_setTarget +=
+        //                     '<td scope="col">' + data[i].target_price + "</td>";
+        //                 html_setTarget += "</tr>";
+        //             } else if (
+        //                 data[i].selectHall === "b" &&
+        //                 data[i].selectShift === "morning"
+        //             ) {
+        //                 html_setTarget += "<tr>";
+        //                 html_setTarget += '<td scope="col">B</td>';
+        //                 html_setTarget += '<td scope="col"><i class="fas fa-sun"></i></td>';
+        //                 html_setTarget +=
+        //                     '<td scope="col">' + data[i].target_price + "</td>";
+        //                 html_setTarget += "</tr>";
+        //             } else if (
+        //                 data[i].selectHall === "b" &&
+        //                 data[i].selectShift === "evening"
+        //             ) {
+        //                 html_setTarget += "<tr>";
+        //                 html_setTarget += '<td scope="col">B</td>';
+        //                 html_setTarget +=
+        //                     '<td scope="col"><i class="fas fa-moon"></i></td>';
+        //                 html_setTarget +=
+        //                     '<td scope="col">' + data[i].target_price + "</td>";
+        //                 html_setTarget += "</tr>";
+        //             }
+        //         }
+        //     } else {
+        //         html_setTarget = "";
+        //         $("#OwnerTargetBox").html(html_setTarget);
+        //     }
+        // })
+        // .then(() => $("#OwnerTargetBox").html(html_setTarget))
+        // .catch((err) => {
+        //     throw err;
+        // });
         .then((data) => {
             if (data.length > 0) {
                 for (let i = 0; i < data.length; i++) {
                     console.log(i, "=> data");
                     if (data[i].selectHall === "a" && data[i].selectShift === "morning") {
-                        html_setTarget += "<tr>";
-                        html_setTarget += '<td scope="col">A</td>';
-                        html_setTarget += '<td scope="col"><i class="fas fa-sun"></i></td>';
-                        html_setTarget +=
-                            '<td scope="col">' + data[i].target_price + "</td>";
-                        html_setTarget += "</tr>";
-                    } else if (
-                        data[i].selectHall === "a" &&
-                        data[i].selectShift === "evening"
-                    ) {
-                        html_setTarget += "<tr>";
-                        html_setTarget += '<td scope="col">A</td>';
-                        html_setTarget +=
-                            '<td scope="col"><i class="fas fa-moon"></i></td>';
-                        html_setTarget +=
-                            '<td scope="col">' + data[i].target_price + "</td>";
-                        html_setTarget += "</tr>";
-                    } else if (
-                        data[i].selectHall === "b" &&
-                        data[i].selectShift === "morning"
-                    ) {
-                        html_setTarget += "<tr>";
-                        html_setTarget += '<td scope="col">B</td>';
-                        html_setTarget += '<td scope="col"><i class="fas fa-sun"></i></td>';
-                        html_setTarget +=
-                            '<td scope="col">' + data[i].target_price + "</td>";
-                        html_setTarget += "</tr>";
+                        // html_setTarget += "<tr>";
+                        // html_setTarget += '<td rowspan="2">A</td>';
+                        // html_setTarget += '<td><i class="fas fa-sun"></i></td>';
+                        // html_setTarget += '<td >' + data[i].target_price + "</td>";
+                        // html_setTarget += "</tr>";
+                        $("#mor_target_a").html(data[i].target_price )
+
+                    } else if (data[i].selectHall === "a" && data[i].selectShift === "evening") {
+                        // html_setTarget += "<tr>";
+                        // // html_setTarget += '<td >A</td>';
+                        // html_setTarget += '<td ><i class="fas fa-moon"></i></td>';
+                        // html_setTarget += '<td >' + data[i].target_price + "</td>";
+                        // html_setTarget += "</tr>";
+                        $("#eve_target_a").html(data[i].target_price )
+
+                    } else if (data[i].selectHall === "b" && data[i].selectShift === "morning") {
+                        // html_setTarget += "<tr>";
+                        // html_setTarget += '<td  rowspan="2">B</td>';
+                        // html_setTarget += '<td><i class="fas fa-sun"></i></td>';
+                        // html_setTarget += '<td >' + data[i].target_price + "</td>";
+                        // html_setTarget += "</tr>";
+                        $("#mor_target_b").html(data[i].target_price )
+
                     } else if (
                         data[i].selectHall === "b" &&
                         data[i].selectShift === "evening"
                     ) {
-                        html_setTarget += "<tr>";
-                        html_setTarget += '<td scope="col">B</td>';
-                        html_setTarget +=
-                            '<td scope="col"><i class="fas fa-moon"></i></td>';
-                        html_setTarget +=
-                            '<td scope="col">' + data[i].target_price + "</td>";
-                        html_setTarget += "</tr>";
+                        // html_setTarget += "<tr>";
+                        // // html_setTarget += '<td >B</td>';
+                        // html_setTarget +=
+                        //     '<td ><i class="fas fa-moon"></i></td>';
+                        // html_setTarget +=
+                        //     '<td >' + data[i].target_price + "</td>";
+                        // html_setTarget += "</tr>";
+                        $("#eve_target_b").html(data[i].target_price )
+
                     }
                 }
-            } else {
-                html_setTarget = "";
-                $("#OwnerTargetBox").html(html_setTarget);
+            }
+             else {
+                // html_setTarget = "";
+                // $("#OwnerTargetBox").html("");
+                // console.log("empty")
+                $("#mor_target_a").html("0")
+                $("#mor_target_b").html("0")
+                $("#eve_target_a").html("0")
+                $("#eve_target_b").html("0")
+
             }
         })
-        .then(() => $("#OwnerTargetBox").html(html_setTarget))
+        // .then(() => $("#OwnerTargetBox").html(html_setTarget))
         .catch((err) => {
             throw err;
         });
@@ -1733,10 +1809,10 @@ const showBookings = (selectDate) => {
     let FetchEventObj = {
         eventDate: convertDate,
     };
-    fetch("http://localhost/mhs_api/ves_api/api-fetch-booking.php", {
-            method: "POST",
-            body: JSON.stringify(FetchEventObj),
-        })
+    fetch("https://vesapi.ves-engr.com/api-fetch-booking.php", {
+        method: "POST",
+        body: JSON.stringify(FetchEventObj),
+    })
         .then((result) => {
             return result.json();
         })
@@ -1799,7 +1875,7 @@ const showBookings = (selectDate) => {
 //     inqid: delId,
 //   };
 //   if (confirm("do you want to delete?")) {
-//     fetch("http://localhost/mhs_api/ves_api/api-delete.php", {
+//     fetch("https://vesapi.ves-engr.com/api-delete.php", {
 //       method: "POST",
 //       body: JSON.stringify(delIdObj),
 //     })
@@ -1819,11 +1895,11 @@ const editInquiryEvent = (editId) => {
         inqid: editId
     };
     $("#edit_id").val(editId);
-    $("#edit_id_inq").val("MHS-SH-"+ (1000 + parseInt(editId)));
-    fetch("http://localhost/mhs_api/ves_api/api-fetch.php", {
-            method: "POST",
-            body: JSON.stringify(editIdObj),
-        })
+    $("#edit_id_inq").val("MHS-SH-" + (1000 + parseInt(editId)));
+    fetch("https://vesapi.ves-engr.com/api-fetch.php", {
+        method: "POST",
+        body: JSON.stringify(editIdObj),
+    })
         .then((result) => {
             return result.json();
         })
@@ -1872,17 +1948,17 @@ const bookEditEvent = (editId) => {
         bookId: editId,
     };
     $("#edit_id").val(editBookingIdObj);
-    fetch("http://localhost/mhs_api/ves_api/api-fetchId-booking.php", {
-            method: "POST",
-            body: JSON.stringify(editBookingIdObj),
-        })
+    fetch("https://vesapi.ves-engr.com/api-fetchId-booking.php", {
+        method: "POST",
+        body: JSON.stringify(editBookingIdObj),
+    })
         .then((result) => {
             return result.json();
             // console.log(editData);
         })
         .then((data) => {
             $("#edit_booking_id").val(data[0].booking_id);
-            $("#edit_booking_id_concat").val("MHS-SM-"+(1000+ parseInt(data[0].booking_id)));
+            $("#edit_booking_id_concat").val("MHS-SM-" + (1000 + parseInt(data[0].booking_id)));
             $("#booking_edit_date").val(data[0].bookingDate);
             $("#booking_edit_program_date").val(data[0].eventDate);
             $("#booking_edit_program_day").val(data[0].eventDay);
@@ -1970,7 +2046,7 @@ const bookEditEvent = (editId) => {
 //     bguest: no_of_guests,
 //   };
 //   console.log(editbookingObj);
-//   fetch("http://localhost/mhs_api/ves_api/api-update-booking.php", {
+//   fetch("https://vesapi.ves-engr.com/api-update-booking.php", {
 //     method: "POST",
 //     body: JSON.stringify(editbookingObj),
 //   })
@@ -1987,7 +2063,7 @@ const bookEditEvent = (editId) => {
 //     bokid: delId,
 //   };
 //   if (confirm("do you want to delete?")) {
-//     fetch("http://localhost/mhs_api/ves_api/api-update-booking.php", {
+//     fetch("https://vesapi.ves-engr.com/api-update-booking.php", {
 //       method: "POST",
 //       body: JSON.stringify(DelBookingObj),
 //     })
@@ -2014,7 +2090,7 @@ window.onload = () => {
         "-" +
         d.getFullYear();
     hello(output);
-    fetch("http://localhost/mhs_api/ves_api/api-fetch-all-booking.php")
+    fetch("https://vesapi.ves-engr.com/api-fetch-all-booking.php")
         .then((result) => {
             return result.json();
         })
@@ -2050,7 +2126,7 @@ window.onload = () => {
         .catch((err) => {
             throw err;
         });
-    // fetch("http://localhost/mhs_api/ves_api/api-target-fetch-all.php")
+    // fetch("https://vesapi.ves-engr.com/api-target-fetch-all.php")
     //   .then((result) => {
     //     return result.json();
     //   })
@@ -2070,7 +2146,7 @@ window.onload = () => {
 
     //   })
 };
-const monthChange = () => {
+const monthChange = (monthIndex) => {
     console.log("hello ");
     var d = new Date();
     var month = d.getMonth() + 1;
@@ -2085,7 +2161,7 @@ const monthChange = () => {
         d.getFullYear();
     // console.log(output);
     hello(output);
-    fetch("http://localhost/mhs_api/ves_api/api-fetch-all-booking.php")
+    fetch("https://vesapi.ves-engr.com/api-fetch-all-booking.php")
         .then((result) => {
             return result.json();
         })
@@ -2123,6 +2199,8 @@ const monthChange = () => {
         .catch((err) => {
             throw err;
         });
+    localStorage.setItem('monthIndex', monthIndex)
+
 };
 
 const balanceCal = () => {
@@ -2160,10 +2238,10 @@ function changeTargetBorder(getTargetDate) {
     let pushTargetDateObj = {
         targetDate: change_format,
     };
-    fetch("http://localhost/mhs_api/ves_api/api-target-fetch.php", {
-            method: "POST",
-            body: JSON.stringify(pushTargetDateObj),
-        })
+    fetch("https://vesapi.ves-engr.com/api-target-fetch.php", {
+        method: "POST",
+        body: JSON.stringify(pushTargetDateObj),
+    })
         .then((result) => {
             return result.json();
         })
@@ -2185,10 +2263,10 @@ const fetchTarget = () => {
     let pushTargetDateObj = {
         targetDate: targetDate,
     };
-    fetch("http://localhost/mhs_api/ves_api/api-target-fetch.php", {
-            method: "POST",
-            body: JSON.stringify(pushTargetDateObj),
-        })
+    fetch("https://vesapi.ves-engr.com/api-target-fetch.php", {
+        method: "POST",
+        body: JSON.stringify(pushTargetDateObj),
+    })
         .then((result) => {
             return result.json();
         })
@@ -2300,22 +2378,22 @@ const updateTarget = (getShift, getHall) => {
     let targetID = document.getElementById("targetId-" + getHall + "-" + getShift).value;
     let targetPrice = document.getElementById("amnt-" + getHall + "-" + getShift).value;
     let UpdateTargetData = {
-        targetID : targetID,
+        targetID: targetID,
         targetPrice: targetPrice,
         targetDate: targetDate,
         targetHall: selectedHall,
         targetshift: selectedShift,
     };
 
-    fetch("http://localhost/mhs_api/ves_api/api-target-update.php", {
-            method: "POST",
-            body: JSON.stringify(UpdateTargetData),
-        })
+    fetch("https://vesapi.ves-engr.com/api-target-update.php", {
+        method: "POST",
+        body: JSON.stringify(UpdateTargetData),
+    })
         .then((result) => {
             return result.json();
         })
-        .then(()=>
-        console.log("item update "))
+        .then(() =>
+            console.log("item update "))
         .catch((err) => {
             throw err;
         });
@@ -2334,10 +2412,10 @@ const addTargetHandler = (getShift, getHall) => {
         targetshift: selectedShift,
     };
 
-    fetch("http://localhost/mhs_api/ves_api/api-target-insert.php", {
-            method: "POST",
-            body: JSON.stringify(PushTargetData),
-        })
+    fetch("https://vesapi.ves-engr.com/api-target-insert.php", {
+        method: "POST",
+        body: JSON.stringify(PushTargetData),
+    })
         .then((result) => {
             return result.json();
         })

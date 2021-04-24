@@ -13,7 +13,7 @@ window.onload = () => {
     let html_payment = ''
     let total_payment = 0;
 
-    fetch("http://localhost/mhs_api/ves_api/api-fetchId-booking.php", {
+    fetch("https://vesapi.ves-engr.com/api-fetchId-booking.php", {
             method: "POST",
             body: JSON.stringify(fetchbookDetailObj),
         })
@@ -27,14 +27,14 @@ window.onload = () => {
             booking_amnt = data[0].bookingAmount
             bookingDate = data[0].bookingDate
             html_payment += '<tr>'
-            html_payment += '<td scope="row">' + (1) + '</td>'
-            html_payment += '<td>' + bookingDate + '</td>'
+            html_payment += '<td scope="row" class="text-center">' + (1) + '</td>'
+            html_payment += '<td class="text-center">' + bookingDate + '</td>'
             html_payment += '<td>' + advAmnt + '</td>'
             html_payment += '</tr>'
 
         })
         .then(() => {
-            fetch("http://localhost/mhs_api/ves_api/api-fetchpayments-booking.php", {
+            fetch("https://vesapi.ves-engr.com/api-fetchpayments-booking.php", {
                     method: "POST",
                     body: JSON.stringify(fetchbookDetailObj),
                 })
@@ -45,8 +45,8 @@ window.onload = () => {
                     for (var i = 0; i < data.length; i++) {
                         let split_date = data[i].payment_date.split(" ")
                         html_payment += '<tr>'
-                        html_payment += '<td scope="row">' + (i + 2) + '</td>'
-                        html_payment += '<td>' + split_date[0] + '</td>'
+                        html_payment += '<td scope="row" class="text-center">' + (i + 2) + '</td>'
+                        html_payment += '<td class="text-center">' + split_date[0] + '</td>'
                         html_payment += '<td>' + data[i].partial_payments + '</td>'
                         html_payment += '</tr>'
                         total_payment += parseFloat(data[i].partial_payments)

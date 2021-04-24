@@ -7,7 +7,7 @@ window.onload = () => {
   let editBookingIdObj = {
     bookId: $.urlParam('id')
   };
-  fetch("http://localhost/mhs_api/ves_api/api-fetchId-booking.php", {
+  fetch("https://vesapi.ves-engr.com/api-fetchId-booking.php", {
     method: "POST",
     body: JSON.stringify(editBookingIdObj),
   })

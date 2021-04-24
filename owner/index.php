@@ -333,7 +333,7 @@
     let calendarEvents = [];
 
     // $(document).ready(function() {
-    let url = "http://localhost/mhs_api/ves_api/api-fetch-all.php";
+    let url = "https://vesapi.ves-engr.com/api-fetch-all.php";
     fetch(url)
       .then((res) => res.json())
       .then((out) => {
