@@ -1,7 +1,0 @@
- // fetch("http://localhost/API_Inquery/api-insert.php",{
-        //   method:"POST",
-        //   body: JSON.stringify(push_data)
-        // }).then(result.json())
-        // .then((json)=>{
-        //   console.log(json)
-        // })
