@@ -212,3 +212,11 @@ table#OwnerTargetBox h3 {
   font-size: 22px;
   font-family: sans-serif;
 }
+.btns_group{
+  display: flex;
+}
+.columns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

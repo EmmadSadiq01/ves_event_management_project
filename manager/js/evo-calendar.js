@@ -2415,5 +2415,7 @@ const getTargetValue = () => {
     });
 }
 const addPackages = () =>{
+    fetchPkgData()
     $('#addPackages').modal("show")
+
 }
