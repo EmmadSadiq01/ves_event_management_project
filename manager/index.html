@@ -514,53 +514,57 @@
   </div>
   <!--Add Packages Modal -->
   <div class="modal fade" id="addPackages" tabindex="-1" aria-labelledby="addPackagesModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Packages</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form onsubmit="">
+        <form>
           <div class="modal-body">
-            <div class="row" id="addPackagesBox">
+            <div class="showBookedPkgs">
+              <table class="table ">
+                <table class="table table-bordered text-center" id="pkgTable">
 
-              <div class="col-3 small-6 columns">
-                <select name="add_package_name" class="form-control" placeholder="Package Name">
-                  <option value="">pkg1</option>
-                  <option value="">pkg2</option>
-                  <option value="">pkg3</option>
+
+                </table>
+            </div>
+            <div class="row" id="addPackagesBox">
+              <input type="hidden" id="packageBookingId">
+              <div class="col-2 small-6 columns">
+                <select name="add_package_name" class="form-control" placeholder="Package Name" id="select_pkg_1"
+                  onchange="getSelectPkgPrice(1)">
+                  <option value="">select</option>
                 </select>
               </div>
-              <div class="col-3 small-6 columns">
-                <input type="text" name="add_package_price" class="form-control" placeholder="Package Price">
+              <div class="col-2 small-6 columns">
+                <input type="text" name="add_package_price" class="form-control" placeholder="Package Price"
+                  id="select_pkg_price_1" onchange="calculateTotal(this.id.slice(15))">
               </div>
-              <div class="col-3 small-6 columns">
-                <input type="checkbox" class="mx-3"> <label for="">Included</label>
+              <div class="col-2 small-6 columns">
+                <input type="number" name="add_package_qty" class="form-control" placeholder="Qunantity"
+                  id="select_pkg_qty_1" onchange="calculateTotal(this.id.slice(15))">
+                <input type="number" name="add_package_calculate" class="form-control" placeholder="Total"
+                  id="select_pkg_calculate_1" disabled>
               </div>
-              <div class="col-3 small-6 columns">
+
+              <div class="col-2 small-6 columns">
+                <textarea name="pkg_desc" id="pkg_desc_1" class="form-control" cols="30" rows="1"
+                  placeholder="Pakage Description"></textarea>
+              </div>
+
+              <div class="col-2 small-6 columns">
+                <input type="checkbox" class="mx-3" id="include_1"> <label for="">Included</label>
+              </div>
+
+              <div class="col-2 small-6 columns">
                 <div class="btn btn-warning" onclick="addPackageRow()">Add</div>
               </div>
-              <div class="col-3 small-6 columns">
-                <select name="add_package_name" class="form-control" placeholder="Package Name">
-                  <option value="">pkg1</option>
-                  <option value="">pkg2</option>
-                  <option value="">pkg3</option>
-                </select>
-              </div>
-              <div class="col-3 small-6 columns">
-                <input type="text" name="add_package_price" class="form-control" placeholder="Package Price">
-              </div>
-              <div class="col-3 small-6 columns">
-                <input type="checkbox" class="mx-3"> <label for="">Included</label>
-              </div>
-              <div class="col-3 small-6 columns">
-                <div class="btn btn-warning" onclick="addPackageRow()">Add</div>
-              </div>
+
             </div>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-
+            <button type="button" class="btn btn-primary" onclick="addPakages()">Submit</button>
           </div>
         </form>
       </div>
@@ -589,7 +593,12 @@
               </div>
               <div class="row">
                 <div class="small-12 columns">
-                  <input type="number" required name="pkg_price" id="pkg_price" placeholder="Package Price">
+                  <input type="number" required name="pkg_price" id="pkg_price" placeholder="Sell Price">
+                </div>
+              </div>
+              <div class="row">
+                <div class="small-12 columns">
+                  <input type="number" required name="pkg_ret_price" id="pkg_ret_price" placeholder="Return Price">
                 </div>
               </div>
             </div>
@@ -598,10 +607,54 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-primary" onclick="addPkgData()">Submit</button>
             </div>
+          </div>
         </form>
       </div>
     </div>
   </div>
+  <!--Return Packages-->
+  <div class="modal fade" id="returnPackages" tabindex="-1" role="dialog" aria-labelledby="returnPackagesLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="returnPackagesLabel">Return Packages</h5>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+        </div>
+        <form action="" class="row align-center">
+          <div class="modal-body">
+<input type="hidden" id="return_pak_pkgId">
+<input type="hidden" id="return_pak_pkgBookId">
+            <div class="small-12 medium-6 small-centered">
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Return Package</span>
+                <input type="text" class="form-control" placeholder="Username" name="return_pak_name" id="return_pak_name" aria-label="Username" aria-describedby="basic-addon1">
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Return Price</span>
+                <input type="text" class="form-control" placeholder="Username" name="return_pak_price" id="return_pak_price" aria-label="Username" aria-describedby="basic-addon1">
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Qunantity</span>
+                <input type="number" class="form-control" placeholder="Username" name="return_pak_qty" id="return_pak_qty" aria-label="Username" aria-describedby="basic-addon1" onchange="totalReturn()">
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Total</span>
+                <input type="number" class="form-control" placeholder="Username" name="return_pak_total" id="return_pak_total" aria-label="Username" aria-describedby="basic-addon1">
+              </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" onclick="addPkgData()">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 
 
@@ -633,9 +686,10 @@
     let newEnvents = [];
     let after_split = "";
     let calendarEvents = [];
+    let add_row = 2;
 
     // $(document).ready(function() {
-    let url = "https://vesapi.ves-engr.com/api-fetch-all.php";
+    let url = "http://localhost/mhs_api/ves_api/api-fetch-all.php";
     fetch(url)
       .then((res) => res.json())
       .then((out) => {
@@ -909,34 +963,42 @@
     };
     const addPackageRow = () => {
       let html = '';
-      html += '<div class="col-3  small-6 columns">'
-      html += '<select name="add_package_name" class="form-control"  placeholder="Package Name">'
-      html += ' <option value="">pkg1</option>'
-      html += ' <option value="">pkg2</option>'
-      html += ' <option value="">pkg3</option>'
+
+      html += '<div class="col-2  small-6 columns">'
+      html += '<select name="add_package_name" class="form-control"  placeholder="Package Name" id="select_pkg_' + add_row + '"  onchange="getSelectPkgPrice(' + add_row + ')">'
+      html += ' <option value="">select</option>'
       html += '  </select>'
       html += ' </div>'
-      html += ' <div class="col-3 small-6 columns">'
-      html += '  <input type="text" name="add_package_price" class="form-control"  placeholder="Package Price">'
+      html += ' <div class="col-2 small-6 columns">'
+      html += '  <input type="text" name="add_package_price" class="form-control"  placeholder="Package Price"  id="select_pkg_price_' + add_row + '">'
       html += ' </div>'
-      html += '<div class="col-3 small-6 columns">'
-      html += '<input type="checkbox" class="mx-3"> <label for="">Included</label>'
+      html += ' <div class="col-2 small-6 columns">'
+      html += '<input type="number" name="add_package_qty" class="form-control" placeholder="Qunantity" id="select_pkg_qty_' + add_row + '"  onchange="calculateTotal(this.id.slice(15))">'
+      html += '   <input type="number" name="add_package_calculate" class="form-control" placeholder="Total"  id="select_pkg_calculate_' + add_row + '" disabled></div>'
+      html += '   <div class="col-2 small-6 columns">'
+      html += '<textarea name="pkg_desc" id="pkg_desc_' + add_row + '"  class="form-control"  cols="30" rows="1" placeholder="Pakage Description"></textarea>'
       html += '</div>'
-      html += '<div class="col-3 small-6 columns">'
+      html += '<div class="col-2 small-6 columns">'
+      html += '<input type="checkbox" class="mx-3" id="include_' + add_row + '"> <label for="">Included</label>'
+      html += '</div>'
+      html += '<div class="col-2 small-6 columns">'
       html += ' <div class="btn btn-warning" onclick="addPackageRow()">Add</div>'
       html += ' </div>'
-      $('#addPackagesBox').append(html);
-      console.log("add row")
 
+      $('#addPackagesBox').append(html);
+      fetchPkgData(add_row)
+      add_row += 1;
 
 
     }
     const addPkgData = () => {
       let pkg_name = $('#package_name').val();
       let pkg_amnt = $('#pkg_price').val()
+      let return_price = $('#pkg_ret_price').val()
       let pushPakageDataObj = {
         pkgName: pkg_name,
-        pkgAmnt: pkg_amnt
+        pkgAmnt: pkg_amnt,
+        return_price: return_price
       }
       fetch('http://localhost/mhs_api/ves_api/api-pkg-insert.php', {
         method: 'POST',
@@ -949,14 +1011,84 @@
           throw err;
         });
     }
-    const fetchPkgData = () => {
+    const fetchPkgData = (row_num) => {
       fetch('http://localhost/mhs_api/ves_api/api-pkg-fetch.php')
         .then((data) => {
           return data.json()
         })
         .then((res) => {
-          console.log(res[0])
+          let pkgObjLength = res.length
+          for (let i = 0; i < pkgObjLength; i++) {
+            $('#select_pkg_' + row_num).append(' <option value="' + res[i].packages_id + '">' + res[i].package_name + '</option>')
+          }
         })
+    }
+    const getSelectPkgPrice = (row_num) => {
+      let getPriceID = {
+        pkgId: $('#select_pkg_' + row_num).val()
+      }
+      fetch('http://localhost/mhs_api/ves_api/api-pkg-getPrice.php', {
+        method: 'POST',
+        body: JSON.stringify(getPriceID)
+      })
+        .then((res) => {
+          return res.json()
+        })
+        .then((render) => {
+          $('#select_pkg_price_' + row_num).val(render[0].pkg_cost)
+        })
+    }
+    const addPakages = () => {
+      let pkg_price = ''
+      let selected_pk = ''
+      let selected_pkg_name = ''
+      let booking_id = ''
+      let included = ''
+      // console.log(add_row)
+      for (let i = 1; i < add_row; i++) {
+        pkg_price = $('#select_pkg_calculate_' + i).val()
+        selected_pkg = $('#select_pkg_' + i).val()
+        qty_pkg = $('#select_pkg_qty_' + i).val()
+        desc_pkg = $('#pkg_desc_' + i).val()
+        selected_pkg_name = $('#select_pkg_' + i + ' :selected').text()
+        booking_id = $('#packageBookingId').val()
+
+        if ($('#include_' + i).is(' :checked')) {
+          included = 'included';
+        }
+        else {
+          included = 'not included'
+        }
+        // console.log($('#include_'+i))
+        let addPackageObj = {
+          pkg_id: selected_pkg,
+          pkg_name: selected_pkg_name,
+          pkg_cost: pkg_price,
+          qty_pkg: qty_pkg,
+          pkg_desc: desc_pkg,
+          booking_id: booking_id,
+          included: included
+        }
+        console.log(addPackageObj)
+        fetch('http://localhost/mhs_api/ves_api/api-bookedPackages-insert.php', {
+          method: 'POST',
+          body: JSON.stringify(addPackageObj)
+        })
+          .then((res) => {
+            return res.json()
+          })
+          .catch((err) => {
+            throw err
+          })
+      }
+
+
+
+
+    }
+    const calculateTotal = (id) => {
+      $('#select_pkg_calculate_' + id).val($('#select_pkg_price_' + id).val() * $('#select_pkg_qty_' + id).val())
+
     }
   </script>
 

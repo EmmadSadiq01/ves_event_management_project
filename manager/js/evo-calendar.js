@@ -429,7 +429,7 @@
 
             // ACTIVE
             _.$active = {
-                month: (localStorage.getItem("monthIndex")===null)?_.$current.month:localStorage.getItem("monthIndex"),
+                month: (localStorage.getItem("monthIndex") === null) ? _.$current.month : localStorage.getItem("monthIndex"),
                 year: _.$current.year,
                 date: _.$current.date,
                 event_date: _.$current.date,
@@ -844,7 +844,7 @@
                 markup +=
                     '<li class="month" role="button" data-month-val="' +
                     i +
-                    '" onclick="monthChange('+i+')">' +
+                    '" onclick="monthChange(' + i + ')">' +
                     _.initials.dates[_.options.language].months[i] +
                     "</li>";
             }
@@ -873,22 +873,22 @@
             // events
             markup +=
                 '<div class="calendar-events"><div class="target-box"  ><table class="target" id="OwnerTargetBox">'
-                markup +='<tr><td colspan="6"><h3>BOOKING TARGET</h3></td></tr>'
-                markup +='<tr>'
-                markup +='<th rowspan="2">A</th>'
-                markup +='<td><i class="fas fa-sun"></i></td>'
-                markup +='<td id="mor_target_a">0</td>'
-                markup +='<th rowspan="2">B</th>'
-                markup +='<td><i class="fas fa-sun"></i></td>'
-                markup +='<td id="mor_target_b">0</td>'
-                markup +='</tr>'
-                markup +='<tr>'
-                markup +='<td><i class="fas fa-moon"></i></td>'
-                markup +='<td id="eve_target_a" >0</td>'
-                markup +='<td><i class="fas fa-moon"></i></td>'
-                markup +='<td id="eve_target_b" >0</td>'
-                markup +=' </tr>'
-                markup +='</table></div>' +
+            markup += '<tr><td colspan="6"><h3>BOOKING TARGET</h3></td></tr>'
+            markup += '<tr>'
+            markup += '<th rowspan="2">A</th>'
+            markup += '<td><i class="fas fa-sun"></i></td>'
+            markup += '<td id="mor_target_a">0</td>'
+            markup += '<th rowspan="2">B</th>'
+            markup += '<td><i class="fas fa-sun"></i></td>'
+            markup += '<td id="mor_target_b">0</td>'
+            markup += '</tr>'
+            markup += '<tr>'
+            markup += '<td><i class="fas fa-moon"></i></td>'
+            markup += '<td id="eve_target_a" >0</td>'
+            markup += '<td><i class="fas fa-moon"></i></td>'
+            markup += '<td id="eve_target_b" >0</td>'
+            markup += ' </tr>'
+            markup += '</table></div>' +
                 '<div class="event-header"><p></p><span id="islDate"></span></div>' +
                 '<div class="event-list"></div>' +
                 ' <div class="action_btns mt-3"><button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="add_event">Inquiry</button><button  type="button" class="btn btn-success"style="margin-left:5px" data-bs-toggle="modal" data-bs-target="#booking_modal" id="add_event" onclick="BookingEventHandler()">Booking</button></div></div>';
@@ -1739,9 +1739,9 @@ const showBookings = (selectDate) => {
                         booking_id +
                         "' onclick='balancePayment(this.id)'>Add Balance</button>";
 
-                    html +="<button type='button' class='btn btn-danger' id='" +
+                    html += "<button type='button' class='btn btn-danger' id='" +
                         booking_id +
-                        "' onclick='addPackages()'>Add Packges</button></div></div>";
+                        "' onclick='addPackages(this.id)'>Add Packges</button></div></div>";
                     $("#booking_view").html(html);
                 }
             }
@@ -1773,7 +1773,7 @@ const showBookings = (selectDate) => {
                         // html_setTarget += '<td><i class="fas fa-sun"></i></td>';
                         // html_setTarget += '<td >' + data[i].target_price + "</td>";
                         // html_setTarget += "</tr>";
-                        $("#mor_target_a").html(data[i].target_price )
+                        $("#mor_target_a").html(data[i].target_price)
 
                     } else if (data[i].selectHall === "a" && data[i].selectShift === "evening") {
                         // html_setTarget += "<tr>";
@@ -1781,7 +1781,7 @@ const showBookings = (selectDate) => {
                         // html_setTarget += '<td ><i class="fas fa-moon"></i></td>';
                         // html_setTarget += '<td >' + data[i].target_price + "</td>";
                         // html_setTarget += "</tr>";
-                        $("#eve_target_a").html(data[i].target_price )
+                        $("#eve_target_a").html(data[i].target_price)
 
                     } else if (data[i].selectHall === "b" && data[i].selectShift === "morning") {
                         // html_setTarget += "<tr>";
@@ -1789,7 +1789,7 @@ const showBookings = (selectDate) => {
                         // html_setTarget += '<td><i class="fas fa-sun"></i></td>';
                         // html_setTarget += '<td >' + data[i].target_price + "</td>";
                         // html_setTarget += "</tr>";
-                        $("#mor_target_b").html(data[i].target_price )
+                        $("#mor_target_b").html(data[i].target_price)
 
                     } else if (
                         data[i].selectHall === "b" &&
@@ -1802,12 +1802,12 @@ const showBookings = (selectDate) => {
                         // html_setTarget +=
                         //     '<td >' + data[i].target_price + "</td>";
                         // html_setTarget += "</tr>";
-                        $("#eve_target_b").html(data[i].target_price )
+                        $("#eve_target_b").html(data[i].target_price)
 
                     }
                 }
             }
-             else {
+            else {
                 // html_setTarget = "";
                 // $("#OwnerTargetBox").html("");
                 // console.log("empty")
@@ -2275,7 +2275,7 @@ window.onload = () => {
     // })
 
 };
-const monthChange = (monthIndex) => { 
+const monthChange = (monthIndex) => {
     var d = new Date();
     var month = d.getMonth() + 1;
     var day = d.getDate();
@@ -2323,8 +2323,8 @@ const monthChange = (monthIndex) => {
         .catch((err) => {
             throw err;
         });
-        console.log("this month",monthIndex )
-        localStorage.setItem('monthIndex',monthIndex)
+    console.log("this month", monthIndex)
+    localStorage.setItem('monthIndex', monthIndex)
 }
 
 
@@ -2414,8 +2414,131 @@ const getTargetValue = () => {
         }
     });
 }
-const addPackages = () =>{
-    fetchPkgData()
+const addPackages = (bookID) => {
+    fetchPkgData(1)
+    $('#packageBookingId').val(bookID)
+    fetchBookPkgs(bookID)
     $('#addPackages').modal("show")
 
 }
+const fetchBookPkgs = (bookID) => {
+    // let html = ''
+    // $('#pkgTable').html(html);
+    html = '<thead>'
+    html += '<tr>'
+    html += ' <th>#</th>'
+    html += '<th>Date</th>'
+    html += '<th>Package</th>'
+    html += ' <th>Amount</th>'
+    html += ' <th>Description</th>'
+    html += '<th>Type</th>'
+    html += '<th>Action</th>'
+    html += '</tr>'
+    html += '</thead>'
+
+    let BookIdObj = {
+        bookId: bookID
+    }
+    fetch('http://localhost/mhs_api/ves_api/api-bookedPackages-fetch.php', {
+        method: 'POST',
+        body: JSON.stringify(BookIdObj)
+    })
+
+        .then((res) => {
+            return res.json()
+        })
+        .then((data) => {
+            // let bookId = ''
+            // let pkg_id = ''
+            // let pkg_name = ''
+            // let pkg_cost = ''
+            html += '<tbody>'
+            for (i = 0; i < data.length; i++) {
+                // bookId = data[i].booking_id
+                // pkg_id = data[i].pkg_id
+                // pkg_name = data[i].pkg_name
+                // pkg_cost = data[i].pkg_cost
+                // included = data[i].included
+                // included = data[i].datetime
+                html += ' <tr>'
+                html += '<td>' + (1 + i) + '</td>'
+                html += '<td>' + data[i].datetime + '</td>'
+                html += '<td>' + data[i].pkg_name + '</td>'
+                html += '<td class="pkgCost">' + ((data[i].included === 'included') ? '0' : data[i].pkg_cost) + '</td>'
+                html += '<td>' + data[i].pkg_desc + '</td>'
+                html += '<td>' + data[i].included + '</td>'
+                html += '<td><a href="#" id="'+data[i].id+'" onclick="returnPkg(this.id)">Return</a></td>'
+                html += '</tr>'
+            }
+            html += '</tbody>'
+            html += '<tfoot>'
+            html += '<td colspan="6"> total </th>'
+            html += '<td id="totalPkgCost"> </th>'
+            html += '</tfoot>'
+            $('#pkgTable').html(html);
+
+            var total = 0;
+            $(".pkgCost").each(function () {
+                total += parseFloat($(this).text())
+                console.log(total);
+            });
+            $('#totalPkgCost').html(total);
+        })
+}
+const returnPkg = (id) =>{
+ 
+    let returnPkgId = {
+        packageId : id
+    }
+    fetch('http://localhost/mhs_api/ves_api/api-bookedPackages-fetchById.php',{
+        method: "POST",
+        body: JSON.stringify(returnPkgId)
+    })
+    .then((res)=>{
+        return res.json()
+    })
+    .then((data)=>{
+        $('#return_pak_name').val(data[0].pkg_name)
+        $('#return_pak_price').val(data[0].pkg_cost)        
+        $('#return_pak_pkgId').val(data[0].pkg_id)        
+        $('#return_pak_pkgBookId').val(data[0].id   )        
+    })
+    .catch(err=>{
+        throw err 
+    })
+    // $('#returnPackages').modal('hide')
+    $('#returnPackages').modal('show')
+}
+
+const totalReturn = () =>{       
+        let price =  $('#return_pak_price').val()
+        let qty =  $('#return_pak_qty').val()
+        $('#return_pak_total').val(price * qty)
+}
+
+// const submitReturn = ()=>{
+//         amnt =  $('#return_pak_price').val() 
+//         selected_pkg = $('#return_pak_pkgId').val()
+//         qty_pkg = $('#return_pak_qty').val()
+//         selected_pkg_name = $('#return_pak_name').val()
+//         bookpkg_id = $('#return_pak_pkgBookId').val()
+//     let returndata = {
+//         pkg_id: selected_pkg,
+//         pkg_name: selected_pkg_name,
+//         pkg_cost: pkg_price,
+//         qty_pkg: qty_pkg,
+//         pkg_desc: desc_pkg,
+//         booking_id: booking_id,
+//         included: included
+//     }
+//     fetch('http://localhost/mhs_api/ves_api/api-bookedPackages-fetchById.php',{
+//         method: "POST",
+//         body: JSON.stringify(returndata)
+//     })
+//     .then((res)=>{
+//         return res.json()
+//     })
+//     .catch(err=>{
+//         throw err 
+//     })
+// }

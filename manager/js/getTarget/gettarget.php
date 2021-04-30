@@ -1,6 +1,6 @@
 
 <?php
-    $conn = mysqli_connect("localhost","vesengrc_mhsuser","vesengrc@123","vesengrc_mhs") or die("Connection Failed");
+    $conn = mysqli_connect("localhost","root","","mhs_db") or die("Connection Failed");
 
         $hall = $_POST['hall'];
         $shift = $_POST['shift'];

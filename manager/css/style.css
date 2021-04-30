@@ -220,3 +220,15 @@ table#OwnerTargetBox h3 {
   align-items: center;
   justify-content: center;
 }
+@media (min-width: 992px){
+
+ #addPackages .modal-lg{
+      max-width: 95% !important;
+  }
+}
+#addPackagesBox .columns {
+  margin-top: 6px !important;
+}
+input#select_pkg_calculate_1 {
+  margin-left: 10px ;
+}
