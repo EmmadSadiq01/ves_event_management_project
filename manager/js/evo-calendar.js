@@ -1655,7 +1655,6 @@ function hello(selectDate) {
             isl_date = out.data.hijri.day;
             isl_month = out.data.hijri.month.ar;
             isl_year = out.data.hijri.year;
-            //   console.log('Checkout this JSON! ', first_date_year);
             //   alert(first_date_year)
             $(".event-header > span").html(
                 isl_date + "-" + isl_month + "-" + isl_year
@@ -1701,7 +1700,6 @@ const showBookings = (selectDate) => {
                     let booking_amnt = data[i].bookingAmount;
                     let booking_ = (date = data[i].bookingDate);
                     let booking_id = data[i].booking_id;
-                    // console.log("currentTime", data[i].currentTime);
                     let eventDate = data[i].eventDate;
                     let eventDay = data[i].eventDay;
                     let eventName = data[i].eventName;
@@ -1766,7 +1764,6 @@ const showBookings = (selectDate) => {
         .then((data) => {
             if (data.length > 0) {
                 for (let i = 0; i < data.length; i++) {
-                    console.log(i, "=> data");
                     if (data[i].selectHall === "a" && data[i].selectShift === "morning") {
                         // html_setTarget += "<tr>";
                         // html_setTarget += '<td rowspan="2">A</td>';
@@ -1825,7 +1822,6 @@ const showBookings = (selectDate) => {
 };
 
 const deleteInquiryEvent = (delId) => {
-    console.log(delId);
     let delIdObj = {
         inqid: delId,
     };
@@ -1873,20 +1869,16 @@ const editInquiryEvent = (editId) => {
             if (data[0].hallportion === "a") {
                 $("#edit_b").prop("checked", false);
                 $("#edit_a").prop("checked", true);
-                // console.log("hello a");
             } else {
                 $("#edit_a").prop("checked", false);
                 $("#edit_b").prop("checked", true);
-                // console.log("hello b");
             }
             if (data[0].hall_shift === "morning") {
                 $("#edit_evening").prop("checked", false);
                 $("#edit_moning").prop("checked", true);
-                // console.log("hello a");
             } else {
                 $("#edit_moning").prop("checked", false);
                 $("#edit_evening").prop("checked", true);
-                // console.log("hello b");
             }
             $("#inq_print").html('<a href="screen/print_inquiry.html?id=' + editId + '" target="_blank" class="btn btn-primary ml-4">Go to Print</a>')
             $("#editModal").modal("show");
@@ -1911,7 +1903,6 @@ const BookingEventHandler = () => {
     $("#booking_date").val(output);
     // $("#booking_program_date").val(output);
 
-    console.log("2021-03-31", output);
 };
 
 const bookEditEvent = (editId) => {
@@ -1925,7 +1916,6 @@ const bookEditEvent = (editId) => {
     })
         .then((result) => {
             return result.json();
-            // console.log(editData);
         })
         .then((data) => {
             $("#edit_booking_id").val(data[0].booking_id);
@@ -1960,7 +1950,6 @@ const bookEditEvent = (editId) => {
             editBalanceCal()
             $("#print_btn").html(' <a href="http://localhost/Work%20Station/manager/screen/print_booking.html?id=' + data[0].booking_id + '" target="_blank" class="btn btn-primary ml-4">Go to Print</a>')
             $("#editBookingModal").modal("show");
-            // console.log(data[0])
         })
         .catch((err) => {
             throw err;
@@ -1989,18 +1978,13 @@ const BookingEditSubmissionHandler = () => {
     for (i = 0; i < edit_book_hall.length; i++) {
         if (edit_book_hall[i].checked) {
             hallAorB = edit_book_hall[i].value;
-            console.log(edit_book_hall[i].value);
         }
     }
-    console.log("hall Shift=>", hall_shift[0]);
     for (i = 0; i < hall_shift.length; i++) {
         if (hall_shift[i].checked) {
             EvenOrMorn = hall_shift[i].value;
-            console.log("shift=>", hall_shift[i].value);
         }
     }
-    // console.log(hallAorB)
-    // console.log(EvenOrMorn)
     let editbookingObj = {
         bokid: edit_book_id,
         bokdate: booking_current_date,
@@ -2019,7 +2003,6 @@ const BookingEditSubmissionHandler = () => {
         beventname: event_name,
         bguest: no_of_guests,
     };
-    console.log(editbookingObj);
     fetch("https://vesapi.ves-engr.com/api-update-booking.php", {
         method: "POST",
         body: JSON.stringify(editbookingObj),
@@ -2027,7 +2010,6 @@ const BookingEditSubmissionHandler = () => {
         .then((result) => {
             result.json();
         })
-        .then(() => console.log("sent successfull"))
         .catch((err) => {
             throw err;
         });
@@ -2241,9 +2223,7 @@ window.onload = () => {
                 if (data[i].hallportion === 'b') {
                     if (data[i].eventShift === "morning") {
                         $('#moonb' + change_format).append('<i class="fas fa-sun"></i>')
-                        console.log('#moonb' + change_format + "=>b is morning")
                     } else if (data[i].eventShift === "evening") {
-                        console.log("b is evening")
                         $('#moonb' + change_format).append('<i class="fas fa-moon"></i>')
                     }
                     $("#" + change_format).addClass("confirm-booking-b")
@@ -2323,7 +2303,6 @@ const monthChange = (monthIndex) => {
         .catch((err) => {
             throw err;
         });
-    console.log("this month", monthIndex)
     localStorage.setItem('monthIndex', monthIndex)
 }
 
@@ -2398,8 +2377,6 @@ const getTargetValue = () => {
             shift = shift_select[i].value;
         }
     }
-
-    console.log(hall, shift, event_date)
     $.ajax({
         url: "js/getTarget/gettarget.php",
         method: "POST",
@@ -2409,7 +2386,6 @@ const getTargetValue = () => {
             event_date: event_date
         },
         success: function (data) {
-            console.log(data);
             $("#targetValue").val(data);
         }
     });
@@ -2429,7 +2405,9 @@ const fetchBookPkgs = (bookID) => {
     html += ' <th>#</th>'
     html += '<th>Date</th>'
     html += '<th>Package</th>'
-    html += ' <th>Amount</th>'
+    html += '<th>Purchase</th>'
+    html += '<th>Return</th>'
+    html += ' <th>Total</th>'
     html += ' <th>Description</th>'
     html += '<th>Type</th>'
     html += '<th>Action</th>'
@@ -2465,14 +2443,47 @@ const fetchBookPkgs = (bookID) => {
                 html += '<td>' + data[i].datetime + '</td>'
                 html += '<td>' + data[i].pkg_name + '</td>'
                 html += '<td class="pkgCost">' + ((data[i].included === 'included') ? '0' : data[i].pkg_cost) + '</td>'
+                html += '<td class="returnAmnt" id="return_' + i + '">' + data[i].return_amnt + '</td>'
+                // if (data[i].included === 'included') {
+                //     html += '<td class="returnAmnt">Rt</td>'
+
+                // }
+                // else {
+                //     // let amnt = 0;
+                //     // let sendData = {
+                //     //     booked_pkg_id: data[i].id
+                //     // }
+                //     // console.log(sendData)
+                //     // // html += getReturnData(sendData)
+                //     // let gethtml = getReturnData(sendData)
+                //     // gethtml.then(data=>{
+                //     //     // html +=data
+                //     //     console.log('return_'+i,'=>',data)
+                //     //     $('return_'+i).html(data)
+                //     // })
+                //     $.ajax({
+                //         url: "js/getReturnData/getData.php",
+                //         method: "POST",
+                //         data: {
+                //             booked_pkg_id: data[i].id
+                //         },
+                //         success: function (data) {
+                //             // $("#return_"+i).val(data);
+                //             console.log('return_'+i,'=>',data)
+                //         }
+                //     });
+
+
+                // }
+                html += '<td>total</td>'
                 html += '<td>' + data[i].pkg_desc + '</td>'
                 html += '<td>' + data[i].included + '</td>'
-                html += '<td><a href="#" id="'+data[i].id+'" onclick="returnPkg(this.id)">Return</a></td>'
+                html += '<td><a href="#" id="' + data[i].booking_pkg_id + '" onclick="returnPkg(this.id)">' + ((data[i].included === 'included') ? '' : 'Return') + 'Return</a></td>'
                 html += '</tr>'
             }
             html += '</tbody>'
             html += '<tfoot>'
-            html += '<td colspan="6"> total </th>'
+            html += '<td colspan="7"> total </th>'
             html += '<td id="totalPkgCost"> </th>'
             html += '</tfoot>'
             $('#pkgTable').html(html);
@@ -2480,65 +2491,102 @@ const fetchBookPkgs = (bookID) => {
             var total = 0;
             $(".pkgCost").each(function () {
                 total += parseFloat($(this).text())
-                console.log(total);
             });
             $('#totalPkgCost').html(total);
         })
 }
-const returnPkg = (id) =>{
- 
+// const getReturnData=(sendData)=>{
+//     let amnt = 0
+//     let pass = ''
+//     return fetch('http://localhost/mhs_api/ves_api/api-returnPackages-getAmnt.php', {
+//                         method: 'POST',
+//                         body: JSON.stringify(sendData)
+//                     }).then((res)=> {
+//                         return res.json()
+//                     }).then((get)=> {
+//                         for (let i = 0; i < get.length; i++) {
+//                             amnt += parseInt(get[i].amnt)
+//                             console.log('amnt=>', get[i].amnt)
+//                         }
+//                         // html += '<td class="returnAmnt">R' + amnt + '</td>'
+//                         // console.log('amnt=>', amnt)
+//                         return amnt
+//                     })
+//                     .then((myamnt)=>{
+//                         console.log(sendData,'=>', myamnt)
+//                         pass = '<td class="returnAmnt">R' + myamnt + '</td>'
+//                         return myamnt
+//                     })
+// // console.log("pass=>",pass)
+
+
+// }
+const returnPkg = (id) => {
+
     let returnPkgId = {
-        packageId : id
+        packageId: id
     }
-    fetch('http://localhost/mhs_api/ves_api/api-bookedPackages-fetchById.php',{
+    fetch('http://localhost/mhs_api/ves_api/api-bookedPackages-fetchById.php', {
         method: "POST",
         body: JSON.stringify(returnPkgId)
     })
-    .then((res)=>{
-        return res.json()
-    })
-    .then((data)=>{
-        $('#return_pak_name').val(data[0].pkg_name)
-        $('#return_pak_price').val(data[0].pkg_cost)        
-        $('#return_pak_pkgId').val(data[0].pkg_id)        
-        $('#return_pak_pkgBookId').val(data[0].id   )        
-    })
-    .catch(err=>{
-        throw err 
-    })
-    // $('#returnPackages').modal('hide')
+        .then((res) => {
+            return res.json()
+        })
+        .then((data) => {
+            $('#return_pak_name').val(data[0].pkg_name)
+            $('#return_pak_pkgId').val(data[0].pkg_id)
+            let sendData = {
+                pkg_id: data[0].pkg_id
+            }
+            fetch('http://localhost/mhs_api/ves_api/api-packages-getReturnPrice.php', {
+                method: "POST",
+                body: JSON.stringify(sendData)
+            }).then((res) => {
+                return res.json()
+            }).then(get => {
+                $('#return_pak_price').val(get[0].return_price)
+
+            })
+            $('#return_pak_pkgBookId').val(data[0].id)
+            $('#return_pak_bookingID').val(data[0].booking_id)
+        })
+        .catch(err => {
+            throw err
+        })
     $('#returnPackages').modal('show')
 }
 
-const totalReturn = () =>{       
-        let price =  $('#return_pak_price').val()
-        let qty =  $('#return_pak_qty').val()
-        $('#return_pak_total').val(price * qty)
+const totalReturn = () => {
+    let price = $('#return_pak_price').val()
+    let qty = $('#return_pak_qty').val()
+    $('#return_pak_total').val(price * qty)
 }
 
-// const submitReturn = ()=>{
-//         amnt =  $('#return_pak_price').val() 
-//         selected_pkg = $('#return_pak_pkgId').val()
-//         qty_pkg = $('#return_pak_qty').val()
-//         selected_pkg_name = $('#return_pak_name').val()
-//         bookpkg_id = $('#return_pak_pkgBookId').val()
-//     let returndata = {
-//         pkg_id: selected_pkg,
-//         pkg_name: selected_pkg_name,
-//         pkg_cost: pkg_price,
-//         qty_pkg: qty_pkg,
-//         pkg_desc: desc_pkg,
-//         booking_id: booking_id,
-//         included: included
-//     }
-//     fetch('http://localhost/mhs_api/ves_api/api-bookedPackages-fetchById.php',{
-//         method: "POST",
-//         body: JSON.stringify(returndata)
-//     })
-//     .then((res)=>{
-//         return res.json()
-//     })
-//     .catch(err=>{
-//         throw err 
-//     })
-// }
+const submitReturn = () => {
+    return_pak_price = $('#return_pak_price').val()
+    return_pak_qty = $('#return_pak_qty').val()
+    return_pak_name = $('#return_pak_name').val()
+    return_pak_total = $('#return_pak_total').val()
+    return_pak_pkgId = $('#return_pak_pkgId').val() // this is pkg id go to pkg_id
+    return_pak_pkgBookId = $('#return_pak_pkgBookId').val() // this is pkg booked id go to  pkg_booked_id
+    return_pak_bookingID = $('#return_pak_bookingID').val() // this is booking ID go to  book_id
+    let returnData = {
+        pkg_id: return_pak_pkgId,
+        booking_id: return_pak_bookingID,
+        pkg_booked_id: return_pak_pkgBookId,
+        pkg_name: return_pak_name,
+        pkg_cost: return_pak_total,
+        qty_pkg: return_pak_qty
+    }
+    fetch('http://localhost/mhs_api/ves_api/api-returnPackage-insert.php', {
+        method: "POST",
+        body: JSON.stringify(returnData)
+    })
+        .then((res) => {
+            return res.json()
+        })
+        .catch(err => {
+            throw err
+        })
+}
