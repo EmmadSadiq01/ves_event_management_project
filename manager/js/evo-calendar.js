@@ -1647,7 +1647,7 @@ function hello(selectDate) {
     let dayName = weekday[a.getDay()];
     // $("#booking_event_date").html(selectDate);
     let url =
-        "https://api.aladhan.com/v1/gToH?date=" + date + "-" + month + "-" + year;
+        "http://api.aladhan.com/v1/gToH?date=" + date + "-" + month + "-" + year;
 
     fetch(url)
         .then((res) => res.json())
@@ -1686,7 +1686,7 @@ const showBookings = (selectDate) => {
     let FetchEventObj = {
         eventDate: convertDate,
     };
-    fetch("https://vesapi.ves-engr.com/api-fetch-booking.php", {
+    fetch("http://localhost/mhs_api/ves_api/api-fetch-booking.php", {
         method: "POST",
         body: JSON.stringify(FetchEventObj),
     })
@@ -1754,7 +1754,7 @@ const showBookings = (selectDate) => {
     };
     let html_setTarget =
         ' <table class="text-center">'
-    fetch("https://vesapi.ves-engr.com/api-target-fetch.php", {
+    fetch("http://localhost/mhs_api/ves_api/api-target-fetch.php", {
         method: "POST",
         body: JSON.stringify(pushTargetDateObj),
     })
@@ -1826,7 +1826,7 @@ const deleteInquiryEvent = (delId) => {
         inqid: delId,
     };
     if (confirm("do you want to delete?")) {
-        fetch("https://vesapi.ves-engr.com/api-delete.php", {
+        fetch("http://localhost/mhs_api/ves_api/api-delete.php", {
             method: "POST",
             body: JSON.stringify(delIdObj),
         })
@@ -1846,7 +1846,7 @@ const editInquiryEvent = (editId) => {
     };
     $("#edit_inq_id_concat").val("MHS-SM-" + (1000 + parseInt(editId)));
     $("#edit_id").val(editId);
-    fetch("https://vesapi.ves-engr.com/api-fetch.php", {
+    fetch("http://localhost/mhs_api/ves_api/api-fetch.php", {
         method: "POST",
         body: JSON.stringify(editIdObj),
     })
@@ -1910,7 +1910,7 @@ const bookEditEvent = (editId) => {
         bookId: editId,
     };
     $("#edit_id").val(editBookingIdObj);
-    fetch("https://vesapi.ves-engr.com/api-fetchId-booking.php", {
+    fetch("http://localhost/mhs_api/ves_api/api-fetchId-booking.php", {
         method: "POST",
         body: JSON.stringify(editBookingIdObj),
     })
@@ -2003,7 +2003,7 @@ const BookingEditSubmissionHandler = () => {
         beventname: event_name,
         bguest: no_of_guests,
     };
-    fetch("https://vesapi.ves-engr.com/api-update-booking.php", {
+    fetch("http://localhost/mhs_api/ves_api/api-update-booking.php", {
         method: "POST",
         body: JSON.stringify(editbookingObj),
     })
@@ -2019,7 +2019,7 @@ const bookDeleteEvent = (delId) => {
         bokid: delId,
     };
     if (confirm("do you want to delete?")) {
-        fetch("https://vesapi.ves-engr.com/api-update-booking.php", {
+        fetch("http://localhost/mhs_api/ves_api/api-update-booking.php", {
             method: "POST",
             body: JSON.stringify(DelBookingObj),
         })
@@ -2064,7 +2064,7 @@ const balancePayment = (balId) => {
         bookId: balId,
     };
     // $("#edit_id").val(editBookingIdObj);
-    fetch("https://vesapi.ves-engr.com/api-fetchId-booking.php", {
+    fetch("http://localhost/mhs_api/ves_api/api-fetchId-booking.php", {
         method: "POST",
         body: JSON.stringify(editBookingIdObj),
     })
@@ -2094,7 +2094,7 @@ const balancePayment = (balId) => {
             let fetchPaymentObj = {
                 bookId: balId
             }
-            fetch("https://vesapi.ves-engr.com/api-fetchpayments-booking.php", {
+            fetch("http://localhost/mhs_api/ves_api/api-fetchpayments-booking.php", {
                 method: "POST",
                 body: JSON.stringify(fetchPaymentObj),
             })
@@ -2171,7 +2171,7 @@ const addPayment = () => {
         balPayment: balPayment,
     }
 
-    fetch("https://vesapi.ves-engr.com/api-addpayments-booking.php", {
+    fetch("http://localhost/mhs_api/ves_api/api-addpayments-booking.php", {
         method: "POST",
         body: JSON.stringify(addPaymentObj),
     })
@@ -2199,7 +2199,7 @@ window.onload = () => {
         "-" +
         d.getFullYear();
     hello(output);
-    fetch("https://vesapi.ves-engr.com/api-fetch-all-booking.php")
+    fetch("http://localhost/mhs_api/ves_api/api-fetch-all-booking.php")
         .then((result) => {
             return result.json();
         }).then((data) => {
@@ -2233,7 +2233,7 @@ window.onload = () => {
         .catch((err) => {
             throw err;
         });
-    // fetch("https://vesapi.ves-engr.com/api-target-fetch-all.php")
+    // fetch("http://localhost/mhs_api/ves_api/api-target-fetch-all.php")
     // .then((result) => {
     //   return result.json();
     // })
@@ -2268,7 +2268,7 @@ const monthChange = (monthIndex) => {
         "-" +
         d.getFullYear();
     hello(output);
-    fetch("https://vesapi.ves-engr.com/api-fetch-all-booking.php")
+    fetch("http://localhost/mhs_api/ves_api/api-fetch-all-booking.php")
         .then((result) => {
             return result.json();
         })
@@ -2343,7 +2343,7 @@ function changeTargetBorder(getTargetDate) {
     let pushTargetDateObj = {
         targetDate: change_format
     }
-    fetch("https://vesapi.ves-engr.com/api-target-fetch.php", {
+    fetch("http://localhost/mhs_api/ves_api/api-target-fetch.php", {
         method: "POST",
         body: JSON.stringify(pushTargetDateObj),
     })
@@ -2426,103 +2426,36 @@ const fetchBookPkgs = (bookID) => {
             return res.json()
         })
         .then((data) => {
-            // let bookId = ''
-            // let pkg_id = ''
-            // let pkg_name = ''
-            // let pkg_cost = ''
             html += '<tbody>'
             for (i = 0; i < data.length; i++) {
-                // bookId = data[i].booking_id
-                // pkg_id = data[i].pkg_id
-                // pkg_name = data[i].pkg_name
-                // pkg_cost = data[i].pkg_cost
-                // included = data[i].included
-                // included = data[i].datetime
                 html += ' <tr>'
                 html += '<td>' + (1 + i) + '</td>'
                 html += '<td>' + data[i].datetime + '</td>'
                 html += '<td>' + data[i].pkg_name + '</td>'
                 html += '<td class="pkgCost">' + ((data[i].included === 'included') ? '0' : data[i].pkg_cost) + '</td>'
                 html += '<td class="returnAmnt" id="return_' + i + '">' + data[i].return_amnt + '</td>'
-                // if (data[i].included === 'included') {
-                //     html += '<td class="returnAmnt">Rt</td>'
-
-                // }
-                // else {
-                //     // let amnt = 0;
-                //     // let sendData = {
-                //     //     booked_pkg_id: data[i].id
-                //     // }
-                //     // console.log(sendData)
-                //     // // html += getReturnData(sendData)
-                //     // let gethtml = getReturnData(sendData)
-                //     // gethtml.then(data=>{
-                //     //     // html +=data
-                //     //     console.log('return_'+i,'=>',data)
-                //     //     $('return_'+i).html(data)
-                //     // })
-                //     $.ajax({
-                //         url: "js/getReturnData/getData.php",
-                //         method: "POST",
-                //         data: {
-                //             booked_pkg_id: data[i].id
-                //         },
-                //         success: function (data) {
-                //             // $("#return_"+i).val(data);
-                //             console.log('return_'+i,'=>',data)
-                //         }
-                //     });
-
-
-                // }
-                html += '<td>total</td>'
+                html += '<td class="totalPkg">' + ((data[i].included === 'included') ? '0' : (data[i].pkg_cost - data[i].return_amnt)) + '</td>'
                 html += '<td>' + data[i].pkg_desc + '</td>'
                 html += '<td>' + data[i].included + '</td>'
-                html += '<td><a href="#" id="' + data[i].booking_pkg_id + '" onclick="returnPkg(this.id)">' + ((data[i].included === 'included') ? '' : 'Return') + 'Return</a></td>'
+                html += '<td>' + ((data[i].included === 'included') ? '' : '<a href="#" id="' + data[i].id + '" onclick="returnPkg(this.id)">Return</a>') + '</td>'
                 html += '</tr>'
             }
             html += '</tbody>'
             html += '<tfoot>'
-            html += '<td colspan="7"> total </th>'
+            html += '<td colspan="8"> total </th>'
             html += '<td id="totalPkgCost"> </th>'
             html += '</tfoot>'
             $('#pkgTable').html(html);
 
             var total = 0;
-            $(".pkgCost").each(function () {
+            $(".totalPkg").each(function () {
                 total += parseFloat($(this).text())
             });
             $('#totalPkgCost').html(total);
         })
 }
-// const getReturnData=(sendData)=>{
-//     let amnt = 0
-//     let pass = ''
-//     return fetch('http://localhost/mhs_api/ves_api/api-returnPackages-getAmnt.php', {
-//                         method: 'POST',
-//                         body: JSON.stringify(sendData)
-//                     }).then((res)=> {
-//                         return res.json()
-//                     }).then((get)=> {
-//                         for (let i = 0; i < get.length; i++) {
-//                             amnt += parseInt(get[i].amnt)
-//                             console.log('amnt=>', get[i].amnt)
-//                         }
-//                         // html += '<td class="returnAmnt">R' + amnt + '</td>'
-//                         // console.log('amnt=>', amnt)
-//                         return amnt
-//                     })
-//                     .then((myamnt)=>{
-//                         console.log(sendData,'=>', myamnt)
-//                         pass = '<td class="returnAmnt">R' + myamnt + '</td>'
-//                         return myamnt
-//                     })
-// // console.log("pass=>",pass)
-
-
-// }
 const returnPkg = (id) => {
-
+    // console.log("this=>",id)
     let returnPkgId = {
         packageId: id
     }
@@ -2535,7 +2468,7 @@ const returnPkg = (id) => {
         })
         .then((data) => {
             $('#return_pak_name').val(data[0].pkg_name)
-            $('#return_pak_pkgId').val(data[0].pkg_id)
+            $('#return_pak_pkgId').val(id)
             let sendData = {
                 pkg_id: data[0].pkg_id
             }
@@ -2568,7 +2501,7 @@ const submitReturn = () => {
     return_pak_qty = $('#return_pak_qty').val()
     return_pak_name = $('#return_pak_name').val()
     return_pak_total = $('#return_pak_total').val()
-    return_pak_pkgId = $('#return_pak_pkgId').val() // this is pkg id go to pkg_id
+    return_pak_pkgId = $('#return_pak_pkgId').val() // this is id go to pkg_id
     return_pak_pkgBookId = $('#return_pak_pkgBookId').val() // this is pkg booked id go to  pkg_booked_id
     return_pak_bookingID = $('#return_pak_bookingID').val() // this is booking ID go to  book_id
     let returnData = {

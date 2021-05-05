@@ -1675,7 +1675,7 @@ function hello(selectDate) {
         ' <table class="table text-center"><tr><th scope="col">Hall</th><th scope="col">Shift</th>';
     html_setTarget += ' <th scope="col">Amount</th>';
     html_setTarget += "  </tr>";
-    fetch("https://vesapi.ves-engr.com/api-target-fetch.php", {
+    fetch("http://localhost/mhs_api/ves_api/api-target-fetch.php", {
         method: "POST",
         body: JSON.stringify(pushTargetDateObj),
     })
@@ -1809,7 +1809,7 @@ const showBookings = (selectDate) => {
     let FetchEventObj = {
         eventDate: convertDate,
     };
-    fetch("https://vesapi.ves-engr.com/api-fetch-booking.php", {
+    fetch("http://localhost/mhs_api/ves_api/api-fetch-booking.php", {
         method: "POST",
         body: JSON.stringify(FetchEventObj),
     })
@@ -1875,7 +1875,7 @@ const showBookings = (selectDate) => {
 //     inqid: delId,
 //   };
 //   if (confirm("do you want to delete?")) {
-//     fetch("https://vesapi.ves-engr.com/api-delete.php", {
+//     fetch("http://localhost/mhs_api/ves_api/api-delete.php", {
 //       method: "POST",
 //       body: JSON.stringify(delIdObj),
 //     })
@@ -1896,7 +1896,7 @@ const editInquiryEvent = (editId) => {
     };
     $("#edit_id").val(editId);
     $("#edit_id_inq").val("MHS-SH-" + (1000 + parseInt(editId)));
-    fetch("https://vesapi.ves-engr.com/api-fetch.php", {
+    fetch("http://localhost/mhs_api/ves_api/api-fetch.php", {
         method: "POST",
         body: JSON.stringify(editIdObj),
     })
@@ -1948,7 +1948,7 @@ const bookEditEvent = (editId) => {
         bookId: editId,
     };
     $("#edit_id").val(editBookingIdObj);
-    fetch("https://vesapi.ves-engr.com/api-fetchId-booking.php", {
+    fetch("http://localhost/mhs_api/ves_api/api-fetchId-booking.php", {
         method: "POST",
         body: JSON.stringify(editBookingIdObj),
     })
@@ -2046,7 +2046,7 @@ const bookEditEvent = (editId) => {
 //     bguest: no_of_guests,
 //   };
 //   console.log(editbookingObj);
-//   fetch("https://vesapi.ves-engr.com/api-update-booking.php", {
+//   fetch("http://localhost/mhs_api/ves_api/api-update-booking.php", {
 //     method: "POST",
 //     body: JSON.stringify(editbookingObj),
 //   })
@@ -2063,7 +2063,7 @@ const bookEditEvent = (editId) => {
 //     bokid: delId,
 //   };
 //   if (confirm("do you want to delete?")) {
-//     fetch("https://vesapi.ves-engr.com/api-update-booking.php", {
+//     fetch("http://localhost/mhs_api/ves_api/api-update-booking.php", {
 //       method: "POST",
 //       body: JSON.stringify(DelBookingObj),
 //     })
@@ -2090,7 +2090,7 @@ window.onload = () => {
         "-" +
         d.getFullYear();
     hello(output);
-    fetch("https://vesapi.ves-engr.com/api-fetch-all-booking.php")
+    fetch("http://localhost/mhs_api/ves_api/api-fetch-all-booking.php")
         .then((result) => {
             return result.json();
         })
@@ -2126,7 +2126,7 @@ window.onload = () => {
         .catch((err) => {
             throw err;
         });
-    // fetch("https://vesapi.ves-engr.com/api-target-fetch-all.php")
+    // fetch("http://localhost/mhs_api/ves_api/api-target-fetch-all.php")
     //   .then((result) => {
     //     return result.json();
     //   })
@@ -2161,7 +2161,7 @@ const monthChange = (monthIndex) => {
         d.getFullYear();
     // console.log(output);
     hello(output);
-    fetch("https://vesapi.ves-engr.com/api-fetch-all-booking.php")
+    fetch("http://localhost/mhs_api/ves_api/api-fetch-all-booking.php")
         .then((result) => {
             return result.json();
         })
@@ -2238,7 +2238,7 @@ function changeTargetBorder(getTargetDate) {
     let pushTargetDateObj = {
         targetDate: change_format,
     };
-    fetch("https://vesapi.ves-engr.com/api-target-fetch.php", {
+    fetch("http://localhost/mhs_api/ves_api/api-target-fetch.php", {
         method: "POST",
         body: JSON.stringify(pushTargetDateObj),
     })
@@ -2263,7 +2263,7 @@ const fetchTarget = () => {
     let pushTargetDateObj = {
         targetDate: targetDate,
     };
-    fetch("https://vesapi.ves-engr.com/api-target-fetch.php", {
+    fetch("http://localhost/mhs_api/ves_api/api-target-fetch.php", {
         method: "POST",
         body: JSON.stringify(pushTargetDateObj),
     })
@@ -2385,7 +2385,7 @@ const updateTarget = (getShift, getHall) => {
         targetshift: selectedShift,
     };
 
-    fetch("https://vesapi.ves-engr.com/api-target-update.php", {
+    fetch("http://localhost/mhs_api/ves_api/api-target-update.php", {
         method: "POST",
         body: JSON.stringify(UpdateTargetData),
     })
@@ -2412,7 +2412,7 @@ const addTargetHandler = (getShift, getHall) => {
         targetshift: selectedShift,
     };
 
-    fetch("https://vesapi.ves-engr.com/api-target-insert.php", {
+    fetch("http://localhost/mhs_api/ves_api/api-target-insert.php", {
         method: "POST",
         body: JSON.stringify(PushTargetData),
     })

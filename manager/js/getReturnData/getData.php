@@ -1,5 +1,6 @@
-<?php
-    $conn = mysqli_connect("localhost","root","","mhs_db") or die("Connection Failed");
+<?php    
+$conn = mysqli_connect("localhost","root","","mhs_db") or die("Connection Failed");
+
 
     $booked_pkg_id =  $_POST['booked_pkg_id'];
     $sql = "SELECT * FROM return_package WHERE pkg_booked_id={$booked_pkg_id}";

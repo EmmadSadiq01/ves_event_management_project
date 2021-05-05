@@ -1,13 +1,3 @@
-<!-- <?php 
-
-// include '../config.php';
-// session_start();
-
-// if (!isset($_SESSION['username']) && !isset($_SESSION['urole']) && !isset($_SESSION['userhall'])) {
-//     header("Location: ../index.php");
-// }
-?> -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,28 +14,14 @@
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/duotone.css"
     integrity="sha384-R3QzTxyukP03CMqKFe0ssp5wUvBPEyy9ZspCB+Y01fEjhMwcXixTyeot+S40+AjZ" crossorigin="anonymous" />
   <link href="fontawesome/fontawesome-free-5.15.3-web/css/all.css" rel="stylesheet" />
-  <link rel="stylesheet" href="../logoutbtn.css" />
+  <!-- <link rel="stylesheet" href="../logoutbtn.css" /> -->
   <link rel="stylesheet" href="./css/button/button.scss" />
 
 </head>
 
 <body>
   <section class="calendar">
-    <!-- <?php
-  //   $uname= $_SESSION['username'];
-  //   $urole= $_SESSION['urole'];
-  //   $uhallid= $_SESSION['userhall'];
-    
-  //    $hallname="";
-     
-  //    $sql = "SELECT * FROM Hall WHERE hall_id='$uhallid'";
-	// $result = mysqli_query($conn, $sql);
-	// if ($result->num_rows > 0) {
-  //       $row = mysqli_fetch_assoc($result);
-  //       $hallname = $row['hall_name'];
-  //       echo "<h3>Welcome " . $uname." Manager of ".$hallname."</h3>"; 
-  //   }
-    ?> -->
+
     <div class="my_row">
       <div class="calendar_section">
         <div id="calendar" class="sidebar-hide"></div>
@@ -520,7 +496,7 @@
           <h5 class="modal-title">Packages</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form>
+        <form onsubmit="addPakages()">
           <div class="modal-body">
             <div class="showBookedPkgs">
               <table class="table ">
@@ -558,13 +534,13 @@
               </div>
 
               <div class="col-2 small-6 columns">
-                <div class="btn btn-warning" onclick="addPackageRow()">Add</div>
+                <div class="btn btn-warning" id="add_1" onclick="addPackageRow()">Add</div>
               </div>
 
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" onclick="addPakages()">Submit</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </form>
       </div>
@@ -574,7 +550,7 @@
 
   <div class="modal fade" id="hallPackages" tabindex="-1" role="dialog" aria-labelledby="hallPackagesLabel"
     aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="hallPackagesLabel">Hall Packages</h5>
@@ -582,33 +558,55 @@
             <span aria-hidden="true">&times;</span>
           </button> -->
         </div>
-        <form action="" class="row align-center material">
-          <div class="modal-body">
-
-            <div class="small-12 medium-6 columns small-centered">
-              <div class="row">
-                <div class="small-12 columns">
-                  <input type="text" required name="package_name" id="package_name" placeholder="Package Name">
-                </div>
-              </div>
-              <div class="row">
-                <div class="small-12 columns">
-                  <input type="number" required name="pkg_price" id="pkg_price" placeholder="Sell Price">
-                </div>
-              </div>
-              <div class="row">
-                <div class="small-12 columns">
-                  <input type="number" required name="pkg_ret_price" id="pkg_ret_price" placeholder="Return Price">
-                </div>
-              </div>
-            </div>
+        <div class="modal-body">
 
 
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" onclick="addPkgData()">Submit</button>
-            </div>
+          <div class="showPkgs">
+            <table class="table table-bordered text-center" id="showPkgs">
+
+            </table>
           </div>
-        </form>
+          <form action="" class="row align-center" onsubmit="addPkgData()">
+            <div class="modal-body">
+              <div class="mb-3" id="balBalance">
+                <label for="package_name" class="form-label">Package Name</label>
+                <input  type="text" name="package_name" id="package_name"class="form-control" required />
+              </div>
+              <div class="mb-3" id="balBalance">
+                <label for="pkg_price" class="form-label">Sell Price</label>
+                <input  type="number" required name="pkg_price" id="pkg_price" class="form-control" required />
+              </div>
+              <div class="mb-3" id="balBalance">
+                <label for="pkg_ret_price" class="form-label">Return Price</label>
+                <input  type="number" required name="pkg_ret_price" id="pkg_ret_price" class="form-control" required />
+              </div>
+              <!-- <div class="small-12 medium-6 columns small-centered">
+                
+                <div class="row">
+                  <div class="small-12 columns">
+                    
+                    <input type="text" required name="package_name" id="package_name" placeholder="Package Name">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="small-12 columns">
+                    <input type="number" required name="pkg_price" id="pkg_price" placeholder="Sell Price">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="small-12 columns">
+                    <input type="number" required name="pkg_ret_price" id="pkg_ret_price" placeholder="Return Price">
+                  </div>
+                </div>
+              </div> -->
+
+
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
@@ -623,34 +621,38 @@
             <span aria-hidden="true">&times;</span>
           </button> -->
         </div>
-        <form action="" class="row align-center">
+        <form action="" class="row align-center" onsubmit="submitReturn()">
           <div class="modal-body">
-<input type="hidden" id="return_pak_pkgId">
-<input type="hidden" id="return_pak_pkgBookId">
-<input type="hidden" id="return_pak_bookingID">
+            <input type="hidden" id="return_pak_pkgId">
+            <input type="hidden" id="return_pak_pkgBookId">
+            <input type="hidden" id="return_pak_bookingID">
             <div class="small-12 medium-6 small-centered">
               <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">Return Package</span>
-                <input type="text" class="form-control" placeholder="Username" name="return_pak_name" id="return_pak_name" aria-label="Username" aria-describedby="basic-addon1">
+                <input type="text" class="form-control" placeholder="Username" name="return_pak_name"
+                  id="return_pak_name" aria-label="Username" aria-describedby="basic-addon1">
               </div>
               <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">Return Price</span>
-                <input type="text" class="form-control" placeholder="Username" name="return_pak_price" id="return_pak_price" aria-label="Username" aria-describedby="basic-addon1">
+                <input type="text" class="form-control" placeholder="Username" name="return_pak_price"
+                  id="return_pak_price" aria-label="Username" aria-describedby="basic-addon1">
               </div>
               <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">Qunantity</span>
-                <input type="number" class="form-control" placeholder="Username" name="return_pak_qty" id="return_pak_qty" aria-label="Username" aria-describedby="basic-addon1" onchange="totalReturn()">
+                <input type="number" class="form-control" placeholder="Username" name="return_pak_qty"
+                  id="return_pak_qty" aria-label="Username" aria-describedby="basic-addon1" onchange="totalReturn()">
               </div>
               <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">Total</span>
-                <input type="number" class="form-control" placeholder="Username" name="return_pak_total" id="return_pak_total" aria-label="Username" aria-describedby="basic-addon1">
+                <input type="number" class="form-control" placeholder="Username" name="return_pak_total"
+                  id="return_pak_total" aria-label="Username" aria-describedby="basic-addon1">
               </div>
 
             </div>
 
 
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary" onclick="submitReturn()">Submit</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
             </div>
           </div>
         </form>
@@ -661,8 +663,7 @@
 
   <!-- buttons -->
   <div class="btns_group">
-    <a class="btn btn-primary mx-3" href="../logout.php">Logout</a>
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#hallPackages">
+    <button type="button" class="btn btn-success" onclick="showPkg()">
       Hall Packages
     </button>
   </div>
@@ -782,7 +783,7 @@
         iguest: event_number_guest,
       };
       // console.log("data=>",push_data);
-      fetch("https://vesapi.ves-engr.com/api-insert.php", {
+      fetch("http://localhost/mhs_api/ves_api/api-insert.php", {
         method: "POST",
         body: JSON.stringify(push_data),
       })
@@ -841,7 +842,7 @@
 
       console.log(editDataObj)
 
-      fetch("https://vesapi.ves-engr.com/api-update.php", {
+      fetch("http://localhost/mhs_api/ves_api/api-update.php", {
         method: "POST",
         body: JSON.stringify(editDataObj),
       })
@@ -903,7 +904,7 @@
         btotal: 0,
       };
       // console.log("pushObj=>", PushBookObj);
-      fetch("https://vesapi.ves-engr.com/api-insert-booking.php", {
+      fetch("http://localhost/mhs_api/ves_api/api-insert-booking.php", {
         method: "POST",
         body: JSON.stringify(PushBookObj),
       })
@@ -950,7 +951,7 @@
         btotal: 0,
       };
       // console.log("pushObj=>", PushBookObj);
-      fetch("https://vesapi.ves-engr.com/api-insert-booking.php", {
+      fetch("http://localhost/mhs_api/ves_api/api-insert-booking.php", {
         method: "POST",
         body: JSON.stringify(PushBookObj),
       })
@@ -983,9 +984,10 @@
       html += '<input type="checkbox" class="mx-3" id="include_' + add_row + '"> <label for="">Included</label>'
       html += '</div>'
       html += '<div class="col-2 small-6 columns">'
-      html += ' <div class="btn btn-warning" onclick="addPackageRow()">Add</div>'
+      html += ' <div class="btn btn-warning" id="add_' + add_row + '" onclick="addPackageRow()">Add</div>'
       html += ' </div>'
-
+      $('[id^=add_]').hide()
+      // $('#add_' + add_row).hide()
       $('#addPackagesBox').append(html);
       fetchPkgData(add_row)
       add_row += 1;
@@ -1045,7 +1047,6 @@
       let selected_pkg_name = ''
       let booking_id = ''
       let included = ''
-      // console.log(add_row)
       for (let i = 1; i < add_row; i++) {
         pkg_price = $('#select_pkg_calculate_' + i).val()
         selected_pkg = $('#select_pkg_' + i).val()
@@ -1053,7 +1054,6 @@
         desc_pkg = $('#pkg_desc_' + i).val()
         selected_pkg_name = $('#select_pkg_' + i + ' :selected').text()
         booking_id = $('#packageBookingId').val()
-
         if ($('#include_' + i).is(' :checked')) {
           included = 'included';
         }
@@ -1071,26 +1071,65 @@
           included: included
         }
         console.log(addPackageObj)
-        fetch('http://localhost/mhs_api/ves_api/api-bookedPackages-insert.php', {
-          method: 'POST',
-          body: JSON.stringify(addPackageObj)
-        })
-          .then((res) => {
-            return res.json()
+        if (addPackageObj.qty_pkg === "" || addPackageObj.pkg_id === "" || addPackageObj.pkg_name === "select" || addPackageObj.pkg_cost === "") {
+          console.log("no")
+        } else {
+          fetch('http://localhost/mhs_api/ves_api/api-bookedPackages-insert.php', {
+            method: 'POST',
+            body: JSON.stringify(addPackageObj)
           })
-          .catch((err) => {
-            throw err
-          })
+            .then((res) => {
+              return res.json()
+            })
+            .catch((err) => {
+              throw err
+            })
+        }
+
       }
+      //       add_package_price
 
-
-
+      // $('[id^=add_]')
+      window.open("./screen/print_packages.html?id=" + booking_id, "_blank");
 
     }
     const calculateTotal = (id) => {
       $('#select_pkg_calculate_' + id).val($('#select_pkg_price_' + id).val() * $('#select_pkg_qty_' + id).val())
 
     }
+    const showPkg = () => {
+      let url = "http://localhost/mhs_api/ves_api/api-packages-fetch.php";
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          let html = '';
+          html += '    <thead>'
+          html += '  <tr>'
+          html += '<th>#</th>'
+          html += '<th>Name</th>'
+          html += '<th>Sell Price</th>'
+          html += '<th>Return Price</th>'
+          html += '</tr>'
+          html += '</thead>'
+          html += '<tbody>'
+          for (let i = 0; i < data.length; i++) {
+            html += '<tr>'
+            html += '<td>' + i + '</td>'
+            html += '<td>' + data[i].package_name + '</td>'
+            html += '<td>' + data[i].pkg_cost + '</td>'
+            html += '<td>' + data[i].return_price + '</td>'
+            html += '</tr>'
+          }
+          html += '</tbody>'
+          $('#showPkgs').html(html)
+          $('#hallPackages').modal('show')
+        })
+        .catch((err) => {
+          throw err;
+        });
+
+    }
+
   </script>
 
 </body>

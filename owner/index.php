@@ -27,22 +27,6 @@
 
 <body>
   <section class="calendar">
-
-    <?php
-  //   $uname= $_SESSION['username'];
-  //   $urole= $_SESSION['urole'];
-  //   $uhallid= $_SESSION['userhall'];
-    
-  //    $hallname="";
-
-  //    $sql = "SELECT * FROM Hall WHERE hall_id='$uhallid'";
-	// $result = mysqli_query($conn, $sql);
-	// if ($result->num_rows > 0) {
-  //       $row = mysqli_fetch_assoc($result);
-  //       $hallname = $row['hall_name'];
-  //       echo "<h3>Welcome " . $uname." Owner of ".$hallname."</h3>"; 
-  //   }
-    ?>
     <div class="my_row">
       <div class="calendar_section">
         <div id="calendar" class="sidebar-hide"></div>
@@ -333,7 +317,7 @@
     let calendarEvents = [];
 
     // $(document).ready(function() {
-    let url = "https://vesapi.ves-engr.com/api-fetch-all.php";
+    let url = "http://localhost/mhs_api/ves_api/api-fetch-all.php";
     fetch(url)
       .then((res) => res.json())
       .then((out) => {
