@@ -1,6 +1,6 @@
 
 <?php
-       $conn = mysqli_connect("localhost","root","","mhs_db") or die("Connection Failed");
+       include('../../../db_connect.php');
 
 
         $hall = $_POST['hall'];

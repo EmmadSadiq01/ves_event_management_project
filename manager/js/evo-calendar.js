@@ -1669,6 +1669,13 @@ function hello(selectDate) {
             $("#booking_program_day").val(dayName);
         })
         .catch((err) => {
+            $(".hijri_date").html("not available");
+            $("#islDateInput").val("not available");
+            $("#bookIslDate").val("not available");
+            $("#booking_program_date").val(year + "-" + month + "-" + date);
+            $("#On_event_date").val(year + "-" + month + "-" + date);
+            $("#booking_program_day").val(dayName);
+
             throw err;
         });
 
@@ -1686,7 +1693,7 @@ const showBookings = (selectDate) => {
     let FetchEventObj = {
         eventDate: convertDate,
     };
-    fetch("http://localhost/mhs_api/ves_api/api-fetch-booking.php", {
+    fetch("./api/api-fetch-booking.php", {
         method: "POST",
         body: JSON.stringify(FetchEventObj),
     })
@@ -1712,8 +1719,16 @@ const showBookings = (selectDate) => {
                     let personName = data[i].personName;
                     let totalGuest = data[i].totalGuest;
                     let totalPrice = data[i].totalPrice;
+                    let status = data[i].status;
+                    let CashInStatus = data[i].	cashIn_Status;
+                    // html +=
+                    //     "<div class='event-container' id='eventBox_";
+                    //     html += booking_id+"' role='button' data-event-index='19'>";
                     html +=
-                        "<div class='event-container'role='button' data-event-index='19'>";
+                        "<div class='event-container'";
+                    html += (status === 'deactivate') ? 'style="background-color: #6e8ab3  !important"' : '';
+                    html += "role='button' data-event-index='19'>";
+
                     html += "<div class='event-icon'>";
                     html +=
                         "<div class='event-bullet-19' style='background-color: red'></div></div>";
@@ -1730,16 +1745,31 @@ const showBookings = (selectDate) => {
                         " <br />Conact:" +
                         personContact +
                         "</p>";
-                    html +=
-                        "<button type='button' class='btn btn-success ' id='" +
-                        booking_id +
-                        "' onclick='bookEditEvent(this.id)'>Edit </button><button type='button' class='btn btn-primary' id='" +
-                        booking_id +
-                        "' onclick='balancePayment(this.id)'>Add Balance</button>";
+                    if (status != 'deactivate') {
+                        html +=
+                            "<button type='button' class='btn btn-success ' id='" +
+                            booking_id +
+                            "' onclick='bookEditEvent(this.id)'><i class='fas fa-edit'></i> Edit</button><button type='button' class='btn btn-primary' id='" +
+                            booking_id +
+                            "' onclick='balancePayment(this.id)'><i class='fas fa-plus'></i> Balance</button>";
 
-                    html += "<button type='button' class='btn btn-danger' id='" +
-                        booking_id +
-                        "' onclick='addPackages(this.id)'>Add Packges</button></div></div>";
+                        html += "<button type='button' class='btn btn-danger' id='" +
+                            booking_id +
+                            "' onclick='addPackages(this.id)'>Packges</button>";
+if(CashInStatus!=1) {
+
+                        html += "<button type='button' class='btn btn-warning' id='" +
+                            booking_id +
+                            "' onclick='cashIn(this.id)'>Cash In</button>";
+                            
+}
+                        html += "<a class='btn btn-success' id='" +
+                            booking_id +
+                            "' href='./manager/screen/floor_print.html?id=" + booking_id + "' target='_blank'><i class='fas fa-info' style='margin-right: 7px'></i>Floor Info</a><button type='button' class='btn btn-primary' id='" +
+                            booking_id +
+                            "' onclick='cancelBooking(this.id)'>Cancel</button>";
+                    }
+                    html += "</div></div>";
                     $("#booking_view").html(html);
                 }
             }
@@ -1754,7 +1784,7 @@ const showBookings = (selectDate) => {
     };
     let html_setTarget =
         ' <table class="text-center">'
-    fetch("http://localhost/mhs_api/ves_api/api-target-fetch.php", {
+    fetch("./api/api-target-fetch.php", {
         method: "POST",
         body: JSON.stringify(pushTargetDateObj),
     })
@@ -1826,7 +1856,7 @@ const deleteInquiryEvent = (delId) => {
         inqid: delId,
     };
     if (confirm("do you want to delete?")) {
-        fetch("http://localhost/mhs_api/ves_api/api-delete.php", {
+        fetch("./api/api-delete.php", {
             method: "POST",
             body: JSON.stringify(delIdObj),
         })
@@ -1846,7 +1876,7 @@ const editInquiryEvent = (editId) => {
     };
     $("#edit_inq_id_concat").val("MHS-SM-" + (1000 + parseInt(editId)));
     $("#edit_id").val(editId);
-    fetch("http://localhost/mhs_api/ves_api/api-fetch.php", {
+    fetch("./api/api-fetch.php", {
         method: "POST",
         body: JSON.stringify(editIdObj),
     })
@@ -1880,7 +1910,7 @@ const editInquiryEvent = (editId) => {
                 $("#edit_moning").prop("checked", false);
                 $("#edit_evening").prop("checked", true);
             }
-            $("#inq_print").html('<a href="screen/print_inquiry.html?id=' + editId + '" target="_blank" class="btn btn-primary ml-4">Go to Print</a>')
+            $("#inq_print").html('<a href="manager/screen/print_inquiry.php?id=' + editId + '" target="_blank" class="btn btn-primary ml-4">Go to Print</a>')
             $("#editModal").modal("show");
         })
         .catch((err) => {
@@ -1910,7 +1940,7 @@ const bookEditEvent = (editId) => {
         bookId: editId,
     };
     $("#edit_id").val(editBookingIdObj);
-    fetch("http://localhost/mhs_api/ves_api/api-fetchId-booking.php", {
+    fetch("./api/api-fetchId-booking.php", {
         method: "POST",
         body: JSON.stringify(editBookingIdObj),
     })
@@ -1948,7 +1978,7 @@ const bookEditEvent = (editId) => {
                 $("#editevening").prop("checked", true);
             }
             editBalanceCal()
-            $("#print_btn").html(' <a href="http://localhost/Work%20Station/manager/screen/print_booking.html?id=' + data[0].booking_id + '" target="_blank" class="btn btn-primary ml-4">Go to Print</a>')
+            $("#print_btn").html(' <a href="./manager/screen/print_booking.php?id=' + data[0].booking_id + '" target="_blank" class="btn btn-primary ml-4">Go to Print</a>')
             $("#editBookingModal").modal("show");
         })
         .catch((err) => {
@@ -2003,7 +2033,7 @@ const BookingEditSubmissionHandler = () => {
         beventname: event_name,
         bguest: no_of_guests,
     };
-    fetch("http://localhost/mhs_api/ves_api/api-update-booking.php", {
+    fetch("./api/api-update-booking.php", {
         method: "POST",
         body: JSON.stringify(editbookingObj),
     })
@@ -2019,7 +2049,7 @@ const bookDeleteEvent = (delId) => {
         bokid: delId,
     };
     if (confirm("do you want to delete?")) {
-        fetch("http://localhost/mhs_api/ves_api/api-update-booking.php", {
+        fetch("./api/api-update-booking.php", {
             method: "POST",
             body: JSON.stringify(DelBookingObj),
         })
@@ -2064,7 +2094,7 @@ const balancePayment = (balId) => {
         bookId: balId,
     };
     // $("#edit_id").val(editBookingIdObj);
-    fetch("http://localhost/mhs_api/ves_api/api-fetchId-booking.php", {
+    fetch("./api/api-fetchId-booking.php", {
         method: "POST",
         body: JSON.stringify(editBookingIdObj),
     })
@@ -2094,7 +2124,7 @@ const balancePayment = (balId) => {
             let fetchPaymentObj = {
                 bookId: balId
             }
-            fetch("http://localhost/mhs_api/ves_api/api-fetchpayments-booking.php", {
+            fetch("./api/api-fetchpayments-booking.php", {
                 method: "POST",
                 body: JSON.stringify(fetchPaymentObj),
             })
@@ -2171,7 +2201,7 @@ const addPayment = () => {
         balPayment: balPayment,
     }
 
-    fetch("http://localhost/mhs_api/ves_api/api-addpayments-booking.php", {
+    fetch("./api/api-addpayments-booking.php", {
         method: "POST",
         body: JSON.stringify(addPaymentObj),
     })
@@ -2181,7 +2211,7 @@ const addPayment = () => {
         .catch((err) => {
             throw err;
         });
-    window.open("screen/print_balance.html?id=" + balBookId)
+    window.open("manager/screen/print_balance.html?id=" + balBookId)
 
 
 }
@@ -2199,7 +2229,7 @@ window.onload = () => {
         "-" +
         d.getFullYear();
     hello(output);
-    fetch("http://localhost/mhs_api/ves_api/api-fetch-all-booking.php")
+    fetch("./api/api-fetch-all-booking.php")
         .then((result) => {
             return result.json();
         }).then((data) => {
@@ -2210,7 +2240,7 @@ window.onload = () => {
                 let month = mySplit[1]
                 let date = mySplit[2]
                 let change_format = month + "-" + date + "-" + year;
-                if (data[i].hallportion === 'a') {
+                if (data[i].hallportion === 'a' && data[i].status != 'deactivate') {
                     if (data[i].eventShift === "morning") {
                         $('#moon' + change_format).append('<i class="fas fa-sun"></i>')
 
@@ -2220,7 +2250,7 @@ window.onload = () => {
                     }
                     $("#" + change_format).addClass("confirm-booking-a")
                 }
-                if (data[i].hallportion === 'b') {
+                if (data[i].hallportion === 'b' && data[i].status != 'deactivate') {
                     if (data[i].eventShift === "morning") {
                         $('#moonb' + change_format).append('<i class="fas fa-sun"></i>')
                     } else if (data[i].eventShift === "evening") {
@@ -2233,7 +2263,7 @@ window.onload = () => {
         .catch((err) => {
             throw err;
         });
-    // fetch("http://localhost/mhs_api/ves_api/api-target-fetch-all.php")
+    // fetch("./api/api-target-fetch-all.php")
     // .then((result) => {
     //   return result.json();
     // })
@@ -2268,7 +2298,7 @@ const monthChange = (monthIndex) => {
         "-" +
         d.getFullYear();
     hello(output);
-    fetch("http://localhost/mhs_api/ves_api/api-fetch-all-booking.php")
+    fetch("./api/api-fetch-all-booking.php")
         .then((result) => {
             return result.json();
         })
@@ -2280,20 +2310,20 @@ const monthChange = (monthIndex) => {
                 let month = mySplit[1];
                 let date = mySplit[2];
                 let change_format = month + "-" + date + "-" + year;
-                if (data[i].hallportion === "a") {
+                if (data[i].hallportion === "a" && data[i].status==="" ) {
                     if (data[i].eventShift === "morning") {
                         $('#moon' + change_format).append('<i class="fas fa-sun"></i>')
 
-                    } else if (data[i].eventShift === "evening") {
+                    } else if (data[i].eventShift === "evening" && data[i].status==="") {
 
                         $('#moon' + change_format).append('<i class="fas fa-moon"></i>')
                     }
                     $("#" + change_format).addClass("confirm-booking-a");
                 }
-                if (data[i].hallportion === "b") {
+                if (data[i].hallportion === "b" && data[i].status==="") {
                     if (data[i].eventShift === "morning") {
                         $('#moonb' + change_format).append('<i class="fas fa-sun"></i>')
-                    } else if (data[i].eventShift === "evening") {
+                    } else if (data[i].eventShift === "evening" && data[i].status==="") {
                         $('#moonb' + change_format).append('<i class="fas fa-moon"></i>')
                     }
                     $("#" + change_format).addClass("confirm-booking-b");
@@ -2343,7 +2373,7 @@ function changeTargetBorder(getTargetDate) {
     let pushTargetDateObj = {
         targetDate: change_format
     }
-    fetch("http://localhost/mhs_api/ves_api/api-target-fetch.php", {
+    fetch("./api/api-target-fetch.php", {
         method: "POST",
         body: JSON.stringify(pushTargetDateObj),
     })
@@ -2378,7 +2408,7 @@ const getTargetValue = () => {
         }
     }
     $.ajax({
-        url: "js/getTarget/gettarget.php",
+        url: "./manager/js/getTarget/gettarget.php",
         method: "POST",
         data: {
             hall: hall,
@@ -2391,6 +2421,7 @@ const getTargetValue = () => {
     });
 }
 const addPackages = (bookID) => {
+    $('#select_pkg_1').html('')
     fetchPkgData(1)
     $('#packageBookingId').val(bookID)
     fetchBookPkgs(bookID)
@@ -2417,7 +2448,7 @@ const fetchBookPkgs = (bookID) => {
     let BookIdObj = {
         bookId: bookID
     }
-    fetch('http://localhost/mhs_api/ves_api/api-bookedPackages-fetch.php', {
+    fetch('./api/api-bookedPackages-fetch.php', {
         method: 'POST',
         body: JSON.stringify(BookIdObj)
     })
@@ -2459,7 +2490,7 @@ const returnPkg = (id) => {
     let returnPkgId = {
         packageId: id
     }
-    fetch('http://localhost/mhs_api/ves_api/api-bookedPackages-fetchById.php', {
+    fetch('./api/api-bookedPackages-fetchById.php', {
         method: "POST",
         body: JSON.stringify(returnPkgId)
     })
@@ -2472,7 +2503,7 @@ const returnPkg = (id) => {
             let sendData = {
                 pkg_id: data[0].pkg_id
             }
-            fetch('http://localhost/mhs_api/ves_api/api-packages-getReturnPrice.php', {
+            fetch('./api/api-packages-getReturnPrice.php', {
                 method: "POST",
                 body: JSON.stringify(sendData)
             }).then((res) => {
@@ -2512,11 +2543,77 @@ const submitReturn = () => {
         pkg_cost: return_pak_total,
         qty_pkg: return_pak_qty
     }
-    fetch('http://localhost/mhs_api/ves_api/api-returnPackage-insert.php', {
+    fetch('./api/api-returnPackage-insert.php', {
         method: "POST",
         body: JSON.stringify(returnData)
     })
         .then((res) => {
+            return res.json()
+        })
+        .catch(err => {
+            throw err
+        })
+}
+
+window.uni_modal_manager = function ($title = '', $url = '', $size = "") {
+    start_load()
+    $.ajax({
+        url: $url,
+        error: err => {
+            console.log()
+            alert("An error occured")
+        },
+        success: function (resp) {
+            if (resp) {
+                $('#uni_modal .modal-title').html($title)
+                $('#uni_modal .modal-body').html(resp)
+                if ($size != '') {
+                    $('#uni_modal .modal-dialog').addClass($size)
+                } else {
+                    $('#uni_modal .modal-dialog').removeAttr("class").addClass("modal-dialog modal-md")
+                }
+                $('#uni_modal').modal({
+                    show: true,
+                    backdrop: 'static',
+                    keyboard: false,
+                    focus: true
+                })
+                end_load()
+            }
+        }
+    })
+}
+
+const cashIn = (id) => {
+    // uni_modal("Edit Utility","manage_cashout.php?id="+ id)\
+    let bookIdObj = {
+        Bok_id: id
+    }
+    fetch("./api/api-cashIn-booking-insert.php", {
+        method: "POST",
+        body: JSON.stringify(bookIdObj),
+    })
+        .then((res) => {
+            window.location.reload();
+            return res.json()
+        })
+        .catch(err => {
+            throw err
+        })
+
+}
+const cancelBooking = (id) => {
+    let bookIdObj = {
+        bokid: id
+
+    }
+    if(confirm("Do you want to cancel this?"))
+    fetch("./api/api-cancel-booking.php", {
+        method: "POST",
+        body: JSON.stringify(bookIdObj),
+    })
+        .then((res) => {
+            window.location.reload();
             return res.json()
         })
         .catch(err => {

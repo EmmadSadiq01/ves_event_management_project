@@ -1,5 +1,6 @@
 <?php    
-$conn = mysqli_connect("localhost","root","","mhs_db") or die("Connection Failed");
+include('../../../db_connect.php');
+
 
 
     $booked_pkg_id =  $_POST['booked_pkg_id'];

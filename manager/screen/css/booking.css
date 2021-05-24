@@ -8,6 +8,9 @@ html {
     overflow: auto;
     padding: 0.5in;
 }
+/* *{
+    font-size: 24px ;
+} */
 body {
     width: 8.5in;
     box-sizing: border-box;
@@ -39,7 +42,7 @@ body {
     margin-bottom: 7px;
 }
 .entry_field h4 {
-    color: #a09d3f;
+    color: black;
     font-size: 14px;
     margin-bottom: 0px;
 }
@@ -79,6 +82,20 @@ body {
     border-bottom: 1px solid !important;
     text-align: center;
     font-size: 14px;
+}
+.rule h2 {
+    font-size: 24px;
+    text-align: center;
+    color: black;
+}
+.rule{
+    margin-top: 20px;
+}
+.rule p {
+    font-size: 14px;
+    font-family: ui-sans-serif;
+    color: black;
+
 }
 @media print {
     .hide-on-print {

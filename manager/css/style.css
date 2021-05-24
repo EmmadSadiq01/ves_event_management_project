@@ -13,9 +13,11 @@
 tr.calendar-body .calendar-day .day i {
   font-size: 0.6rem;
 }
-/* section.calendar {
-  overflow-x: hidden;
-} */
+section.calendar {
+  padding-top: 0px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
 .my_row {
   display: flex;
 }
@@ -97,8 +99,8 @@ tr.calendar-body .calendar-day .day i {
     color: white;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding-left: 40px;
+    justify-content: flex-end;
+    /* padding-left: 40px; */
     font-family: 'Font Awesome 5 Free';
 }
 
@@ -117,7 +119,7 @@ tr.calendar-body .calendar-day .day .moon_icon {
 }
 tr.calendar-body .calendar-day .day .iconb {
   position: absolute;
-  top: -10%;
+  top: 0%;
   left: 10px;
 }
 tr.calendar-body .calendar-day .day i {
@@ -156,7 +158,7 @@ th[colspan="6"] {
 .bookings {
     background-color: #8773c1;
     width: 100%;
-    height: 100%;
+    height: 72%;
     overflow-x:hidden;
 
 }
@@ -236,3 +238,27 @@ input#select_pkg_calculate_1 {
 /* #myTogle{
   z-index: 1;
 } */
+
+@media screen and (max-width: 450px) {
+  .my_row {
+    flex-direction: column;
+    
+  }
+  .confirm-booking-b::after{
+    font-size: 5px;
+  }
+  .confirm-booking-a::before{
+    font-size: 5px;
+  }
+  .day  i{
+    display: none;
+  }
+}
+
+.returnAmnt{
+  background-color: #fb8989;
+  color: black;
+}
+.moon_icon,.iconb {
+  font-size: 12px;
+}

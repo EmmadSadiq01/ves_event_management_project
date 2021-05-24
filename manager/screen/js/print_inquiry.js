@@ -7,7 +7,7 @@ window.onload = () => {
     let editBookingIdObj = {
         inqid: $.urlParam('id')
     };
-    fetch("https://vesapi.ves-engr.com/api-fetch.php", {
+    fetch("../../api/api-fetch.php", {
       method: "POST",
       body: JSON.stringify(editBookingIdObj),
     })
@@ -27,6 +27,7 @@ window.onload = () => {
         // $("#event_shift").html(data[0].eventShift);
         $("#hall_portion").html(data[0].hallportion+" / "+ data[0].hall_shift);
         $("#party_name").html(data[0].personName);
+        // console.log(data[0].personName)
         $("#address").html(data[0].personAddress);
         $("#phone").html(data[0].personContact);
         $("#cnic").html(data[0].personCinc);

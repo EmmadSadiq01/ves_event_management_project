@@ -13,7 +13,7 @@ window.onload = () => {
     let html_payment = ''
     let total_payment = 0;
 
-    fetch("https://vesapi.ves-engr.com/api-fetchId-booking.php", {
+    fetch("../../api/api-fetchId-booking.php", {
             method: "POST",
             body: JSON.stringify(fetchbookDetailObj),
         })
@@ -34,7 +34,7 @@ window.onload = () => {
 
         })
         .then(() => {
-            fetch("https://vesapi.ves-engr.com/api-fetchpayments-booking.php", {
+            fetch("../../api/api-fetchpayments-booking.php", {
                     method: "POST",
                     body: JSON.stringify(fetchbookDetailObj),
                 })

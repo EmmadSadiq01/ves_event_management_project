@@ -9,7 +9,7 @@ window.onload = () => {
     }
     let html_payment = ''
 
-    fetch("http://localhost/mhs_api/ves_api/api-fetchId-booking.php", {
+    fetch("../../api/api-fetchId-booking.php", {
             method: "POST",
             body: JSON.stringify(fetchbookDetailObj),
         })
@@ -22,7 +22,7 @@ window.onload = () => {
 
         })
         .then(() => {
-            fetch("http://localhost/mhs_api/ves_api/api-bookedPackages-fetchByBookingId.php", {
+            fetch("../../api/api-bookedPackages-fetchByBookingId.php", {
                     method: "POST",
                     body: JSON.stringify(fetchbookDetailObj),
                 })
