@@ -29,7 +29,7 @@
 									$d_arr[0] = "Unset";
 									$p_arr[0] = "Unset";
 									
-									$employee_qry=$conn->query("SELECT * FROM utilities") or die(mysqli_error());
+									$employee_qry=$conn->query("SELECT * FROM utilities ORDER BY id DESC;") or die(mysqli_error());
 									while($row=$employee_qry->fetch_array()){
 									?>
 									<tr>
@@ -48,27 +48,42 @@
 										} ?></td>
 										
 										<?php if($row['status'] == 0): ?>
-										<td class="text-center"><span class="badge badge-danger">Not Approved</span></td>
+										<td class="text-center"><span class="badge badge-danger">Not Approved</span>
+										<?php if($row['gen_cashout'] == 1): ?>
+										<span class="badge badge-success">Cashout Generated</span>
+										<?php endif ?>
+										</td>
 										<?php else: ?>
 										<td class="text-center"><span class="badge badge-success">Approved</span>
-										<button class="btn btn-sm btn-outline-primary generate_cashout" bill-no="<?php echo $row['id']?>" type="button">Cash out</button>
-										</td><?php endif ?>
+										<?php if($row['gen_cashout'] == 1): ?>
+										<span class="badge badge-success">Cashout Generated</span>
+										<?php endif ?>
+										</td>
+										<?php endif ?>
 										<td class="text-center">
-											<span style="font-size: 12px !important;font-weight: 700 !important;">Upload Images</span>
+										<?php if($_SESSION['login_type'] == 1): ?>View Images<?php else: ?>Upload Images<?php endif ?></span>
 											<button class="btn btn-sm btn-outline-primary add_images" img-id="<?php echo $row['id']?>" type="button"><i class="fa fa-images"></i></button>
 										</td>
 										<td>
 											<center>
-										<?php if($row['status'] == 0): ?>
-											<?php if($_SESSION['login_type'] == 1): ?>
-											<button class="btn btn-sm btn-outline-primary calculate_utilities" data-id="<?php echo $row['id']?>" type="button">Approved</button>
-											<button class="btn btn-sm btn-outline-primary view_employee" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-eye"></i></button>
-											<?php endif; ?>
-										<?php else: ?>
-											<button class="btn btn-sm btn-outline-success view_employee" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-eye"></i></button>
+										<?php if($row['gen_cashout'] == 0): ?>
+										<button class="btn btn-sm btn-outline-primary generate_cashout" bill-no="<?php echo $row['id']?>" type="button">Cash out</button>
 										<?php endif ?>
-											<button class="btn btn-sm btn-outline-primary edit_employee" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-edit"></i></button>
+											<?php if($_SESSION['login_type'] == 1): ?>
+											<?php if($row['status'] == 0): ?>
+											<button class="btn btn-sm btn-outline-primary calculate_utilities" data-id="<?php echo $row['id']?>" type="button">Approved</button>
+											<?php endif ?>
+											<button class="btn btn-sm btn-outline-primary view_employee" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-eye"></i></button>
+											<?php else: ?>
+											<button class="btn btn-sm btn-outline-success view_employee" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-eye"></i></button>
+										<?php endif; ?>
 										<?php if($_SESSION['login_type'] == 2): ?>
+											<?php if($row['status'] == 0): ?>
+											<button class="btn btn-sm btn-outline-primary edit_employee" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-edit"></i></button>
+											<?php endif ?>
+										<?php endif; ?>
+											<?php if($_SESSION['login_type'] == 1): ?>
+											<button class="btn btn-sm btn-outline-primary edit_owner_employee" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-edit"></i></button>
 											<!-- <button class="btn btn-sm btn-outline-danger delete_maintenance" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-trash"></i></button> -->
 											<?php endif; ?>
 										</center>
@@ -99,6 +114,11 @@
 				uni_modal("Edit Utility","manage_utilities.php?id="+$id)
 				
 			});
+			$('.generate_cashout').click(function(){
+				var $id=$(this).attr('bill-no');
+				uni_modal("Edit Maintenance","manage_utility_cashout.php?id="+$id)
+				
+			});
 			$('.view_employee').click(function(){
 				var $id=$(this).attr('data-id');
 				uni_modal2("Utility Details","view_utilities.php?id="+$id,"mid-large")
@@ -109,16 +129,8 @@
 				location.href = "index.php?page=image_utilities&id="+$id;
 				
 			});
-			$('.generate_cashout').click(function(){
-				var $id=$(this).attr('bill-no');
-				uni_modal("Edit Cashout","manage_cashout.php?id="+$id)
-				
-			});
 			$('#new_emp_btn').click(function(){
 				uni_modal("New Utility","manage_utilities.php")
-			})
-			$('.delete_maintenance').click(function(){
-				_conf("Are you sure to delete this maintenance report?","delete_maintenance",[$(this).attr('data-id')])
 			})
 			$('.calculate_utilities').click(function(){
 				start_load()
@@ -138,23 +150,6 @@
 						}
 				})
 			})
+			
 		});
-		function delete_maintenance(id){
-			start_load()
-			$.ajax({
-				url:'ajax.php?action=delete_maintenance',
-				method:"POST",
-				data:{id:id},
-				error:err=>console.log(err),
-				success:function(resp){
-						if(resp == 1){
-							alert_toast("Maintenance Report successfully deleted","success");
-								setTimeout(function(){
-								location.reload();
-
-							},1000)
-						}
-					}
-			})
-		}
 	</script>

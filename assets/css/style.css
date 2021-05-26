@@ -1625,7 +1625,7 @@ nav#sidebar {
     /* background: url(assets/img/payroll-cover.jpg); */
     background-repeat: no-repeat;
     background-size: cover;
-    position: absolute;
+    position: fixed;
     transition: 1s all ease-in-out;
     transform: translateY(-103%);
     

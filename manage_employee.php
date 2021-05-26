@@ -1,7 +1,7 @@
 <?php 
 include 'db_connect.php'; 
 if(isset($_GET['id'])){
-	$qry = $conn->query("SELECT * FROM employee where id = ".$_GET['id'])->fetch_array();
+	$qry = $conn->query("SELECT * FROM employee where id = ".$_GET['id']." Order by id desc")->fetch_array();
 	foreach($qry as $k => $v){
 		$$k = $v;
 	}
@@ -46,7 +46,7 @@ if(isset($_GET['id'])){
 		<div class="form-group">
 			<label>Roles & Responsiblities:</label>
 			<!-- textfield -->
-			<input type="text" name="responsiblity" required="required" class="form-control" value="<?php echo isset($responsiblity) ? $responsiblity : "" ?>" />
+			<textarea name="responsiblity" required="required" cols="30" rows="2" class="form-control"><?php echo isset($responsiblity) ? $responsiblity : "" ?></textarea>
 		</div>
 		<div class="form-group">
 			<label>Department</label>
@@ -76,11 +76,6 @@ if(isset($_GET['id'])){
 			<label>Monthly Salary</label>
 			<input type="number" name="salary" required="required" class="form-control text-right" step="any" value="<?php echo isset($salary) ? $salary : "" ?>" />
 		</div>
-		<!-- <div class="form-group">
-			<label>Profile Image</label>
-			<input type="file" name="profile_pic" required="required" id="employee_image" value="<?php echo isset($profile_pic) ? $profile_pic : "" ?>"/><br />
-			<span>Only .jpg and .png allowed</span>
-		</div> -->
 	</form>
 </div>
 <script>

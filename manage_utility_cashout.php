@@ -1,7 +1,7 @@
 <?php 
 include 'db_connect.php'; 
 if(isset($_GET['id'])){
-	$qry = $conn->query("SELECT * FROM maintenance where id = ".$_GET['id'])->fetch_array();
+	$qry = $conn->query("SELECT * FROM utilities where id = ".$_GET['id'])->fetch_array();
 	foreach($qry as $k => $v){
 		$$k = $v;
 	}
@@ -13,17 +13,14 @@ if(isset($_GET['id'])){
 		<div class="form-group">
 			<label>Description:</label>
 			<input type="hidden" name="id" value="<?php echo isset($id) ? $id : "" ?>" />
+			<input type="hidden" name="utility_no" value="<?php echo isset($utility_no) ? $utility_no : "" ?>" />
 			<textarea name="description" required cols="30" rows="2" class="form-control" ><?php echo isset($description) ? $description : "" ?></textarea>
 		</div>
 		<div class="form-group">
-			<label>Resolution:</label>
-			<textarea name="resolution" required="required" cols="30" rows="2" class="form-control" ><?php echo isset($resolution) ? $resolution : "" ?></textarea>
-			
+			<label>Amount:</label>
+			<input type="hidden" name="id" value="<?php echo isset($id) ? $id : "" ?>" />
+			<input type="number" name="amount" required="required" cols="30" rows="2" class="form-control" value="<?php echo isset($amount) ? $amount : "" ?>"/>
 		</div>
-		<div class="form-group">
-			<label>Assign To:</label>
-			<input type="text" name="assign" required="required" class="form-control" value="<?php echo isset($assign) ? $assign : "" ?>" />
-		</div> 
 		<div class="form-group">
 			<label>Priority:</label>
 			<select name="priority" id="priority" class="custom-select">
@@ -32,10 +29,6 @@ if(isset($_GET['id'])){
 				<option value="3" <?php echo isset($priority) && $priority == 3 ? 'selected': '' ?>>High</option>
 			</select>
 			</div>
-		<div class="form-group">
-			<label>Owner Remarks:</label>
-			<textarea name="owner_remarks" required="required" cols="30" rows="2" class="form-control"><?php echo isset($owner_remarks) ? $owner_remarks : "" ?></textarea>
-		</div>
 	</form>
 </div>
 <script>
@@ -49,13 +42,13 @@ if(isset($_GET['id'])){
 				start_load();
 			$.ajax({
 				
-				url:'ajax.php?action=save_maintenance',
+				url:'ajax.php?action=generate_cashout_utility',
 				method:"POST",
 				data:$(this).serialize(),
 				error:err=>console.log(),
 				success:function(resp){
 						if(resp == 1){
-							alert_toast("Maintenance's data successfully saved","success");
+							alert_toast("Cashout's data successfully saved","success");
 								setTimeout(function(){
 								location.reload();
 

@@ -37,9 +37,15 @@ if(mysqli_num_rows($chk) <= 0){
 }
 $cashindata = $e_num;
 
+$hall_ShortCode ='';
+    $splitName = explode(" ",$_SESSION['login_hall_name']);
+     foreach ($splitName as $value) {
+           $hall_ShortCode .=  substr($value,0,1);
+       } 
+      $bill_no = "HMS-".$hall_ShortCode. "-".(1000+$balBookId);
 
 $sql2 = "INSERT INTO cashin(`cashin_no`,`Description`,`price`,`recept_id`,`hall_id`)
-VALUES ('$cashindata','Booking Partial Payment', '$balPayment','$balBookId','$hallCode');";
+VALUES ('$cashindata','Booking Partial Payment', '$balPayment','$bill_no','$hallCode');";
 
 if (mysqli_query($conn, $sql2)) {
 

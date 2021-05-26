@@ -33,8 +33,11 @@
 										while($row=$pos->fetch_assoc()):
 											$p_arr[$row['id']] = $row['name'];
 										 endwhile;
-								    
+								    if ($_SESSION['login_type'] == 1){
 									$employee_qry=$conn->query("SELECT * FROM employee") or die(mysqli_error($conn));
+								}
+								else{
+									$employee_qry=$conn->query("SELECT * FROM employee where status=1") or die(mysqli_error($conn));}
 									while($row=$employee_qry->fetch_array()){
 								?>
 								<tr>
@@ -46,7 +49,7 @@
 									<td>
 										<center>
 										 <button class="btn btn-sm btn-outline-primary view_employee" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-eye"></i></button>
-										 <?php if($_SESSION['login_type'] == 1): ?>
+										 <?php if($_SESSION['login_type'] == 1 && $row['status'] == 0): ?>
 										 <button class="btn btn-sm btn-outline-success active_employee" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-user-check"></i></button>
 										 <?php endif; ?>
 										 <?php if($_SESSION['login_type'] == 2): ?>

@@ -43,9 +43,16 @@ else{
         }
     }
     $cashoutdata =$e_num;
-    
+
+    $hall_ShortCode ='';
+    $splitName = explode(" ",$_SESSION['login_hall_name']);
+     foreach ($splitName as $value) {
+           $hall_ShortCode .=  substr($value,0,1);
+       } 
+      $bill_no = "HMS-".$hall_ShortCode. "-".(1000+$booking_id);
+      
 $sql2 = "INSERT INTO `cashout` (`cashout_no`, `bill_no`, `description`, `priority`, `amount`, `providby`, `status`)
-VALUES ('$cashoutdata','$booking_id','Package Return Amount From $pkg_name','3','$pkg_cost','Manager','1');";
+VALUES ('$cashoutdata','$bill_no','Package Return Amount From $pkg_name','3','$pkg_cost','Manager','1');";
 
 if (mysqli_query($conn, $sql2)) {
 

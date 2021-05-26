@@ -16,9 +16,9 @@
 							<thead>
 								<tr>
 									<th>Cashin No</th>
+									<th>Bill No</th>
 									<th>Description</th>
 									<th>Amount</th>
-									<th>Images</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -27,18 +27,21 @@
 									$d_arr[0] = "Unset";
 									$p_arr[0] = "Unset";
 									
-									$employee_qry=$conn->query("SELECT * FROM cashin") or die(mysqli_error());
+									$employee_qry=$conn->query("SELECT * FROM cashin where hall_id=".$_SESSION['login_hid']) or die(mysqli_error());
 									while($row=$employee_qry->fetch_array()){
 									?>
 									<tr>
 										<td><?php echo $row['cashin_no']?></td>
+										<td>HMS-<?php 
+                                        $hall_ShortCode ='';
+                            $splitName = explode(" ",$_SESSION['login_hall_name']);
+                            foreach ($splitName as $value) {
+                            $hall_ShortCode .=  substr($value,0,1);
+                            } 
+                    echo $hall_ShortCode. "-".(1000+$row['recept_id'])?></td>
 										<td><?php echo $row['Description']?></td>
 										<td><?php echo $row['price']?></td>
 										
-										<td class="text-center">
-											<span style="font-size: 12px !important;font-weight: 700 !important;">Upload Images</span>
-											<button class="btn btn-sm btn-outline-primary add_images" img-id="<?php echo $row['id']?>" type="button"><i class="fa fa-images"></i></button>
-										</td>
 										<td>
 											<center>
 											<?php if($_SESSION['login_type'] == 1): ?>

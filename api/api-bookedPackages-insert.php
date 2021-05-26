@@ -31,7 +31,7 @@ if(mysqli_query($conn, $sql)){
 else{
     echo json_encode(array('message' => 'No Data insert.', 'status' => false));
 }
-
+if ($included == "not included"){
 //id wala kaam
 $i= 1;
 while($i == 1){
@@ -45,14 +45,21 @@ if(mysqli_num_rows($chk) <= 0){
 }
 $cashindata =$e_num;
 
+$hall_ShortCode ='';
+    $splitName = explode(" ",$_SESSION['login_hall_name']);
+     foreach ($splitName as $value) {
+           $hall_ShortCode .=  substr($value,0,1);
+       } 
+      $bill_no = "HMS-".$hall_ShortCode. "-".(1000+$booking_id);
 
 $sql2 = "INSERT INTO cashin(`cashin_no`,`Description`,`price`,`recept_id`,`hall_id`)
-VALUES ('$cashindata','Package $pkg_name', '$pkg_cost','$booking_id','$hallCode')";
+VALUES ('$cashindata','Package $pkg_name', '$pkg_cost','$bill_no','$hallCode')";
 
 if (mysqli_query($conn, $sql2)) {
 
     echo json_encode(array('message' => 'Data insert.', 'status' => false));
 } else {
     echo json_encode(array('message' => 'No Data insert.', 'status' => false));
+}
 }
 ?>

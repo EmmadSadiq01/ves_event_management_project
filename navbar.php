@@ -14,6 +14,9 @@
 				<a type="button" onclick="showPkg()" class="nav-item nav-users"><span class='icon-field'><i class="fa fa-box-open"></i></span> Hall Packages
 				</a>  
 				<?php endif; ?>
+				<a href="index.php?page=bookings" class="nav-item nav-bookings"><span class='icon-field'><i class="fa fa-list"></i></span> Bookings List</a>
+					<a href="index.php?page=inquiry" class="nav-item nav-inquiry"><span class='icon-field'><i class="fa fa-list"></i></span> Inquiry List</a>
+				
 				<a href="index.php?page=employee" class="nav-item nav-employee"><span class='icon-field'><i class="fa fa-user"></i></span> Employee List</a>
 				<a href="index.php?page=department" class="nav-item nav-department"><span class='icon-field'><i class="fa fa-columns"></i></span> Depatment List</a>
 				<a href="index.php?page=position" class="nav-item nav-position"><span class='icon-field'><i class="fa fa-user-tie"></i></span> Position List</a>
@@ -26,7 +29,7 @@
 					<a href="index.php?page=procurements" class="nav-item nav-procurements"><span class='icon-field'><i class="fa fa-list"></i></span> Procurements Bill List</a>
 					<a href="index.php?page=cashin" class="nav-item nav-cashin"><span class='icon-field'><i class="fa fa-list"></i></span> Cashin Bill List</a>
 					<a href="index.php?page=cashout" class="nav-item nav-cashout"><span class='icon-field'><i class="fa fa-list"></i></span> Cashout Bill List</a>
-				
+					
 		</div>
  
 </nav>

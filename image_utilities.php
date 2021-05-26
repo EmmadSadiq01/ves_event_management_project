@@ -16,7 +16,9 @@
 				<br />
 				<div class="card">
 					<div class="card-header">
-						<span><b>Utility Bill No : <?php echo $pay['utility_no'] ?></b></span>
+						<span>
+						<button class="btn btn-primary btn-sm btn-block col-md-3 float-right" type="button" id="back_btn"><span class="fa fa-plus"></span>Back to utility List</button>
+						<b>Utility Bill No : <?php echo $pay['utility_no'] ?></b></span>
 					</div>
 					<div class="card-body">
 					<?php if($_SESSION['login_type'] == 2): ?>
@@ -91,6 +93,10 @@
 				_conf("Are you sure to delete this image?","remove_image",[$(this).attr('data-id')])
 			})
 		});
+		$('#back_btn').click(function(){
+				// window.history.back();
+				window.location.href = "index.php?page=utilities";
+			})
 		$('.add_description').click(function(){
 				var $id=$(this).attr('data-id');
 				uni_modal("Edit Description"+$id,"utility_image_description.php?id="+$id)

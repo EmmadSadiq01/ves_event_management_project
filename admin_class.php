@@ -151,6 +151,7 @@ Class Action {
 		$data .=", address='$address' ";
 		$data .=", emergency_contact='$emergency_contact' ";
 		$data .=", responsiblity='$responsiblity' "; 
+		$data .=", status='1' ";
 
 		if(empty($id)){
 			$i= 1;
@@ -444,7 +445,7 @@ Class Action {
 		$pm_out = "24:00";
 		$this->db->query("DELETE FROM payroll_items where payroll_id=".$id);
 		$pay = $this->db->query("SELECT * FROM payroll where id = ".$id)->fetch_array();
-		$employee = $this->db->query("SELECT * FROM employee");
+		$employee = $this->db->query("SELECT * FROM employee where status=1");
 		if($pay['type'] == 1)
 		$dm = 30.14;
 		else
@@ -690,6 +691,137 @@ Class Action {
 		extract($_POST);
 		$data =" status=1";
 		$save = $this->db->query("UPDATE cashout set ".$data." where id=".$id);
+		if($save)
+			return 1;
+	}
+	function generate_cashout_maintenance(){
+		extract($_POST);
+		$data1 =" gen_cashout=1";
+
+		$save2 = $this->db->query("UPDATE maintenance set ".$data1." where id=".$id);
+
+		$data2 =" description='$description' ";
+		$data2 .=", bill_no='$maintenance_no' ";
+		$data2 .=", priority='$priority' ";
+
+			$i= 1;
+			while($i == 1){
+				$e_num='CO'.'-'. mt_rand(1,9999).'-'.date('Y') ;
+				$chk  = $this->db->query("SELECT * FROM cashout where cashout_no = '$e_num' ")->num_rows;
+				if($chk <= 0){
+					$i = 0;
+				}
+			}
+			$data2 .=", cashout_no='$e_num' ";
+
+			$save3 = $this->db->query("INSERT INTO cashout set ".$data2);
+		if($save2 && $save3)
+			return 1;
+	}
+	function generate_cashout_utility(){
+		extract($_POST);
+		$data1 =" gen_cashout=1";
+
+		$save2 = $this->db->query("UPDATE utilities set ".$data1." where id=".$id);
+
+		$data2 =" description='$description' ";
+		$data2 .=", bill_no='$utility_no' ";
+		$data2 .=", amount='$amount' ";
+		$data2 .=", priority='$priority' ";
+
+			$i= 1;
+			while($i == 1){
+				$e_num='CO'.'-'. mt_rand(1,9999).'-'.date('Y') ;
+				$chk  = $this->db->query("SELECT * FROM cashout where cashout_no = '$e_num' ")->num_rows;
+				if($chk <= 0){
+					$i = 0;
+				}
+			}
+			$data2 .=", cashout_no='$e_num' ";
+
+			$save3 = $this->db->query("INSERT INTO cashout set ".$data2);
+		if($save2 && $save3)
+			return 1;
+	}
+	function generate_cashout_procurement(){
+		extract($_POST);
+		$data1 =" gen_cashout=1";
+
+		$save2 = $this->db->query("UPDATE procurement set ".$data1." where id=".$id);
+
+		$data2 =" description='$description' ";
+		$data2 .=", bill_no='$procurement_no' ";
+		$data2 .=", amount='$amount' ";
+		$data2 .=", priority='$priority' ";
+
+			$i= 1;
+			while($i == 1){
+				$e_num='CO'.'-'. mt_rand(1,9999).'-'.date('Y') ;
+				$chk  = $this->db->query("SELECT * FROM cashout where cashout_no = '$e_num' ")->num_rows;
+				if($chk <= 0){
+					$i = 0;
+				}
+			}
+			$data2 .=", cashout_no='$e_num' ";
+
+			$save3 = $this->db->query("INSERT INTO cashout set ".$data2);
+		if($save2 && $save3)
+			return 1;
+	}
+	
+	function save_cashin(){
+		extract($_POST);
+		$data =" Description='$Description' ";
+		$data .=", price='$price' ";
+		$data .=", 	hall_id='$hallid' ";
+
+		if(empty($id)){
+			$i= 1;
+			while($i == 1){
+				$e_num='CI'.'-'. mt_rand(1,9999).'-'.date('Y') ;
+				$chk  = $this->db->query("SELECT * FROM cashin where cashin_no = '$e_num' ")->num_rows;
+				if($chk <= 0){
+					$i = 0;
+				}
+			}
+			$data .=", cashin_no='$e_num' ";
+
+			$save = $this->db->query("INSERT INTO cashin set ".$data);
+		}else{
+			$save = $this->db->query("UPDATE cashin set ".$data." where id=".$id);
+		}
+		
+		if($save)
+			return 1;
+	}
+	function delete_cashin(){
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM cashin where id = ".$id);
+		if($delete)
+			return 1;
+	}
+	function save_cashin_image(){
+		extract($_POST);
+		$data =" image_description='$description' ";
+
+		if(empty($id)){
+			$save = $this->db->query("INSERT INTO cashin_img set ".$data);
+		}else{
+			$save = $this->db->query("UPDATE cashin_img set ".$data." where id=".$id);
+		}
+		if($save)
+			return 1;
+	}
+	function remove_cashin_image(){
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM cashin_img where id = ".$id);
+		if($delete)
+			return 1;
+	}
+	function calculate_cashin(){
+		extract($_POST);
+		$data =" status=1";
+		$save = $this->db->query("UPDATE cashin set ".$data." where id=".$id);
 		if($save)
 			return 1;
 	}

@@ -16,6 +16,7 @@
 							<thead>
 								<tr>
 									<th>Cashout No</th>
+									<th>Bill No</th>
 									<th>Description</th>
 									<th>Amount</th>
 									<th>Provided By</th>
@@ -30,11 +31,12 @@
 									$d_arr[0] = "Unset";
 									$p_arr[0] = "Unset";
 									
-									$employee_qry=$conn->query("SELECT * FROM cashout") or die(mysqli_error());
+									$employee_qry=$conn->query("SELECT * FROM cashout ORDER BY id DESC") or die(mysqli_error());
 									while($row=$employee_qry->fetch_array()){
 									?>
 									<tr>
 										<td><?php echo $row['cashout_no']?></td>
+										<td><?php echo $row['bill_no']?></td>
 										<td><?php echo $row['description']?></td>
 										<td><?php echo $row['amount']?></td>
 										<td><?php echo $row['providby']?></td>
@@ -55,7 +57,7 @@
 										<td class="text-center"><span class="badge badge-success">Approved</span></td>
 										<?php endif ?>
 										<td class="text-center">
-											<span style="font-size: 12px !important;font-weight: 700 !important;">Upload Images</span>
+										<?php if($_SESSION['login_type'] == 1): ?>View Images<?php else: ?>Upload Images<?php endif ?></span>
 											<button class="btn btn-sm btn-outline-primary add_images" img-id="<?php echo $row['id']?>" type="button"><i class="fa fa-images"></i></button>
 										</td>
 										<td>

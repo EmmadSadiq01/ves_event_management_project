@@ -11,7 +11,7 @@
 				<select id="employee_id" class="borwser-default select2">
 					<option value=""></option>
 					<?php 
-					$employee = $conn->query("SELECT *,concat(lastname,', ',firstname,' ',middlename) as ename FROM employee order by concat(lastname,', ',firstname,' ',middlename) asc");
+					$employee = $conn->query("SELECT *,concat(lastname,', ',firstname,' ',middlename) as ename FROM employee where status = '1' order by concat(lastname,', ',firstname,' ',middlename) asc");
 					while($row = $employee->fetch_assoc()):
 					?>
 						<option value="<?php echo $row['id'] ?>"><?php echo $row['ename'] . ' | '. $row['employee_no'] ?></option>

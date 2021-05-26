@@ -36,6 +36,14 @@ window.onload = () => {
                         html_payment += '<td class="text-center">' + data[i].datetime + '</td>'
                         html_payment += '<td>' + data[i].pkg_name + '</td>'
                         html_payment += '<td>' + (parseInt(data[i].pkg_cost) - parseInt(data[i].return_amnt)) + '</td>'
+                        html_payment += '<td>' + data[i].included
+                        if(data[i].included === "not included"){
+                            html_payment += " ( Payable )"
+                        }
+                        else{
+                            html_payment += " ( Include In Booking Amount )"
+                        }
+                        html_payment += '</td>'
                         html_payment += '</tr>'
                     }
 

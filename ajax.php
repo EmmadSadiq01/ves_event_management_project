@@ -54,6 +54,11 @@ if($action == "delete_employee"){
 	if($save)
 		echo $save;
 }
+if($action == "active_employee"){
+	$save = $crud->active_employee();
+	if($save)
+		echo $save;
+}
 if($action == "save_department"){
 	$save = $crud->save_department();
 	if($save)
@@ -254,6 +259,50 @@ if($action == "remove_cashout_image"){
 }
 if($action == "calculate_cashout"){
 	$save = $crud->calculate_cashout();
+	if($save)
+		echo $save;
+}
+if($action == "generate_cashout_maintenance"){
+	$save = $crud->generate_cashout_maintenance();
+	if($save)
+		echo $save;
+}
+if($action == "generate_cashout_utility"){
+	$save = $crud->generate_cashout_utility();
+	if($save)
+		echo $save;
+}
+if($action == "generate_cashout_procurement"){
+	$save = $crud->generate_cashout_procurement();
+	if($save)
+		echo $save;
+}
+
+
+if($action == "save_cashin"){
+	
+	$save = $crud->save_cashin();
+	if($save)
+		echo $save;
+}
+if($action == "delete_cashin"){
+	$save = $crud->delete_cashin();
+	if($save)
+		echo $save;
+}
+if($action == "save_cashin_image"){
+	
+	$save = $crud->save_cashin_image();
+	if($save)
+		echo $save;
+}
+if($action == "remove_cashin_image"){
+	$save = $crud->remove_cashin_image();
+	if($save)
+		echo $save;
+}
+if($action == "calculate_cashin"){
+	$save = $crud->calculate_cashin();
 	if($save)
 		echo $save;
 }

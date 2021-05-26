@@ -1,5 +1,6 @@
 <?php 
 include 'db_connect.php'; 
+include 'admin_class.php';
 if(isset($_GET['id'])){
 	$qry = $conn->query("SELECT * FROM cashin where id = ".$_GET['id'])->fetch_array();
 	foreach($qry as $k => $v){
@@ -13,11 +14,12 @@ if(isset($_GET['id'])){
 		<div class="form-group">
 			<label>Description:</label>
 			<input type="hidden" name="id" value="<?php echo isset($id) ? $id : "" ?>" />
-			<textarea name="description" required="required" cols="30" rows="2" class="form-control"><?php echo isset($description) ? $description : "" ?></textarea>
+			<input type="hidden" name="hallid" value="<?php echo isset($hallid) ? $hallid : $_SESSION['login_hid'] ?>" />
+			<textarea name="Description" required="required" cols="30" rows="2" class="form-control"><?php echo isset($Description) ? $Description : "" ?></textarea>
 		</div>
 		<div class="form-group">
 			<label>Amount:</label>
-			<input type="number" name="amount" required="required" cols="30" rows="2" class="form-control" value="<?php echo isset($amount) ? $amount : "" ?>" />
+			<input type="number" name="price" required="required" cols="30" rows="2" class="form-control" value="<?php echo isset($price) ? $price : "" ?>" />
 		</div>
 	</form>
 </div>

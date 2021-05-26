@@ -39,9 +39,13 @@
 									<?php endif ?>
 									<td>
 										<center>
+									<?php if($_SESSION['login_type'] == 1): ?>
 									<?php if($row['status'] == 0): ?>
 										 <button class="btn btn-sm btn-outline-primary calculate_payroll" data-id="<?php echo $row['id']?>" type="button">Calculate</button>
-									<?php else: ?>
+									<?php endif ?>
+									<?php endif ?>
+									<?php if($row['status'] == 1): ?>
+										 
 										 <button class="btn btn-sm btn-outline-primary view_payroll" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-eye"></i></button>
 									<?php endif ?>
 									<?php if($_SESSION['login_type'] == 2): ?>

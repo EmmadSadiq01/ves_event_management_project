@@ -1,7 +1,8 @@
 <?php 
 include 'db_connect.php'; 
+include 'admin_class.php';
 if(isset($_GET['id'])){
-	$qry = $conn->query("SELECT * FROM maintenance where id = ".$_GET['id'])->fetch_array();
+	$qry = $conn->query("SELECT * FROM maintenance where id = ".$_GET['id']." Order by id desc" )->fetch_array();
 	foreach($qry as $k => $v){
 		$$k = $v;
 	}
@@ -33,9 +34,14 @@ if(isset($_GET['id'])){
 			</select>
 			</div>
 		<div class="form-group">
-			<label>Owner Remarks:</label>
 			<input type="hidden" name="owner_remarks" required="required" cols="30" rows="2" class="form-control" value="<?php echo isset($owner_remarks) ? $owner_remarks : "" ?>" />
 		</div>
+		<?php if($_SESSION['login_type'] == 1): ?>
+		<div class="form-group">
+			<label>Owner Remarks:</label>
+			<textarea name="owner_remarks" required="required" cols="30" rows="2" class="form-control"><?php echo isset($owner_remarks) ? $owner_remarks : "" ?></textarea>
+		</div>
+		<?php endif; ?>
 	</form>
 </div>
 <script>

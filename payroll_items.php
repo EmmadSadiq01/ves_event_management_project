@@ -11,8 +11,9 @@
 				<div class="card">
 					<div class="card-header">
 						<span><b>Payroll : <?php echo $pay['ref_no'] ?></b></span>
-						
+						<?php if($_SESSION['login_type'] == 1): ?>
 						<button class="btn btn-primary btn-sm btn-block col-md-2 float-right" type="button" id="new_payroll_btn"><span class="fa fa-plus"></span> Re-Caclulate Payroll</button>
+						<?php endif ?>
 					</div>
 					<div class="card-body">
 						<div class="row">

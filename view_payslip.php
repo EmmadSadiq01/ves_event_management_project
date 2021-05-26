@@ -26,7 +26,7 @@
 				<p><b>Net Pay : <?php echo number_format($net,2) ?></b></p>
 			</div>
 		</div>
-	
+
 	</div>
 </div>
 <style type="text/css">

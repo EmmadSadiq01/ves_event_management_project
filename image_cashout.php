@@ -6,8 +6,7 @@
 <html>
 <head>
 	<title>Multiple Image Upload</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/forimgcss/style.css">
+	<link rel="stylesheet" href="./assets/forimgcss/style.css">
 </head>
 <body>
 		<div class="container-fluid " >
@@ -17,7 +16,10 @@
 				<br />
 				<div class="card">
 					<div class="card-header">
-						<span><b>Cash Out No : <?php echo $pay['cashout_no'] ?></b></span>
+						<span>
+						<button class="btn btn-primary btn-sm btn-block col-md-3 float-right" type="button" id="back_btn"><span class="fa fa-plus"></span>Back to cashout List</button>
+						<b>Cash Out No : <?php echo $pay['cashout_no'] ?></b>
+						</span>
 					</div>
 					<div class="card-body">
 					<?php if($_SESSION['login_type'] == 2): ?>
@@ -90,6 +92,10 @@
 				_conf("Are you sure to delete this image?","remove_cashout_image",[$(this).attr('data-id')])
 			})
 		});
+			$('#back_btn').click(function(){
+				// window.history.back();
+				window.location.href = "index.php?page=cashout";
+			})
 		$('.add_description').click(function(){
 				var $id=$(this).attr('data-id');
 				uni_modal("Edit Description"+$id,"cashout_image_description.php?id="+$id)
