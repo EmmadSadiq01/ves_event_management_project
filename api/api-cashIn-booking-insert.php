@@ -12,6 +12,7 @@ $data = json_decode(file_get_contents("php://input"),true);
 
 $Bok_id = $data['Bok_id'];
 $adv_amnt = 0;
+$bill_no = 0;
 $hallCode = $_SESSION['login_hid'];
 $userCode = $_SESSION['login_uid'];
 
@@ -40,12 +41,13 @@ if(mysqli_num_rows($chk) <= 0){
 }
 $cashindata =$e_num;
 
-$hall_ShortCode ='';
-    $splitName = explode(" ",$_SESSION['login_hall_name']);
-     foreach ($splitName as $value) {
-           $hall_ShortCode .=  substr($value,0,1);
-       } 
-      $bill_no = "HMS-".$hall_ShortCode. "-".(1000+$Bok_id);
+ $hall_ShortCode ='';
+ $splitName = explode(" ",$_SESSION['login_hall_name']);
+ foreach ($splitName as $value) {
+    $hall_ShortCode .=  substr($value,0,1);
+  } 
+  // echo $hall_ShortCode. "-".(1000+$row['recept_id'])
+      $bill_no = "HMS-$hall_ShortCode-".(1000+$Bok_id);
 
 $sql2 = "INSERT INTO cashin(`cashin_no`,`Description`,`price`,`recept_id`,`hall_id`)
 VALUES ('$cashindata','Booking Advance', '$adv_amnt','$bill_no','$hallCode')";

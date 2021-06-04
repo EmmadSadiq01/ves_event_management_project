@@ -1,4 +1,5 @@
-<?php include 'db_connect.php' ?>
+<?php include('db_connect.php');
+include('admin_class.php'); ?>
 
 <?php ?>
 
@@ -11,7 +12,8 @@
 				<select id="employee_id" class="borwser-default select2">
 					<option value=""></option>
 					<?php 
-					$employee = $conn->query("SELECT *,concat(lastname,', ',firstname,' ',middlename) as ename FROM employee where status = '1' order by concat(lastname,', ',firstname,' ',middlename) asc");
+					$haid = $_SESSION['login_hid'];
+					$employee = $conn->query("SELECT *,concat(lastname,', ',firstname,' ',middlename) as ename FROM employee where status = '1' AND hallid=$haid order by concat(lastname,', ',firstname,' ',middlename) asc");
 					while($row = $employee->fetch_assoc()):
 					?>
 						<option value="<?php echo $row['id'] ?>"><?php echo $row['ename'] . ' | '. $row['employee_no'] ?></option>

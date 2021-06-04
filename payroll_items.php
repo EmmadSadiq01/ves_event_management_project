@@ -1,6 +1,7 @@
-<?php include('db_connect.php') ?>
+<?php include('db_connect.php');
+$haid = $_SESSION['login_hid']; ?>
 <?php
-		$pay = $conn->query("SELECT * FROM payroll where id = ".$_GET['id'])->fetch_array();
+		$pay = $conn->query("SELECT * FROM payroll WHERE hallid = $haid AND id = ".$_GET['id'])->fetch_array();
 		$pt = array(1=>"Monhtly",2=>"Semi-Monthly");
 ?>
 		<div class="container-fluid " >
@@ -38,7 +39,7 @@
 							<tbody>
 								<?php
 									
-									$payroll=$conn->query("SELECT p.*,concat(e.lastname,', ',e.firstname,' ',e.middlename) as ename,e.employee_no FROM payroll_items p inner join employee e on e.id = p.employee_id ") or die(mysqli_error());
+									$payroll=$conn->query("SELECT p.*,concat(e.lastname,', ',e.firstname,' ',e.middlename) as ename,e.employee_no FROM payroll_items p inner join employee e on e.id = p.employee_id WHERE e.hallid = $haid") or die(mysqli_error());
 									while($row=$payroll->fetch_array()){
 								?>
 								<tr>

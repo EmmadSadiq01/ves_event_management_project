@@ -3,10 +3,12 @@
 header ('Content-Type: application/json');
 header ('Access-Control-Allow-Origin: *');
 
-
+include '../admin_class.php';
+$hallCode = $_SESSION['login_hid'];
+$userCode = $_SESSION['login_uid'];
 include "config.php";
 
-$sql = "SELECT * FROM bookingtarget";
+$sql = "SELECT * FROM bookingtarget  AND hall_code = {$hallCode}";
 $result = mysqli_query($conn, $sql) or die ("SQL Query Failed");
 
 if(mysqli_num_rows($result) > 0){

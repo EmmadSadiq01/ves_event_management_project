@@ -24,13 +24,14 @@ $book_advance = $data['badvance'];
 $book_totalamount = $data['btotal'];
 $book_Guest = $data['bguest'];
 $book_eventname = $data['beventname'];
+$book_remarks = $data['remarks'];
 $hallCode = $_SESSION['login_hid'];
 $userCode = $_SESSION['login_uid'];
 
 include "config.php";
 
-$sql = "INSERT INTO bookings(`bookingDate`, `eventDate`, `hijriDate`, `eventDay`, `personName`, `personAddress`, `personContact`, `personCinc`, `personEmail`, `eventShift`, `hallportion`, `bookingAmount`, `advanceAmount`, `totalPrice`, `totalGuest`, `eventName`,`userCode`,`hall_code`) 
-VALUES ( '$book_Date', '$bookevent_Date', '$book_Hijridate', '$book_eventDay', '$bookperson_Name', '$bookperson_Address', '$bookperson_Contact', '$bookperson_Cnic', '$bookperson_Email', '$book_eventshift', '$book_Portion', '$book_amount', '$book_advance', '$book_totalamount', '$book_Guest', '$book_eventname','$userCode','$hallCode');";
+$sql = "INSERT INTO bookings(`bookingDate`, `eventDate`, `hijriDate`, `eventDay`, `personName`, `personAddress`, `personContact`, `personCinc`, `personEmail`, `eventShift`, `hallportion`, `bookingAmount`, `advanceAmount`, `totalPrice`, `totalGuest`, `eventName`,`userCode`,`hall_code`,`remarks`) 
+VALUES ( '$book_Date', '$bookevent_Date', '$book_Hijridate', '$book_eventDay', '$bookperson_Name', '$bookperson_Address', '$bookperson_Contact', '$bookperson_Cnic', '$bookperson_Email', '$book_eventshift', '$book_Portion', '$book_amount', '$book_advance', '$book_totalamount', '$book_Guest', '$book_eventname','$userCode','$hallCode','$book_remarks');";
 
 if (mysqli_query($conn, $sql)) {
 

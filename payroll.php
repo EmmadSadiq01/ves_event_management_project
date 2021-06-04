@@ -1,4 +1,5 @@
-<?php include('db_connect.php') ?>
+<?php include('db_connect.php');
+$haid = $_SESSION['login_hid']; ?>
 		<div class="container-fluid " >
 			<div class="col-lg-12">
 				
@@ -25,7 +26,7 @@
 							<tbody>
 								<?php
 									
-									$payroll=$conn->query("SELECT * FROM payroll order by date(date_from) desc") or die(mysqli_error());
+									$payroll=$conn->query("SELECT * FROM payroll WHERE hallid = $haid order by date(date_from) desc") or die(mysqli_error());
 									while($row=$payroll->fetch_array()){
 								?>
 								<tr>

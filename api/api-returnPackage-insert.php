@@ -51,8 +51,8 @@ else{
        } 
       $bill_no = "HMS-".$hall_ShortCode. "-".(1000+$booking_id);
       
-$sql2 = "INSERT INTO `cashout` (`cashout_no`, `bill_no`, `description`, `priority`, `amount`, `providby`, `status`)
-VALUES ('$cashoutdata','$bill_no','Package Return Amount From $pkg_name','3','$pkg_cost','Manager','1');";
+$sql2 = "INSERT INTO `cashout` (`cashout_no`, `bill_no`, `description`, `priority`, `amount`, `providby`, `status`,`hallid`,`userid`)
+VALUES ('$cashoutdata','$bill_no','Package Return Amount From $pkg_name','3','$pkg_cost','Manager','1','$hallCode','$userCode');";
 
 if (mysqli_query($conn, $sql2)) {
 

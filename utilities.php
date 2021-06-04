@@ -28,8 +28,9 @@
 								<?php
 									$d_arr[0] = "Unset";
 									$p_arr[0] = "Unset";
+									$haid = $_SESSION['login_hid'];
 									
-									$employee_qry=$conn->query("SELECT * FROM utilities ORDER BY id DESC;") or die(mysqli_error());
+									$employee_qry=$conn->query("SELECT * FROM utilities WHERE hallid= $haid ORDER BY id DESC;") or die(mysqli_error());
 									while($row=$employee_qry->fetch_array()){
 									?>
 									<tr>
@@ -116,7 +117,7 @@
 			});
 			$('.generate_cashout').click(function(){
 				var $id=$(this).attr('bill-no');
-				uni_modal("Edit Maintenance","manage_utility_cashout.php?id="+$id)
+				uni_modal("Edit Cashout","manage_utility_cashout.php?id="+$id)
 				
 			});
 			$('.view_employee').click(function(){

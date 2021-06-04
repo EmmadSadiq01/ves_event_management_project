@@ -26,6 +26,9 @@
                     }
                     
                      echo "Welcome back ". $_SESSION['login_name']." ".$typo." ". $_SESSION['login_hall_name']; ?>
+						<?php if($_SESSION['login_type'] == 2): ?>
+				<button type="button" onclick="showPkg()" class="btn btn-primary btn-sm btn-block col-md-3 float-right"><i class="fa fa-box-open"></i>Hall Packages</button>  
+				<?php endif; ?>
 
                     </div>
                 </div>

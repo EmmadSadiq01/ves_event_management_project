@@ -33,7 +33,8 @@
 							</thead>
 							<tbody>
 								<?php
-									$att=$conn->query("SELECT a.*,e.employee_no, concat(e.lastname,', ',e.firstname,' ',e.middlename) as ename FROM attendance a inner join employee e on a.employee_id = e.id order by UNIX_TIMESTAMP(datetime_log) asc  ") or die(mysqli_error());
+									$haid = $_SESSION['login_hid'];
+									$att=$conn->query("SELECT a.*,e.employee_no, concat(e.firstname,' ',e.middlename,' ',e.lastname) as ename FROM attendance a inner join employee e on a.employee_id = e.id WHERE e.hallid = $haid order by UNIX_TIMESTAMP(datetime_log) asc  ") or die(mysqli_error());
 									$lt_arr = array(1 => " Time-in AM",2=>"Time-out AM",3 => " Time-in PM",4=>"Time-out PM");
 									while($row=$att->fetch_array()){
 										$date = date("Y-m-d",strtotime($row['datetime_log']));

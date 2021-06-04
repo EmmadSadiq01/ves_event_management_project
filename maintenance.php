@@ -29,8 +29,9 @@
 								<?php
 									$d_arr[0] = "Unset";
 									$p_arr[0] = "Unset";
+									$haid = $_SESSION['login_hid'];
 									
-									$employee_qry=$conn->query("SELECT * FROM maintenance ORDER BY id DESC") or die(mysqli_error());
+									$employee_qry=$conn->query("SELECT * FROM maintenance WHERE hallid= $haid ORDER BY id DESC") or die(mysqli_error());
 									while($row=$employee_qry->fetch_array()){
 									?>
 									<input type="hidden" name="id" value="<?php echo isset($description) ? $description : "" ?>" />
@@ -117,7 +118,7 @@
 			});
 			$('.generate_cashout').click(function(){
 				var $id=$(this).attr('bill-no');
-				uni_modal("Edit Maintenance","manage_maintenance_cashout.php?id="+$id)
+				uni_modal("Edit Cashout","manage_maintenance_cashout.php?id="+$id)
 				
 			});
 			$('.edit_owner_employee').click(function(){

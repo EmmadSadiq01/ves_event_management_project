@@ -22,13 +22,14 @@ $inquery_shit = $data['ishift'];
 $inquery_Event = $data['ievent'];
 $inquery_Cost = $data['icost'];
 $inquery_Guest = $data['iguest'];
+$remarks = $data['remarks'];
 $hallCode = $_SESSION['login_hid'];
 $userCode = $_SESSION['login_uid'];
 
 include "config.php";
 
-$sql = "INSERT INTO inquery (inquery_date, hijridate, personName, personAddress, personContact, personCinc, personEmail, hallportion,hall_shift, event_name, estimated_cost, totalGuest,userCode,hall_code ) 
-VALUES ('$inquery_Date','$inquery_Hijridate', '$inquery_Name', '$inquery_Address','$inquery_Contact','$inquery_Cnic','$inquery_Email', '$inquery_Portion','$inquery_shit','$inquery_Event', '$inquery_Cost', '$inquery_Guest','$userCode','$hallCode')";
+$sql = "INSERT INTO inquery (inquery_date, hijridate, personName, personAddress, personContact, personCinc, personEmail, hallportion,hall_shift, event_name, estimated_cost, totalGuest,userCode,hall_code,remarks ) 
+VALUES ('$inquery_Date','$inquery_Hijridate', '$inquery_Name', '$inquery_Address','$inquery_Contact','$inquery_Cnic','$inquery_Email', '$inquery_Portion','$inquery_shit','$inquery_Event', '$inquery_Cost', '$inquery_Guest','$userCode','$hallCode','$remarks')";
 
 if(mysqli_query($conn, $sql)){
 

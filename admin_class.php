@@ -78,67 +78,11 @@ Class Action {
 			return 1;
 		}
 	}
-	function signup(){
-		extract($_POST);
-		$data = " name = '$name' ";
-		$data .= ", hallid = '$hallid' ";
-		$data .= ", contact = '$contact' ";
-		$data .= ", address = '$address' ";
-		$data .= ", username = '$email' ";
-		$data .= ", password = '".md5($password)."' ";
-		$data .= ", type = 3";
-		$chk = $this->db->query("SELECT * FROM users where username = '$email' ")->num_rows;
-		if($chk > 0){
-			return 2;
-			exit;
-		}
-			$save = $this->db->query("INSERT INTO users set ".$data);
-		if($save){
-			$qry = $this->db->query("SELECT * FROM users where username = '".$email."' and password = '".md5($password)."' ");
-			if($qry->num_rows > 0){
-				foreach ($qry->fetch_array() as $key => $value) {
-					if($key != 'passwors' && !is_numeric($key))
-						$_SESSION['login_'.$key] = $value;
-				}
-			}
-			return 1;
-		}
-	}
-
-	function save_settings(){
-		extract($_POST);
-		$data = " name = '".str_replace("'","&#x2019;",$name)."' ";
-		$data .= ", email = '$email' ";
-		$data .= ", contact = '$contact' ";
-		$data .= ", about_content = '".htmlentities(str_replace("'","&#x2019;",$about))."' ";
-		if($_FILES['img']['tmp_name'] != ''){
-						$fname = strtotime(date('y-m-d H:i')).'_'.$_FILES['img']['name'];
-						$move = move_uploaded_file($_FILES['img']['tmp_name'],'assets/img/'. $fname);
-					$data .= ", cover_img = '$fname' ";
-
-		}
 		
-		// echo "INSERT INTO system_settings set ".$data;
-		$chk = $this->db->query("SELECT * FROM system_settings");
-		if($chk->num_rows > 0){
-			$save = $this->db->query("UPDATE system_settings set ".$data);
-		}else{
-			$save = $this->db->query("INSERT INTO system_settings set ".$data);
-		}
-		if($save){
-		$query = $this->db->query("SELECT * FROM system_settings limit 1")->fetch_array();
-		foreach ($query as $key => $value) {
-			if(!is_numeric($key))
-				$_SESSION['setting_'.$key] = $value;
-		}
-
-			return 1;
-				}
-	}
-
-	
 	function save_employee(){
 		extract($_POST);
+		$hallid = $_SESSION['login_hid'];
+		$userid = $_SESSION['login_uid'];
 		$data =" firstname='$firstname' ";
 		$data .=", middlename='$middlename' ";
 		$data .=", lastname='$lastname' ";
@@ -152,6 +96,8 @@ Class Action {
 		$data .=", emergency_contact='$emergency_contact' ";
 		$data .=", responsiblity='$responsiblity' "; 
 		$data .=", status='1' ";
+		$data .=", hallid='$hallid' ";
+		$data .=", userid='$userid' ";
 
 		if(empty($id)){
 			$i= 1;
@@ -194,11 +140,15 @@ Class Action {
 
 	function save_maintenance(){
 		extract($_POST);
+		$hallid = $_SESSION['login_hid'];
+		$userid = $_SESSION['login_uid'];
 		$data =" description='$description' ";
 		$data .=", resolution='$resolution' ";
 		$data .=", assign='$assign' ";
 		$data .=", priority='$priority' ";
 		$data .=", owner_remarks='$owner_remarks' ";
+		$data .=", hallid='$hallid' ";
+		$data .=", userid='$userid' ";
 		
 
 		if(empty($id)){
@@ -255,7 +205,9 @@ Class Action {
 	}
 	function save_department(){
 		extract($_POST);
+		$hallid = $_SESSION['login_hid'];
 		$data =" name='$name' ";
+		$data .=", hallid='$hallid' ";
 		
 
 		if(empty($id)){
@@ -275,7 +227,9 @@ Class Action {
 	
 	function save_position(){
 		extract($_POST);
+		$hallid = $_SESSION['login_hid'];
 		$data =" name='$name' ";
+		$data .=", hallid='$hallid' ";
 		$data .=", department_id = '$department_id' ";
 		
 
@@ -378,11 +332,16 @@ Class Action {
 	function save_employee_attendance(){
 		extract($_POST);
 		
+		$hallid = $_SESSION['login_hid'];
+		$userid = $_SESSION['login_uid'];
+
 		foreach($employee_id as $k =>$v){
 			$datetime_log[$k] =date("Y-m-d H:i",strtotime($datetime_log[$k]));
 			$data =" employee_id='$employee_id[$k]' ";
 			$data .=", log_type = '$log_type[$k]' ";
 			$data .=", datetime_log = '$datetime_log[$k]' ";
+			$data .=", hallid='$hallid' ";
+			$data .=", userid='$userid' ";
 			$save[] = $this->db->query("INSERT INTO attendance set ".$data);
 		}
 
@@ -408,9 +367,13 @@ Class Action {
 	}
 	function save_payroll(){
 		extract($_POST);
+		$hallid = $_SESSION['login_hid'];
+		$userid = $_SESSION['login_uid'];
 		$data =" date_from='$date_from' ";
 		$data .=", date_to = '$date_to' ";
 		$data .=", type = '$type' ";
+		$data .=", hallid='$hallid' ";
+		$data .=", userid='$userid' ";
 		
 
 		if(empty($id)){
@@ -439,20 +402,21 @@ Class Action {
 	}
 	function calculate_payroll(){
 		extract($_POST);
+		$hallid = $_SESSION['login_hid'];
 		$am_in = "09:00";
 		$am_out = "17:00";
 		$pm_in = "15:00";
 		$pm_out = "24:00";
-		$this->db->query("DELETE FROM payroll_items where payroll_id=".$id);
-		$pay = $this->db->query("SELECT * FROM payroll where id = ".$id)->fetch_array();
-		$employee = $this->db->query("SELECT * FROM employee where status=1");
+		$this->db->query("DELETE FROM payroll_items payroll_id=".$id);
+		$pay = $this->db->query("SELECT * FROM payroll where hallid = $hallid AND id = ".$id)->fetch_array();
+		$employee = $this->db->query("SELECT * FROM employee where hallid = $hallid AND status=1");
 		if($pay['type'] == 1)
 		$dm = 30.14;
 		else
 		$dm = 111;
 		$calc_days = abs(strtotime($pay['date_to']." 23:59:59")) - strtotime($pay['date_from']." 00:00:00 -1 day") ; 
         $calc_days =floor($calc_days / (60*60*24)  );
-		$att=$this->db->query("SELECT * FROM attendance where date(datetime_log) between '".$pay['date_from']."' and '".$pay['date_from']."' order by UNIX_TIMESTAMP(datetime_log) asc  ") or die(mysqli_error($conn));
+		$att=$this->db->query("SELECT * FROM attendance where hallid = $hallid AND date(datetime_log) between '".$pay['date_from']."' and '".$pay['date_from']."' order by UNIX_TIMESTAMP(datetime_log) asc  ") or die(mysqli_error($conn));
 		while($row=$att->fetch_array()){
 			$date = date("Y-m-d",strtotime($row['datetime_log']));
 			if($row['log_type'] == 1 || $row['log_type'] == 3){
@@ -506,6 +470,7 @@ Class Action {
 			$data .= ", late = '$late' ";
 			$data .= ", salary = '$salary' ";
 			$data .= ", net = '$net' ";
+			$data .=", hallid='$hallid' ";
 			$save[] = $this->db->query("INSERT INTO payroll_items set ".$data);
 
 		}
@@ -516,10 +481,14 @@ Class Action {
 	}
 	function save_utilities(){
 		extract($_POST);
+		$hallid = $_SESSION['login_hid'];
+		$userid = $_SESSION['login_uid'];
 		$data =" description='$description' ";
 		$data .=", amount='$amount' ";
 		$data .=", priority='$priority' ";
 		$data .=", owner_remarks='$owner_remarks' ";
+		$data .=", hallid='$hallid' ";
+		$data .=", userid='$userid' ";
 		
 
 		if(empty($id)){
@@ -575,11 +544,15 @@ Class Action {
 
 	function save_procurements(){
 		extract($_POST);
+		$hallid = $_SESSION['login_hid'];
+		$userid = $_SESSION['login_uid'];
 		$data =" description='$description' ";
 		$data .=", amount='$amount' ";
 		$data .=", supplier_name='$supplier' ";
 		$data .=", priority='$priority' ";
 		$data .=", owner_remarks='$owner_remarks' ";
+		$data .=", hallid='$hallid' ";
+		$data .=", userid='$userid' ";
 
 		if(empty($id)){
 			$i= 1;
@@ -639,10 +612,14 @@ Class Action {
 	
 	function save_cashout(){
 		extract($_POST);
+		$hallid = $_SESSION['login_hid'];
+		$userid = $_SESSION['login_uid'];
 		$data =" description='$description' ";
 		$data .=", amount='$amount' ";
 		$data .=", providby='$providby' ";
 		$data .=", priority='$priority' ";
+		$data .=", hallid='$hallid' ";
+		$data .=", userid='$userid' ";
 
 		if(empty($id)){
 			$i= 1;
@@ -654,6 +631,7 @@ Class Action {
 				}
 			}
 			$data .=", cashout_no='$e_num' ";
+			$data .=", bill_no='$e_num' ";
 
 			$save = $this->db->query("INSERT INTO cashout set ".$data);
 		}else{
@@ -696,6 +674,8 @@ Class Action {
 	}
 	function generate_cashout_maintenance(){
 		extract($_POST);
+		$hallid = $_SESSION['login_hid'];
+		$userid = $_SESSION['login_uid'];
 		$data1 =" gen_cashout=1";
 
 		$save2 = $this->db->query("UPDATE maintenance set ".$data1." where id=".$id);
@@ -703,6 +683,8 @@ Class Action {
 		$data2 =" description='$description' ";
 		$data2 .=", bill_no='$maintenance_no' ";
 		$data2 .=", priority='$priority' ";
+		$data2 .=", hallid='$hallid' ";
+		$data2 .=", userid='$userid' ";
 
 			$i= 1;
 			while($i == 1){
@@ -720,6 +702,8 @@ Class Action {
 	}
 	function generate_cashout_utility(){
 		extract($_POST);
+		$hallid = $_SESSION['login_hid'];
+		$userid = $_SESSION['login_uid'];
 		$data1 =" gen_cashout=1";
 
 		$save2 = $this->db->query("UPDATE utilities set ".$data1." where id=".$id);
@@ -728,6 +712,8 @@ Class Action {
 		$data2 .=", bill_no='$utility_no' ";
 		$data2 .=", amount='$amount' ";
 		$data2 .=", priority='$priority' ";
+		$data2 .=", hallid='$hallid' ";
+		$data2 .=", userid='$userid' ";
 
 			$i= 1;
 			while($i == 1){
@@ -745,6 +731,8 @@ Class Action {
 	}
 	function generate_cashout_procurement(){
 		extract($_POST);
+		$hallid = $_SESSION['login_hid'];
+		$userid = $_SESSION['login_uid'];
 		$data1 =" gen_cashout=1";
 
 		$save2 = $this->db->query("UPDATE procurement set ".$data1." where id=".$id);
@@ -753,6 +741,8 @@ Class Action {
 		$data2 .=", bill_no='$procurement_no' ";
 		$data2 .=", amount='$amount' ";
 		$data2 .=", priority='$priority' ";
+		$data2 .=", hallid='$hallid' ";
+		$data2 .=", userid='$userid' ";
 
 			$i= 1;
 			while($i == 1){
@@ -785,6 +775,7 @@ Class Action {
 				}
 			}
 			$data .=", cashin_no='$e_num' ";
+			$data .=", 	recept_id='$e_num' ";
 
 			$save = $this->db->query("INSERT INTO cashin set ".$data);
 		}else{

@@ -1,4 +1,6 @@
-<?php include('db_connect.php') ?>
+<?php include('db_connect.php');
+// include 'admin_class.php';
+$haid = $_SESSION['login_hid']; ?>
 		<div class="container-fluid " >
 			<div class="col-lg-12">
 				
@@ -17,6 +19,7 @@
 								<tr>
 									<th>Cashin No</th>
 									<th>Bill No</th>
+									<th>Creation Date</th>
 									<th>Description</th>
 									<th>Amount</th>
 									<th>Action</th>
@@ -27,18 +30,13 @@
 									$d_arr[0] = "Unset";
 									$p_arr[0] = "Unset";
 									
-									$employee_qry=$conn->query("SELECT * FROM cashin where hall_id=".$_SESSION['login_hid']) or die(mysqli_error());
+									$employee_qry=$conn->query("SELECT * FROM cashin where hall_id=$haid") or die(mysqli_error());
 									while($row=$employee_qry->fetch_array()){
 									?>
 									<tr>
 										<td><?php echo $row['cashin_no']?></td>
-										<td>HMS-<?php 
-                                        $hall_ShortCode ='';
-                            $splitName = explode(" ",$_SESSION['login_hall_name']);
-                            foreach ($splitName as $value) {
-                            $hall_ShortCode .=  substr($value,0,1);
-                            } 
-                    echo $hall_ShortCode. "-".(1000+$row['recept_id'])?></td>
+										<td><?php echo $row['recept_id']?></td>
+										<td><?php echo $row['created_at']?></td>
 										<td><?php echo $row['Description']?></td>
 										<td><?php echo $row['price']?></td>
 										

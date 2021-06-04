@@ -5,10 +5,12 @@ header ('Access-Control-Allow-Origin: *');
 
 $data = json_decode(file_get_contents("php://input"),true);
 $targetDate = $data['targetDate'];
-
+include '../admin_class.php';
+$hallCode = $_SESSION['login_hid'];
+$userCode = $_SESSION['login_uid'];
 include "config.php";
 
-$sql = "SELECT * FROM bookingtarget WHERE target_date = '$targetDate'";
+$sql = "SELECT * FROM bookingtarget WHERE target_date = '$targetDate' AND hall_code = {$hallCode}";
 $result = mysqli_query($conn, $sql) or die ("SQL Query Failed");
 
 if(mysqli_num_rows($result) > 0){

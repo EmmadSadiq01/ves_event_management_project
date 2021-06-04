@@ -19,7 +19,7 @@ $userCode = $_SESSION['login_uid'];
 
 include "config.php";
 
-$sql = "INSERT INTO `packages` (`package_name`, `pkg_cost`, `return_price`,`hall_id`) VALUES ('$pkgName', '$pkgAmnt','$return_price', '$hallCode')";
+$sql = "INSERT INTO `packages` (`package_name`, `pkg_cost`, `return_price`,`hall_id`,`userCode`) VALUES ('$pkgName', '$pkgAmnt','$return_price', '$hallCode','$userCode')";
 
 if(mysqli_query($conn, $sql)){
 

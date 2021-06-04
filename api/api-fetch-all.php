@@ -1,11 +1,13 @@
 <?php
 header ('Content-Type: application/json');
 header ('Access-Control-Allow-Origin: *');
- 
+include '../admin_class.php';
+$hallCode = $_SESSION['login_hid'];
+$userCode = $_SESSION['login_uid'];
 
 include "config.php";
 
-$sql = "select * from inquery ORDER BY `inquery`.`inquery_date` ASC";
+$sql = "select * from inquery WHERE hall_code={$hallCode} ORDER BY `inquery`.`inquery_date` ASC";
 $result = mysqli_query($conn, $sql) or die ("SQL Query Failed");
 
 if(mysqli_num_rows($result) > 0){

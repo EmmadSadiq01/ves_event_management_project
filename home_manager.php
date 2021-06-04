@@ -35,8 +35,8 @@
       <form action="" onsubmit="eventHandler()">
         <div class="modal-body">
           <div class="mb-3">
-            <label for="date" class="form-label">Date</label>
-            <input type="date" name="event_date" class="form-control" id="On_event_date" require />
+            <label for="date" class="form-label">Booking Date</label>
+            <input type="date" name="event_date" class="form-control" id="On_event_date" disabled require />
             <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
           </div>
           <div class="mb-3">
@@ -94,6 +94,10 @@
             <label for="event_cost" class="form-label">Estimated Cost Rs.</label>
             <input type="number" name="cost" class="form-control" id="event_cost" require />
           </div>
+          <div class="mb-3">
+            <label for="inq_remarks" class="form-label">Remarks</label>
+            <textarea cols="30" rows="1" name="inq_remarks" class="form-control" id="inq_remarks" require></textarea>
+          </div>
 
 
         </div>
@@ -121,8 +125,13 @@
           </div>
           <div class="mb-3">
             <input type="hidden" id="edit_id" class="form-control" />
-            <label for="editDate" class="form-label">Date</label>
-            <input type="date" name="event_date" class="form-control" id="Edit_On_event_date" require />
+            <label for="editDate" class="form-label">Inquiry Date</label>
+            <input type="date" name="inq_date" class="form-control" id="Edit_inq_date" disabled require />
+          </div>
+          <div class="mb-3">
+            <input type="hidden" id="edit_id" class="form-control" />
+            <label for="editDate" class="form-label">Booking Date</label>
+            <input type="date" name="event_date" class="form-control" id="Edit_On_event_date" disabled require />
           </div>
           <div class="mb-3">
             <label for="editIslDate" class="form-label">Islamic Date</label>
@@ -174,13 +183,18 @@
             <label for="edit_event_number_guest" class="form-label">No. of Guest</label>
             <input type="number" name="number_guest" class="form-control" id="edit_event_number_guest" require />
           </div>
+          <div class="mb-3">
+            <label for="edit_inq_remarks" class="form-label">Remarks</label>
+            <textarea cols="30" rows="1" name="edit_inq_remarks" class="form-control" id="edit_inq_remarks" require></textarea>
+          </div>
+
 
           <!-- <button type="button" class="btn btn-primary">Booking</button> -->
         </div>
         <div class="modal-footer">
 
           <div id="inq_print"></div>
-          <button type="button" class="btn btn-warning" onclick="convertBooking()">Convert Booking</button>
+          <button type="button" class="btn btn-warning" id="convertBookingBtn" onclick="convertBooking()">Convert Booking</button>
           <button type="submit" class="btn btn-primary">Update</button>
 
         </div>
@@ -201,35 +215,60 @@
           <div class="row">
             <div class="col">
               <small>Booking Date</small>
-              <input type="date" class="form-control" id="booking_date" require />
+              <input type="date" class="form-control" id="booking_date" disabled require />
             </div>
             <div class="col">
               <small>Program Date</small>
-              <input type="date" id="booking_program_date" class="form-control" require />
+              <input type="date" id="booking_program_date" class="form-control" disabled require />
             </div>
             <div class="col">
               <small>Day</small>
-              <input type="text" class="form-control" id="booking_program_day" require />
+              <input type="text" class="form-control" id="booking_program_day" disabled require />
             </div>
           </div>
           <div class="mb-3">
             <label for="bookIslDate" class="form-label">Islamic Date</label>
             <input type="text" name="bookIslDate" class="form-control" id="bookIslDate" require />
           </div>
-          <div class="mb-3">
+          <!-- <div class="mb-3">
             <small>Shift</small>
             <label for="morning" class="form-label"><i class="fas fa-sun"></i></label>
-            <input type="radio" name="shift" value="morning" id="morning" class="form-label" />
+            <input type="radio" name="shift" value="morning" id="morning" class="form-label"/>
             <label for="evening" class="form-label"><i class="fas fa-moon"></i></label>
-            <input type="radio" name="shift" value="evening" id="evening" class="form-label" />
+            <input type="radio" name="shift" value="evening" id="evening" class="form-label"/>
           </div>
           <div class="mb-3">
             <small>Select Hall</small>
             <label for="book_hall" class="form-label">A</label>
-            <input type="radio" name="book_hall" value="a" id="book_a" class="form-label" />
+            <input type="radio" name="book_hall" value="a" id="book_a" class="form-label"/>
             <label for="book_hall" class="form-label">B</label>
-            <input type="radio" name="book_hall" value="b" id="book_b" class="form-label" />
+            <input type="radio" name="book_hall" value="b" id="book_b" class="form-label"/>
+          </div> -->
+          <div class="mb-3 container" id="available_slots">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Hall</th>
+                  <th scope="col">Morning</th>
+                  <th scope="col">Evening</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">A</th>
+                  <td><input type="radio" name="hallSlots" value="morning_a" id="morning_a" class="form-label" /></td>
+                  <td><input type="radio" name="hallSlots" value="evening_a" id="evening_a" class="form-label" /></td>
+                </tr>
+                <tr>
+                  <th scope="row">B</th>
+                  <td><input type="radio" name="hallSlots" value="morning_b" id="morning_b" class="form-label" /></td>
+                  <td><input type="radio" name="hallSlots" value="evening_b" id="evening_b" class="form-label" /></td>
+                </tr>
+              </tbody>
+
+            </table>
           </div>
+          <!-- <div class="mb-3" id="duplicateAlert"></div> -->
 
 
           <div class="mb-3">
@@ -274,6 +313,10 @@
             <label for="booking_no_of_guests" class="form-label">No. of Guest</label>
             <input type="number" name="booking_no_of_guests" class="form-control" id="booking_no_of_guests" />
           </div>
+          <div class="mb-3">
+            <label for="booking_remarks" class="form-label">Remarks</label>
+            <textarea cols="30" rows="1" name="booking_remarks" class="form-control" id="booking_remarks"></textarea>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary">Confirm Booking</button>
@@ -317,7 +360,7 @@
             <label for="editbookIslDate" class="form-label">Islamic Date</label>
             <input type="text" name="bookIslDate" class="form-control" id="editbookIslDate" />
           </div>
-          <div class="mb-3">
+          <!-- <div class="mb-3">
             <small>Shift</small>
             <label for="morning" class="form-label">Morning</label>
             <input type="radio" name="editshift" value="morning" id="editmorning" class="form-label" />
@@ -330,6 +373,30 @@
             <input type="radio" name="edit_book_hall" value="a" id="edit_book_a" class="form-label" />
             <label for="book_hall" class="form-label">B</label>
             <input type="radio" name="edit_book_hall" value="b" id="edit_book_b" class="form-label" />
+          </div> -->
+          <div class="mb-3">
+          <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Hall</th>
+                  <th scope="col">Morning</th>
+                  <th scope="col">Evening</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">A</th>
+                  <td><input type="radio" name="edithallSlots" value="morning_a" id="editmorning_a" class="form-label" /></td>
+                  <td><input type="radio" name="edithallSlots" value="evening_a" id="editevening_a" class="form-label" /></td>
+                </tr>
+                <tr>
+                  <th scope="row">B</th>
+                  <td><input type="radio" name="edithallSlots" value="morning_b" id="editmorning_b" class="form-label" /></td>
+                  <td><input type="radio" name="edithallSlots" value="evening_b" id="editevening_b" class="form-label" /></td>
+                </tr>
+              </tbody>
+
+            </table>
           </div>
           <div class="mb-3">
             <label for="name" class="form-label">Name</label>
@@ -372,6 +439,10 @@
           <div class="mb-3">
             <label for="edit_booking_no_of_guests" class="form-label">No. of Guest</label>
             <input type="number" name="edit_booking_no_of_guests" class="form-control" id="edit_booking_no_of_guests" />
+          </div>
+          <div class="mb-3">
+            <label for="edit_booking_remarks" class="form-label">Remarks</label>
+            <textarea cols="30" rows="1" name="edit_booking_remarks" class="form-control" id="edit_booking_remarks"></textarea>
           </div>
         </div>
         <div class="modal-footer">
@@ -632,9 +703,10 @@
           name: out[i].event_name,
           date: after_split,
           type: out[i].iquery_id,
-          description: "Hall: " +
+          description: "<b>HMS-SM-" + (1000 + parseInt(out[i].iquery_id)) + "</b><br/>Name:" +
+            out[i].personName + "<br/>Hall: " +
             out[i].hallportion +
-            "</br>Cost: " +
+            "/" + out[i].hall_shift + "</br>Cost: " +
             out[i].estimated_cost +
             "</br>Conact:" +
             out[i].personContact,
@@ -661,6 +733,7 @@
     let email = document.getElementById("email").value;
     let event_name = document.getElementById("event_name").value;
     let event_cost = document.getElementById("event_cost").value;
+    let remarks = document.getElementById("inq_remarks").value;
     let event_number_guest = document.getElementById("event_number_guest")
       .value;
     let party_contact = document.getElementById("contact").value;
@@ -691,6 +764,7 @@
       ievent: event_name,
       icost: event_cost,
       iguest: event_number_guest,
+      remarks: remarks,
     };
     // console.log("data=>",push_data);
     fetch("./api/api-insert.php", {
@@ -720,6 +794,7 @@
     let total_guest = $("#edit_event_number_guest").val();
     let contact = $("#edit_contact").val();
     let edit_id = $("#edit_id").val();
+    let remarks = $("#edit_inq_remarks").val();
     let hall_select = document.getElementsByName("edit_hall");
     for (i = 0; i < hall_select.length; i++) {
       if (hall_select[i].checked) {
@@ -747,6 +822,7 @@
       ievent: event_name,
       icost: event_cost,
       iguest: total_guest,
+      remarks: remarks,
     };
     console.log(shift)
 
@@ -778,6 +854,7 @@
     let total_guest = $("#edit_event_number_guest").val();
     let contact = $("#edit_contact").val();
     let edit_id = $("#edit_id").val();
+    let remarks = $("#edit_inq_remarks").val();
     let hall_select = document.getElementsByName("edit_hall");
     for (i = 0; i < hall_select.length; i++) {
       if (hall_select[i].checked) {
@@ -812,6 +889,7 @@
       badvance: 0,
       bguest: total_guest,
       btotal: 0,
+      remarks: remarks,
     };
     // console.log("pushObj=>", PushBookObj);
     fetch("./api/api-insert-booking.php", {
@@ -828,20 +906,29 @@
     location.reload();
   };
   const BookingSubmissionHandler = () => {
-    let hallShift = "";
-    let shiftOption = document.getElementsByName("shift");
+    // let hallShift = "";
+    // let shiftOption = document.getElementsByName("shift");
+    // for (i = 0; i < shiftOption.length; i++) {
+    //   if (shiftOption[i].checked) {
+    //     hallShift = shiftOption[i].value;
+    //   }
+    // }
+    let shiftOption = document.getElementsByName("hallSlots");
+    let shift_hall = ""
     for (i = 0; i < shiftOption.length; i++) {
       if (shiftOption[i].checked) {
-        hallShift = shiftOption[i].value;
+        shift_hall = shiftOption[i].value;
       }
     }
-    let hall = "";
-    let hall_select = document.getElementsByName("book_hall");
-    for (i = 0; i < hall_select.length; i++) {
-      if (hall_select[i].checked) {
-        hall = hall_select[i].value;
-      }
-    }
+    let split_shit = shift_hall.split("_")
+
+    // let hall = "";
+    // let hall_select = document.getElementsByName("book_hall");
+    // for (i = 0; i < hall_select.length; i++) {
+    //   if (hall_select[i].checked) {
+    //     hall = hall_select[i].value;
+    //   }
+    // }
     let PushBookObj = {
       bokdate: $("#booking_date").val(),
       bhijtidate: $("#bookIslDate").val(),
@@ -852,13 +939,14 @@
       bpcontact: $("#booking_cell_no").val(),
       bpcnic: $("#bookingcnic").val(),
       bpemail: $("#bookingEmail").val(),
-      beventshift: hallShift,
-      bportion: hall,
+      beventshift: split_shit[0],
+      bportion: split_shit[1],
       beventname: $("#booking_event_name").val(),
       bamount: $("#bookAmnt").val(),
       badvance: $("#booking_advance").val(),
       bguest: $("#booking_no_of_guests").val(),
       btotal: 0,
+      remarks: $("#booking_remarks").val(),
     };
     // console.log("pushObj=>", PushBookObj);
     fetch("./api/api-insert-booking.php", {
@@ -872,6 +960,8 @@
       .catch((err) => {
         throw err;
       });
+
+
   };
   const addPackageRow = () => {
     let html = '';

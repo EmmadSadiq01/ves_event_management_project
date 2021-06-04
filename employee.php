@@ -25,19 +25,20 @@
 								<?php
 									$d_arr[0] = "Unset";
 									$p_arr[0] = "Unset";
-									$dept = $conn->query("SELECT * from department order by name asc");
+									$haid = $_SESSION['login_hid'];
+								$dept = $conn->query("SELECT * from department where hallid=$haid order by name asc");
 										while($row=$dept->fetch_assoc()):
 											$d_arr[$row['id']] = $row['name'];
 										endwhile;
-										$pos = $conn->query("SELECT * from position order by name asc");
+										$pos = $conn->query("SELECT * from position where hallid=$haid order by name asc");
 										while($row=$pos->fetch_assoc()):
 											$p_arr[$row['id']] = $row['name'];
 										 endwhile;
 								    if ($_SESSION['login_type'] == 1){
-									$employee_qry=$conn->query("SELECT * FROM employee") or die(mysqli_error($conn));
+									$employee_qry=$conn->query("SELECT * FROM employee where hallid=$haid") or die(mysqli_error($conn));
 								}
 								else{
-									$employee_qry=$conn->query("SELECT * FROM employee where status=1") or die(mysqli_error($conn));}
+									$employee_qry=$conn->query("SELECT * FROM employee where status=1 AND hallid=$haid") or die(mysqli_error($conn));}
 									while($row=$employee_qry->fetch_array()){
 								?>
 								<tr>
@@ -86,7 +87,7 @@
 			});
 			$('.view_employee').click(function(){
 				var $id=$(this).attr('data-id');
-				uni_modal("Employee Details","view_employee.php?id="+$id,"mid-large")
+				uni_modal3("Employee Details","view_employee.php?id="+$id,"mid-large")
 			});
 			$('#new_emp_btn').click(function(){
 				uni_modal("New Employee","manage_employee.php")

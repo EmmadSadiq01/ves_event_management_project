@@ -22,12 +22,13 @@ $inquery_shift = $data['ishift'];
 $inquery_Event = $data['ievent'];
 $inquery_Cost = $data['icost'];
 $inquery_Guest = $data['iguest'];
+$remarks = $data['remarks'];
 $hallCode = $_SESSION['login_hid'];
 $ownerId = $_SESSION['login_uid'];
 
 include "config.php";
 
-$sql = "UPDATE inquery SET inquery_date= '$inquery_Date', hijridate= '$inquery_Hijridate', personName= '$inquery_Name', personAddress= '$inquery_Address', personContact= '$inquery_Contact', personCinc= '$inquery_Cnic', personEmail= '$inquery_Email', hallportion= '$inquery_Portion', hall_shift='$inquery_shift', event_name= '$inquery_Event', estimated_cost= '$inquery_Cost', totalGuest= '$inquery_Guest' WHERE iquery_id = '$iq_id'";
+$sql = "UPDATE inquery SET inquery_date= '$inquery_Date', hijridate= '$inquery_Hijridate', personName= '$inquery_Name', personAddress= '$inquery_Address', personContact= '$inquery_Contact', personCinc= '$inquery_Cnic', personEmail= '$inquery_Email', hallportion= '$inquery_Portion', hall_shift='$inquery_shift', event_name= '$inquery_Event', estimated_cost= '$inquery_Cost', totalGuest= '$inquery_Guest',remarks='$remarks' WHERE iquery_id = '$iq_id'";
 
 if(mysqli_query($conn, $sql)){
 

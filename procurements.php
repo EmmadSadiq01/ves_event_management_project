@@ -28,8 +28,9 @@
 								<?php
 									$d_arr[0] = "Unset";
 									$p_arr[0] = "Unset";
+									$haid = $_SESSION['login_hid'];
 									
-									$employee_qry=$conn->query("SELECT * FROM procurement ORDER BY id DESC") or die(mysqli_error());
+									$employee_qry=$conn->query("SELECT * FROM procurement WHERE hallid= $haid ORDER BY id DESC") or die(mysqli_error());
 									while($row=$employee_qry->fetch_array()){
 									?>
 									<tr>

@@ -17,6 +17,7 @@
 								<tr>
 									<th>Cashout No</th>
 									<th>Bill No</th>
+									<th>Creation Date</th>
 									<th>Description</th>
 									<th>Amount</th>
 									<th>Provided By</th>
@@ -30,13 +31,14 @@
 								<?php
 									$d_arr[0] = "Unset";
 									$p_arr[0] = "Unset";
-									
-									$employee_qry=$conn->query("SELECT * FROM cashout ORDER BY id DESC") or die(mysqli_error());
+									$haid = $_SESSION['login_hid'];
+									$employee_qry=$conn->query("SELECT * FROM cashout WHERE hallid=$haid ORDER BY id DESC") or die(mysqli_error());
 									while($row=$employee_qry->fetch_array()){
 									?>
 									<tr>
 										<td><?php echo $row['cashout_no']?></td>
 										<td><?php echo $row['bill_no']?></td>
+										<td><?php echo $row['created_at']?></td>
 										<td><?php echo $row['description']?></td>
 										<td><?php echo $row['amount']?></td>
 										<td><?php echo $row['providby']?></td>
@@ -65,7 +67,7 @@
 										<?php if($row['status'] == 0): ?>
 											<?php if($_SESSION['login_type'] == 1): ?>
 											<button class="btn btn-sm btn-outline-primary calculate_cashout" data-id="<?php echo $row['id']?>" type="button">Approved</button>
-											<button class="btn btn-sm btn-outline-primary view_cashout" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-eye"></i></button>
+											<!-- <button class="btn btn-sm btn-outline-primary view_cashout" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-eye"></i></button> -->
 											<?php endif; ?>
 										<?php else: ?>
 										<?php endif ?>

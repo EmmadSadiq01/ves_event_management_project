@@ -1,4 +1,5 @@
-<?php include('db_connect.php');?>
+<?php include('db_connect.php');
+$haid = $_SESSION['login_hid'];?>
 
 <div class="container-fluid">
 	
@@ -18,7 +19,7 @@
 								<select class="custom-select browser-default select2" name="department_id">
 									<option value=""></option>
 								<?php
-								$dept = $conn->query("SELECT * from department order by name asc");
+								$dept = $conn->query("SELECT * from department WHERE hallid=$haid order by name asc");
 								while($row=$dept->fetch_assoc()):
 								?>
 									<option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
@@ -61,7 +62,7 @@
 							<tbody>
 								<?php 
 								$i = 1;
-								$position = $conn->query("SELECT *, department.name as 'dep_name', position.name as 'pos_name' FROM position Inner join department ON position.department_id = department.id  order by position.id asc");
+								$position = $conn->query("SELECT *, department.name as 'dep_name', position.name as 'pos_name' FROM position Inner join department ON position.department_id = department.id  WHERE position.hallid=$haid AND department.hallid=$haid order by position.id asc");
 								while($row=$position->fetch_assoc()):
 								?>
 								<tr>
@@ -74,7 +75,7 @@
 									</td>
 									<td class="text-center">
 										<button class="btn btn-sm btn-primary edit_position" type="button" data-id="<?php echo $row['id'] ?>" data-name="<?php echo $row['name'] ?>" data-department_id="<?php echo $row['department_id'] ?>"  >Edit</button>
-										<button class="btn btn-sm btn-danger delete_position" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
+										<!-- <button class="btn btn-sm btn-danger delete_position" type="button" data-id="<?php echo $row['id'] ?>">Delete</button> -->
 									</td>
 								</tr>
 								<?php endwhile; ?>

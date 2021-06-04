@@ -1,7 +1,9 @@
 <?php 
-include 'db_connect.php'; 
+include 'db_connect.php';
+include 'admin_class.php'; 
+$haid = $_SESSION['login_hid'];
 if(isset($_GET['id'])){
-	$qry = $conn->query("SELECT * FROM employee where id = ".$_GET['id']." Order by id desc")->fetch_array();
+	$qry = $conn->query("SELECT * FROM employee where id = ".$_GET['id']." AND hallid = ".$haid." Order by id desc")->fetch_array();
 	foreach($qry as $k => $v){
 		$$k = $v;
 	}
@@ -53,7 +55,7 @@ if(isset($_GET['id'])){
 			<select class="custom-select browser-default select2" name="department_id">
 				<option value=""></option>
 			<?php
-			$dept = $conn->query("SELECT * from department order by name asc");
+			$dept = $conn->query("SELECT * from department where hallid=$haid order by name asc");
 			while($row=$dept->fetch_assoc()):
 			?>
 				<option value="<?php echo $row['id'] ?>" <?php echo isset($department_id) && $department_id == $row['id'] ? "selected" :"" ?>><?php echo $row['name'] ?></option>
@@ -65,7 +67,7 @@ if(isset($_GET['id'])){
 			<select class="custom-select browser-default select2" name="position_id">
 				<option value=""></option>
 			<?php
-			$pos = $conn->query("SELECT * from position order by name asc");
+			$pos = $conn->query("SELECT * from position where hallid=$haid order by name asc");
 			while($row=$pos->fetch_assoc()):
 			?>
 				<option class="opt" value="<?php echo $row['id'] ?>" data-did="<?php echo $row['department_id'] ?>" <?php echo isset($department_id) && $department_id == $row['department_id'] ? '' :"disabled" ?> <?php echo isset($position_id) && $position_id == $row['id'] ? " selected" : '' ?> ><?php echo $row['name'] ?></option>

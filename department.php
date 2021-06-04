@@ -50,7 +50,8 @@
 							<tbody>
 								<?php 
 								$i = 1;
-								$department = $conn->query("SELECT * FROM department order by id asc");
+								$haid = $_SESSION['login_hid'];
+								$department = $conn->query("SELECT * FROM department WHERE hallid=$haid order by id asc");
 								while($row=$department->fetch_assoc()):
 								?>
 								<tr>
@@ -61,7 +62,7 @@
 									</td>
 									<td class="text-center">
 										<button class="btn btn-sm btn-primary edit_department" type="button" data-id="<?php echo $row['id'] ?>" data-name="<?php echo $row['name'] ?>"  >Edit</button>
-										<button class="btn btn-sm btn-danger delete_department" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
+										<!-- <button class="btn btn-sm btn-danger delete_department" type="button" data-id="<?php echo $row['id'] ?>">Delete</button> -->
 									</td>
 								</tr>
 								<?php endwhile; ?>

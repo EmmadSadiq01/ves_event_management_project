@@ -30,8 +30,8 @@ include 'db_connect.php';   ?>
 								<?php
 									$d_arr[0] = "Unset";
 									$p_arr[0] = "Unset";
-									
-									$employee_qry=$conn->query("SELECT * FROM bookings ORDER BY eventDate ASC;") or die(mysqli_error());
+									$haid = $_SESSION['login_hid'];
+									$employee_qry=$conn->query("SELECT * FROM bookings WHERE hall_code=$haid ORDER BY eventDate ASC;") or die(mysqli_error());
 									while($row=$employee_qry->fetch_array()){
 									?>
 									<tr>

@@ -26,12 +26,13 @@ $book_advance = $data['badvance'];
 $book_totalamount = $data['btotal'];
 $book_Guest = $data['bguest'];
 $book_eventname = $data['beventname'];
+$book_remarks = $data['remarks'];
 $hallCode = $_SESSION['login_hid'];
 $ownerId = $_SESSION['login_uid'];
 
 include "config.php";
 
-$sql = "UPDATE bookings SET bookingDate = '$book_Date', eventDate = '$bookevent_Date' , hijriDate = '$book_Hijridate', eventDay = '$book_eventDay', personName = '$bookperson_Name', personAddress = '$bookperson_Address', personContact = '$bookperson_Contact', personCinc = '$bookperson_Cnic', personEmail = '$bookperson_Email', eventShift = '$book_eventshift',hallportion = '$book_Portion',bookingAmount = '$book_amount', advanceAmount = '$book_advance', totalPrice = '$book_totalamount', totalGuest = '$book_Guest', eventName = '$book_eventname' WHERE booking_id = '$bok_id'";
+$sql = "UPDATE bookings SET bookingDate = '$book_Date', eventDate = '$bookevent_Date' , hijriDate = '$book_Hijridate', eventDay = '$book_eventDay', personName = '$bookperson_Name', personAddress = '$bookperson_Address', personContact = '$bookperson_Contact', personCinc = '$bookperson_Cnic', personEmail = '$bookperson_Email', eventShift = '$book_eventshift',hallportion = '$book_Portion',bookingAmount = '$book_amount', advanceAmount = '$book_advance', totalPrice = '$book_totalamount', totalGuest = '$book_Guest', eventName = '$book_eventname', remarks='$book_remarks' WHERE booking_id = '$bok_id'";
 
 if(mysqli_query($conn, $sql)){
 
