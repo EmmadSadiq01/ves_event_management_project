@@ -1698,6 +1698,8 @@ function hello(selectDate) {
 
     showBookings(selectDate);
     showEventsBar()
+    $('#calendar').removeClass("event-hide");
+    $('#calendar').addClass("sidebar-hide");
 
 }
 
@@ -1764,31 +1766,32 @@ const showBookings = (selectDate) => {
                         " <br />Conact:" +
                         personContact +
                         "</p>";
+                        html+="<div class='row'>   "
                     if (status != 'deactivate') {
                         html +=
-                            "<button type='button' class='btn btn-success ' id='" +
+                            "<div class='col-lg-4 col-6'><button type='button' class='btn btn-success ' id='" +
                             booking_id +
-                            "' onclick='bookEditEvent(this.id)'><i class='fas fa-edit'></i> Edit</button><button type='button' class='btn btn-primary' id='" +
+                            "' onclick='bookEditEvent(this.id)'><i class='fas fa-edit'></i> Edit</button> </div><div class='col-lg-4 col-6'> <button type='button' class='btn btn-primary' id='" +
                             booking_id +
-                            "' onclick='balancePayment(this.id)'><i class='fas fa-plus'></i> Balance</button>";
+                            "' onclick='balancePayment(this.id)'><i class='fas fa-plus'></i> Balance</button> </div>";
 
-                        html += "<button type='button' class='btn btn-danger' id='" +
+                        html += "<div class='col-lg-4 col-6'><button type='button' class='btn btn-danger' id='" +
                             booking_id +
-                            "' onclick='addPackages(this.id)'>Packges</button>";
+                            "' onclick='addPackages(this.id)'>Packges</button> </div>";
                         if (CashInStatus != 1) {
 
-                            html += "<button type='button' class='btn btn-warning' id='" +
+                            html += "<div class='col-lg-4 col-6'><button type='button' class='btn btn-warning' id='" +
                                 booking_id +
-                                "' onclick='cashIn(this.id)'>Cash In</button>";
+                                "' onclick='cashIn(this.id)'>Cash In</button></div>";
 
                         }
-                        html += "<a class='btn btn-success' id='" +
+                        html += "<div class='col-lg-4 col-6'><button class='btn btn-success' id='" +
                             booking_id +
-                            "' href='./manager/screen/floor_print.html?id=" + booking_id + "' target='_blank'><i class='fas fa-info' style='margin-right: 7px'></i>Floor Info</a><button type='button' class='btn btn-primary' id='" +
+                            "' onclick='floorInfoPrint(this.id)'><i class='fas fa-info'></i>Floor</button> </div> <div class='col-lg-4 col-6'> <button type='button' class='btn btn-primary' id='" +
                             booking_id +
-                            "' onclick='cancelBooking(this.id)'>Cancel</button>";
+                            "' onclick='cancelBooking(this.id)'>Cancel</button></div>";
                     }
-                    html += "</div></div>";
+                    html += "</div></div></div>";
                     $("#booking_view").html(html);
                 }
             }
@@ -1983,10 +1986,10 @@ const BookingEventHandler = () => {
     $("#morning_b").attr('disabled', false)
     $("#evening_a").attr('disabled', false)
     $("#evening_b").attr('disabled', false)
-    $("#morning_a").prop('checked', false); 
-    $("#morning_b").prop('checked', false); 
-    $("#evening_a").prop('checked', false); 
-    $("#evening_b").prop('checked', false); 
+    $("#morning_a").prop('checked', false);
+    $("#morning_b").prop('checked', false);
+    $("#evening_a").prop('checked', false);
+    $("#evening_b").prop('checked', false);
     let program_date = {
         eventDate: $("#booking_program_date").val()
     }
@@ -2454,6 +2457,7 @@ const monthChange = (monthIndex) => {
             throw err;
         });
     localStorage.setItem('monthIndex', monthIndex)
+    $('#calendar').addClass("event-hide");
 }
 
 
@@ -2794,4 +2798,10 @@ window.end_load = function () {
     $('#preloader2').fadeOut('fast', function () {
         $(this).remove();
     })
+}
+
+
+const floorInfoPrint = (booking_id) =>{
+    let url = './manager/screen/floor_print.html?id=' + booking_id 
+    window.open(url,'_blank');
 }

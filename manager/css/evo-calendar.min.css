@@ -259,7 +259,7 @@ tr.calendar-body .calendar-day .day[disabled] {
   right: 0;
   width: 300px;
   height: 100%;
-  padding: 70px 30px 60px 30px;
+  padding: 70px 5px 60px 5  px;
   background-color: #fbfbfb;
   -webkit-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
@@ -282,7 +282,7 @@ tr.calendar-body .calendar-day .day[disabled] {
   background: #6c6875;
 }
 .calendar-events > .event-header > p {
-  font-size: 30px;
+  font-size: 1.1rem;
   font-weight: 600;
   color: #5a5a5a;
 }
@@ -316,6 +316,7 @@ tr.calendar-body .calendar-day .day[disabled] {
 .event-container {
   position: relative;
   display: flex;
+  flex-direction: column;
   width: 100%;
   border-radius: 10px;
   margin-bottom: 10px;
@@ -351,9 +352,9 @@ tr.calendar-body .calendar-day .day[disabled] {
 }
 .event-container > .event-icon {
   position: relative;
-  padding: 20px;
-  width: 60px;
-  height: 60px;
+  padding: 5px;
+  width: 30px;
+  height: 30px;
   float: left;
 }
 .event-container > .event-icon > img {
@@ -361,9 +362,9 @@ tr.calendar-body .calendar-day .day[disabled] {
 }
 .event-container > .event-info {
   align-self: center;
-  width: calc(100% - 60px);
+  width: 100%;
   display: inline-block;
-  padding: 10px 10px 10px 0;
+  padding: 0px 10px 10px 10px;
 }
 .event-container > .event-info > p {
   margin: 0;
@@ -490,14 +491,14 @@ button.icon-button > span.chevron-arrow-right {
     max-width: calc(100% - 580px);
   }
   .sidebar-hide .calendar-inner {
-    max-width: calc(100% - 380px);
+    max-width: calc(100% - 245px);
   }
   tr.calendar-header .calendar-header-day,
   tr.calendar-body .calendar-day {
     padding: 10px 5px;
   }
   .calendar-events {
-    width: 380px;
+    width: 250px;
     padding: 70px 20px 60px 20px;
   }
 }
@@ -511,13 +512,13 @@ button.icon-button > span.chevron-arrow-right {
     margin-left: 175px;
   }
   .sidebar-hide .calendar-inner {
-    max-width: calc(100% - 300px);
+    max-width: calc(100% - 15rem);
   }
   .event-hide .calendar-inner {
     max-width: calc(100% - 175px);
   }
   .calendar-events {
-    width: 300px;
+    width: 15rem;
     padding: 70px 10px 60px 10px;
   }
   tr.calendar-body .calendar-day .day {
@@ -594,13 +595,13 @@ button.icon-button > span.chevron-arrow-right {
     margin-left: 150px;
   }
   .sidebar-hide .calendar-inner {
-    max-width: calc(100% - 275px);
+    max-width: calc(100% - 210px);
   }
   .event-hide .calendar-inner {
     max-width: calc(100% - 150px);
   }
   .calendar-events {
-    width: 275px;
+    width: 210px;
     padding: 70px 10px 60px 10px;
   }
 }

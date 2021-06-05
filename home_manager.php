@@ -525,7 +525,7 @@
               </select>
             </div>
             <div class="col-2 small-6 columns">
-              <input type="text" name="add_package_price" class="form-control" placeholder="Package Price" id="select_pkg_price_1" onchange="calculateTotal(this.id.slice(15))">
+              <input type="text" name="add_package_price" class="form-control" placeholder="Package Price" id="select_pkg_price_1" onchange="calculateTotal(this.id.slice(17))">
             </div>
             <div class="col-2 small-6 columns">
               <input type="number" name="add_package_qty" class="form-control" placeholder="Qunantity" id="select_pkg_qty_1" onchange="calculateTotal(this.id.slice(15))">

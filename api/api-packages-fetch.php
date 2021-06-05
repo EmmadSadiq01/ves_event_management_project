@@ -4,8 +4,9 @@ header ('Access-Control-Allow-Origin: *');
  
 
 include "config.php";
-
-$sql = "select * from packages ORDER BY `packages`.`package_name` ASC";
+include '../admin_class.php';
+$hallCode = $_SESSION['login_hid'];
+$sql = "select * from packages WHERE hall_id='$hallCode' ORDER BY `packages`.`package_name` ASC";
 $result = mysqli_query($conn, $sql) or die ("SQL Query Failed");
 
 if(mysqli_num_rows($result) > 0){

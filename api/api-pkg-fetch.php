@@ -6,7 +6,10 @@ header ('Access-Control-Allow-Origin: *');
 
 include "config.php";
 
-$sql = "SELECT * FROM `packages` where hall_id = 1";
+include '../admin_class.php';
+
+$hallCode = $_SESSION['login_hid'];
+$sql = "SELECT * FROM `packages` where hall_id = $hallCode  ";
 $result = mysqli_query($conn, $sql) or die ("SQL Query Failed");
 
 if(mysqli_num_rows($result) > 0){
