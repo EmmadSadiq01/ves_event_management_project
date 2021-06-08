@@ -375,7 +375,7 @@
             <input type="radio" name="edit_book_hall" value="b" id="edit_book_b" class="form-label" />
           </div> -->
           <div class="mb-3">
-          <table class="table">
+            <table class="table">
               <thead>
                 <tr>
                   <th scope="col">Hall</th>
@@ -570,7 +570,7 @@
 
           </table>
         </div>
-        <form action="" class="row align-center" onsubmit="addPkgData()">
+        <form action="" class="row align-center">
           <div class="modal-body">
             <div class="mb-3" id="balBalance">
               <label for="package_name" class="form-label">Package Name</label>
@@ -606,7 +606,8 @@
 
 
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <!-- <button type="buuton" class="btn btn-primary">Submit</button> -->
+              <input type="button" class="btn btn-primary" value="Submit" onclick="addPkgData()">
             </div>
           </div>
         </form>
@@ -690,31 +691,35 @@
       monthsArray[9] = "October";
       monthsArray[10] = "November";
       monthsArray[11] = "December";
-      for (let i = 0; i < out.length; i++) {
-        eventdate = out[i].inquery_date;
-        changeFormat = eventdate.split("-");
-        let year = changeFormat[0];
-        let month = changeFormat[1] - 1;
-        let date = changeFormat[2];
-        after_split = monthsArray[month] + "/" + date + "/" + year;
+      fetch('./api/api-getHallShortCode.php')
+        .then(resonse => resonse.json())
+        .then(hallCode => {
+          for (let i = 0; i < out.length; i++) {
+            eventdate = out[i].inquery_date;
+            changeFormat = eventdate.split("-");
+            let year = changeFormat[0];
+            let month = changeFormat[1] - 1;
+            let date = changeFormat[2];
+            after_split = monthsArray[month] + "/" + date + "/" + year;
 
-        pushEnvents = {
-          id: out[i].iquery_id,
-          name: out[i].event_name,
-          date: after_split,
-          type: out[i].iquery_id,
-          description: "<b>HMS-SM-" + (1000 + parseInt(out[i].iquery_id)) + "</b><br/>Name:" +
-            out[i].personName + "<br/>Hall: " +
-            out[i].hallportion +
-            "/" + out[i].hall_shift + "</br>Cost: " +
-            out[i].estimated_cost +
-            "</br>Conact:" +
-            out[i].personContact,
-          everyYear: false,
-          color: "red",
-        };
-        myEvents.push(pushEnvents);
-      }
+            pushEnvents = {
+              id: out[i].iquery_id,
+              name: out[i].event_name,
+              date: after_split,
+              type: out[i].iquery_id,
+              description: "<b>HMS-" + hallCode + "-" + (1000 + parseInt(out[i].iquery_id)) + "</b><br/>Name:" +
+                out[i].personName + "<br/>Hall/shift: " +
+                out[i].hallportion +
+                "/" + out[i].hall_shift + "</br>Cost: " +
+                out[i].estimated_cost +
+                "</br>Conact:" +
+                out[i].personContact,
+              everyYear: false,
+              color: "red",
+            };
+            myEvents.push(pushEnvents);
+          }
+        })
       $("#calendar").evoCalendar({
         theme: "Royal Navy",
         calendarEvents: myEvents,
@@ -994,6 +999,7 @@
 
 
   }
+  let pkg_shown = false
   const addPkgData = () => {
     let pkg_name = $('#package_name').val();
     let pkg_amnt = $('#pkg_price').val()
@@ -1010,9 +1016,57 @@
       .then((result) => {
         return result.json();
       })
+      .then(()=>{
+
+        pkg_shown=true
+        showPkg()
+        $('#package_name').val("");
+        $('#pkg_price').val("")
+        $('#pkg_ret_price').val("")
+        pkg_shown=false
+
+      })
       .catch((err) => {
         throw err;
       });
+
+  }
+  const showPkg = () => {
+    let url = "./api/api-packages-fetch.php";
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        let html = '';
+        html += '    <thead>'
+        html += '  <tr>'
+        html += '<th>#</th>'
+        html += '<th>Name</th>'
+        html += '<th>Sell Price</th>'
+        html += '<th>Return Price</th>'
+        html += '<th>Action</th>'
+        html += '</tr>'
+        html += '</thead>'
+        html += '<tbody>'
+        for (let i = 0; i < data.length; i++) {
+          html += '<tr>'
+          html += '<td>' + (i + 1) + '</td>'
+          html += '<td id="pkg_name_' + data[i].packages_id + '">' + data[i].package_name + '</td>'
+          html += '<td id="pkg_cost_' + data[i].packages_id + '">' + data[i].pkg_cost + '</td>'
+          html += '<td id="pkg_return_' + data[i].packages_id + '">' + data[i].return_price + '</td>'
+          html += '<td><button  id="e_' + data[i].packages_id + '" class="btn btn-success" value="" onclick="editPkg(this.id)"><i class="fas fa-edit"></i> Edit</button><button type="button" id="d_' + data[i].packages_id + '" class="btn btn-danger" onclick="delPkg(this.id)"><i class="fas fa-trash-alt"></i></button></td>'
+          html += '</tr>'
+        }
+        html += '</tbody>'
+        $('#showPkgs').html(html)
+        if(pkg_shown!=true){
+          $('#hallPackages').modal('show')
+
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
+
   }
   const fetchPkgData = (row_num) => {
     fetch('./api/api-pkg-fetch.php')
@@ -1096,40 +1150,7 @@
     $('#select_pkg_calculate_' + id).val($('#select_pkg_price_' + id).val() * $('#select_pkg_qty_' + id).val())
 
   }
-  const showPkg = () => {
-    let url = "./api/api-packages-fetch.php";
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        let html = '';
-        html += '    <thead>'
-        html += '  <tr>'
-        html += '<th>#</th>'
-        html += '<th>Name</th>'
-        html += '<th>Sell Price</th>'
-        html += '<th>Return Price</th>'
-        html += '<th>Action</th>'
-        html += '</tr>'
-        html += '</thead>'
-        html += '<tbody>'
-        for (let i = 0; i < data.length; i++) {
-          html += '<tr>'
-          html += '<td>' + (i + 1) + '</td>'
-          html += '<td id="pkg_name_' + data[i].packages_id + '">' + data[i].package_name + '</td>'
-          html += '<td id="pkg_cost_' + data[i].packages_id + '">' + data[i].pkg_cost + '</td>'
-          html += '<td id="pkg_return_' + data[i].packages_id + '">' + data[i].return_price + '</td>'
-          html += '<td><button  id="e_' + data[i].packages_id + '" class="btn btn-success" value="" onclick="editPkg(this.id)"><i class="fas fa-edit"></i> Edit</button><button type="button" id="d_' + data[i].packages_id + '" class="btn btn-danger" onclick="delPkg(this.id)"><i class="fas fa-trash-alt"></i></button></td>'
-          html += '</tr>'
-        }
-        html += '</tbody>'
-        $('#showPkgs').html(html)
-        $('#hallPackages').modal('show')
-      })
-      .catch((err) => {
-        throw err;
-      });
-
-  }
+  
   const editPkg = (id) => {
     let pkg_namme = $('#pkg_name_' + id.slice(2)).html()
     $('#pkg_name_' + id.slice(2)).html('<input type="text" id="pkg_name_inp_' + id.slice(2) + '" value="' + pkg_namme + '">')
@@ -1160,7 +1181,8 @@
           return res.json()
         })
         .then(() => {
-          window.location.reload();
+          // window.location.reload();
+          showPkg()
         })
         .catch((err) => {
           throw err
@@ -1183,7 +1205,7 @@
       .then((res) => {
         return res.json()
       })
-      .then(window.location.reload())
+      .then(showPkg())
       .catch((err) => {
         throw err
       })

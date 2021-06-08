@@ -872,23 +872,23 @@
 
             // events
             markup +=
-            '<div class="calendar-events"><div class="target-box"  ><table class="target" id="OwnerTargetBox">'
-            markup +='<tr><td colspan="6"><h3>BOOKING TARGET</h3></td></tr>'
-            markup +='<tr>'
-            markup +='<th rowspan="2">A</th>'
-            markup +='<td><i class="fas fa-sun"></i></td>'
-            markup +='<td id="mor_target_a">0</td>'
-            markup +='<th rowspan="2">B</th>'
-            markup +='<td><i class="fas fa-sun"></i></td>'
-            markup +='<td id="mor_target_b">0</td>'
-            markup +='</tr>'
-            markup +='<tr>'
-            markup +='<td><i class="fas fa-moon"></i></td>'
-            markup +='<td id="eve_target_a" >0</td>'
-            markup +='<td><i class="fas fa-moon"></i></td>'
-            markup +='<td id="eve_target_b" >0</td>'
-            markup +=' </tr>'
-            markup +='</table></div>' 
+                '<div class="calendar-events"><div class="target-box"  ><table class="target" id="OwnerTargetBox">'
+            markup += '<tr><td colspan="6"><h3>BOOKING TARGET</h3></td></tr>'
+            markup += '<tr>'
+            markup += '<th rowspan="2">A</th>'
+            markup += '<td><i class="fas fa-sun"></i></td>'
+            markup += '<td id="mor_target_a">0</td>'
+            markup += '<th rowspan="2">B</th>'
+            markup += '<td><i class="fas fa-sun"></i></td>'
+            markup += '<td id="mor_target_b">0</td>'
+            markup += '</tr>'
+            markup += '<tr>'
+            markup += '<td><i class="fas fa-moon"></i></td>'
+            markup += '<td id="eve_target_a" >0</td>'
+            markup += '<td><i class="fas fa-moon"></i></td>'
+            markup += '<td id="eve_target_b" >0</td>'
+            markup += ' </tr>'
+            markup += '</table></div>'
             markup +=
                 ' <div class="event-header"><p></p><span id="islDate"></span></div>' +
                 '<div class="event-list"></div>' +
@@ -1746,7 +1746,7 @@ function hello(selectDate) {
                         // html_setTarget += '<td><i class="fas fa-sun"></i></td>';
                         // html_setTarget += '<td >' + data[i].target_price + "</td>";
                         // html_setTarget += "</tr>";
-                        $("#mor_target_a").html(data[i].target_price )
+                        $("#mor_target_a").html(data[i].target_price)
 
                     } else if (data[i].selectHall === "a" && data[i].selectShift === "evening") {
                         // html_setTarget += "<tr>";
@@ -1754,7 +1754,7 @@ function hello(selectDate) {
                         // html_setTarget += '<td ><i class="fas fa-moon"></i></td>';
                         // html_setTarget += '<td >' + data[i].target_price + "</td>";
                         // html_setTarget += "</tr>";
-                        $("#eve_target_a").html(data[i].target_price )
+                        $("#eve_target_a").html(data[i].target_price)
 
                     } else if (data[i].selectHall === "b" && data[i].selectShift === "morning") {
                         // html_setTarget += "<tr>";
@@ -1762,7 +1762,7 @@ function hello(selectDate) {
                         // html_setTarget += '<td><i class="fas fa-sun"></i></td>';
                         // html_setTarget += '<td >' + data[i].target_price + "</td>";
                         // html_setTarget += "</tr>";
-                        $("#mor_target_b").html(data[i].target_price )
+                        $("#mor_target_b").html(data[i].target_price)
 
                     } else if (
                         data[i].selectHall === "b" &&
@@ -1775,12 +1775,12 @@ function hello(selectDate) {
                         // html_setTarget +=
                         //     '<td >' + data[i].target_price + "</td>";
                         // html_setTarget += "</tr>";
-                        $("#eve_target_b").html(data[i].target_price )
+                        $("#eve_target_b").html(data[i].target_price)
 
                     }
                 }
             }
-             else {
+            else {
                 // html_setTarget = "";
                 // $("#OwnerTargetBox").html("");
                 // console.log("empty")
@@ -1836,31 +1836,42 @@ const showBookings = (selectDate) => {
                     let personName = data[i].personName;
                     let totalGuest = data[i].totalGuest;
                     let totalPrice = data[i].totalPrice;
-                    html +=
-                        "<div class='event-container'role='button' data-event-index='19'>";
-                    html += "<div class='event-icon'>";
-                    html +=
-                        "<div class='event-bullet-19' style='background-color: red'></div></div>";
+                    let status = data[i].status;
+                    let hallShortCode = ''
+                    fetch('./api/api-getHallShortCode.php')
+                        .then(resonse => resonse.json())
+                        .then(hallCode => {
+                            hallShortCode = hallCode
 
-                    html += "<div class='event-info'>";
-                    html += "<p class='event-title'>" + eventName + "</p>";
-                    html +=
-                        "<p class='event-desc'>Hall: " +
-                        hallportion +
-                        "<br />Booking Price: " +
-                        booking_amnt +
-                        " <br />Advance: " +
-                        adv_amnt +
-                        " <br />Conact:" +
-                        personContact +
-                        "</p>";
-                    html +=
-                        "<button type='button' class='btn btn-success ' style='margin-right:10px' id='" +
-                        booking_id +
-                        "' onclick='bookEditEvent(this.id)'>View</button>";
+                            if (status != 'deactivate') {
+                                html +=
+                                    "<div class='event-container'role='button' data-event-index='19'>";
+                                html += "<div class='event-icon'>";
+                                html +=
+                                    "<div class='event-bullet-19' style='background-color: red'></div></div>";
 
-                    html += " </div></div>";
-                    $("#booking_view").html(html);
+                                html += "<div class='event-info'>";
+                                html += "<p class='event-title'>" + eventName + "</p>";
+                                html +=
+                                    "<p class='event-desc'><b>HMS-" + hallShortCode + "-" + (1000 + parseInt(booking_id)) + "</b><br/>Name: " +
+                                    personName + "<br/>Hall: " +
+                                    hallportion +
+                                    "/" + eventShift + "<br />Booking Price: " +
+                                    booking_amnt +
+                                    " <br />Advance: " +
+                                    adv_amnt +
+                                    " <br />Conact:" +
+                                    personContact +
+                                    "</p>";
+                                html +=
+                                    "<button type='button' class='btn btn-success ' style='margin-right:10px' id='" +
+                                    booking_id +
+                                    "' onclick='bookEditEvent(this.id)'>View</button>";
+
+                                html += " </div></div>";
+                            }
+                            $("#booking_view").html(html);
+                        })
                 }
             }
         })
@@ -1895,7 +1906,11 @@ const editInquiryEvent = (editId) => {
         inqid: editId
     };
     $("#edit_id").val(editId);
-    $("#edit_id_inq").val("MHS-SH-" + (1000 + parseInt(editId)));
+                    fetch('./api/api-getHallShortCode.php')
+                        .then(resonse => resonse.json())
+                        .then(hallCode => {
+                            $("#edit_id_inq").val("HMS-"+hallCode+"-" + (1000 + parseInt(editId)));
+                        })
     fetch("./api/api-fetch.php", {
         method: "POST",
         body: JSON.stringify(editIdObj),
@@ -1958,7 +1973,12 @@ const bookEditEvent = (editId) => {
         })
         .then((data) => {
             $("#edit_booking_id").val(data[0].booking_id);
-            $("#edit_booking_id_concat").val("MHS-SM-" + (1000 + parseInt(data[0].booking_id)));
+            fetch('./api/api-getHallShortCode.php')
+                .then(resonse => resonse.json())
+                .then(hallCode => {
+
+                    $("#edit_booking_id_concat").val("HMS-" + hallCode + "-" + (1000 + parseInt(data[0].booking_id)));
+                })
             $("#booking_edit_date").val(data[0].bookingDate);
             $("#booking_edit_program_date").val(data[0].eventDate);
             $("#booking_edit_program_day").val(data[0].eventDay);
@@ -2102,7 +2122,7 @@ window.onload = () => {
                 let month = mySplit[1];
                 let date = mySplit[2];
                 let change_format = month + "-" + date + "-" + year;
-                if (data[i].hallportion === "a") {
+                if (data[i].hallportion === "a" && data[i].status != 'deactivate') {
                     if (data[i].eventShift === "morning") {
                         $("#moon" + change_format).append('<i class="fas fa-sun"></i>');
                     } else if (data[i].eventShift === "evening") {
@@ -2111,7 +2131,7 @@ window.onload = () => {
                     $("#" + change_format).addClass("confirm-booking-a");
                     // $('#'+change_format).addClass("addclass")
                 }
-                if (data[i].hallportion === "b") {
+                if (data[i].hallportion === "b" && data[i].status != 'deactivate') {
                     if (data[i].eventShift === "morning") {
                         $("#moonb" + change_format).append('<i class="fas fa-sun"></i>');
                         console.log("#moonb" + change_format + "=>b is morning");

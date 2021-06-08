@@ -307,7 +307,9 @@
         monthsArray[9] = "October";
         monthsArray[10] = "November";
         monthsArray[11] = "December";
-
+        fetch('./api/api-getHallShortCode.php')
+                        .then(resonse => resonse.json())
+                        .then(hallCode => {
         for (let i = 0; i < out.length; i++) {
           eventdate = out[i].inquery_date;
           // console.log(eventdate)
@@ -320,16 +322,18 @@
           // let more_split_date = date.split(" ");
           after_split = monthsArray[month] + "/" + date + "/" + year;
           // console.log("in then", after_split);
-
+                   
+                        
           pushEnvents = {
             id: out[i].iquery_id,
             name: out[i].event_name,
             date: after_split,
             type: out[i].iquery_id,
             description:
-              "Hall: " +
-              out[i].hallportion +
-              "</br>Cost: " +
+              "<b>HMS-"+hallCode+"-" + (1000 + parseInt(out[i].iquery_id)) + "</b><br/>Name:" +
+            out[i].personName + "<br/>Hall/shift: " +
+            out[i].hallportion +
+            "/" + out[i].hall_shift + "</br>Cost: " +
               out[i].estimated_cost +
               "</br>Conact:" +
               out[i].personContact,
@@ -337,7 +341,9 @@
             color: "red",
           };
           myEvents.push(pushEnvents);
+        
         }
+      })
         $("#calendar").evoCalendar({
           theme: "Royal Navy",
           // settingName: settingValue

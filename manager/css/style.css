@@ -174,6 +174,9 @@ th[colspan="6"] {
 .event-container:hover .calendar-events .event-container>.event-info>p {
   color: white !important;
 }
+.calendar-events{
+  padding: 1rem;
+}
 /* .event-container:hover */
 td.hijri_date {
   text-align: right;
@@ -214,7 +217,7 @@ td.hijri_date {
 }
 #OwnerTargetBox td,#OwnerTargetBox th {
   /* border: 1px solid; */
-  padding: 5px 15px;
+  padding: 5px 5px;
   font-size: 12px;
 }
 table#OwnerTargetBox h3 {
