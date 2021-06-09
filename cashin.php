@@ -43,7 +43,6 @@ $haid = $_SESSION['login_hid']; ?>
 										<td>
 											<center>
 											<?php if($_SESSION['login_type'] == 1): ?>
-											<button class="btn btn-sm btn-outline-primary calculate_cashin" data-id="<?php echo $row['id']?>" type="button">Approved</button>
 											<button class="btn btn-sm btn-outline-primary view_cashin" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-eye"></i></button>
 											<?php endif; ?>
 										<?php if($_SESSION['login_type'] == 2): ?>
@@ -93,26 +92,7 @@ $haid = $_SESSION['login_hid']; ?>
 			})
 			$('.delete_cashin').click(function(){
 				_conf("Are you sure to delete this cashin report?","delete_cashin",[$(this).attr('data-id')])
-			})
-			$('.calculate_cashin').click(function(){
-				start_load()
-				$.ajax({
-					url:'ajax.php?action=calculate_cashin',
-					method:"POST",
-					data:{id:$(this).attr('data-id')},
-					error:err=>console.log(err),
-					success:function(resp){
-							if(resp == 1){
-								alert_toast("cashin successfully Approved","success");
-									setTimeout(function(){
-									location.reload();
-
-								},1000)
-							}
-						}
-				})
-			})
-		});
+			});
 		function delete_maintenance(id){
 			start_load()
 			$.ajax({

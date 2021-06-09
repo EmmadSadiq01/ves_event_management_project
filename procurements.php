@@ -67,26 +67,25 @@
 										</td>
 										<td>
 											<center>
-										<?php if($row['gen_cashout'] == 0): ?>
-										<button class="btn btn-sm btn-outline-primary generate_cashout" bill-no="<?php echo $row['id']?>" type="button">Cash out</button>
-										<?php endif ?>
 											<?php if($_SESSION['login_type'] == 1): ?>
+												<button class="btn btn-sm btn-outline-primary edit_owner_employee" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-edit"></i></button>
 											<?php if($row['status'] == 0): ?>
 											<button class="btn btn-sm btn-outline-primary calculate_procurements" data-id="<?php echo $row['id']?>" type="button">Approved</button>
-											<?php endif ?>
+											<?php endif; ?>
 											<button class="btn btn-sm btn-outline-primary view_employee" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-eye"></i></button>
-											<?php else: ?>
-											<button class="btn btn-sm btn-outline-success view_employee" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-eye"></i></button>
+											
 										<?php endif; ?>
 										<?php if($_SESSION['login_type'] == 2): ?>
+											<button class="btn btn-sm btn-outline-success view_employee" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-eye"></i></button>
+											<?php if($row['status'] == 1): ?>
+											<?php if($row['gen_cashout'] == 0): ?>
+												<button class="btn btn-sm btn-outline-primary generate_cashout" bill-no="<?php echo $row['id']?>" type="button">Cash out</button>
+											<?php endif; ?>
+											<?php endif;?>
 											<?php if($row['status'] == 0): ?>
 											<button class="btn btn-sm btn-outline-primary edit_employee" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-edit"></i></button>
-											<?php endif ?>
-										<?php endif; ?>
-											<?php if($_SESSION['login_type'] == 1): ?>
-											<button class="btn btn-sm btn-outline-primary edit_owner_employee" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-edit"></i></button>
-											<!-- <button class="btn btn-sm btn-outline-danger delete_maintenance" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-trash"></i></button> -->
 											<?php endif; ?>
+										<?php endif; ?>
 										</center>
 										</td>
 									</tr>

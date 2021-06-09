@@ -165,12 +165,14 @@ button:focus {
 .sidebar-hide .calendar-inner {
   max-width: calc(100% - 300px);
   margin-left: 0;
+  height: 100%;
 }
 .event-hide .calendar-inner {
   max-width: calc(100% - 200px);
 }
 .event-hide.sidebar-hide .calendar-inner {
   max-width: 100%;
+  height: 100%;
 }
 .calendar-inner .calendar-table {
   border-collapse: collapse;
@@ -492,6 +494,7 @@ button.icon-button > span.chevron-arrow-right {
   }
   .sidebar-hide .calendar-inner {
     max-width: calc(100% - 245px);
+    height: 100% !important;
   }
   tr.calendar-header .calendar-header-day,
   tr.calendar-body .calendar-day {
@@ -513,6 +516,7 @@ button.icon-button > span.chevron-arrow-right {
   }
   .sidebar-hide .calendar-inner {
     max-width: calc(100% - 15rem);
+    height: 100%;
   }
   .event-hide .calendar-inner {
     max-width: calc(100% - 175px);
@@ -596,6 +600,7 @@ button.icon-button > span.chevron-arrow-right {
   }
   .sidebar-hide .calendar-inner {
     max-width: calc(100% - 210px);
+    height: 100%;
   }
   .event-hide .calendar-inner {
     max-width: calc(100% - 150px);
@@ -617,6 +622,7 @@ button.icon-button > span.chevron-arrow-right {
   .sidebar-hide .calendar-inner,
   .event-hide .calendar-inner {
     max-width: 100%;
+    height: 100%;
   }
   .calendar-inner::after {
     content: "";
@@ -785,6 +791,7 @@ button.icon-button > span.chevron-arrow-right {
   .event-hide .calendar-inner,
   .calendar-inner {
     max-width: 100%;
+    height: 100%;
   }
   .calendar-sidebar > span#sidebarToggler,
   #eventListToggler {

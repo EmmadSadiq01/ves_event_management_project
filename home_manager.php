@@ -1016,14 +1016,14 @@
       .then((result) => {
         return result.json();
       })
-      .then(()=>{
+      .then(() => {
 
-        pkg_shown=true
+        pkg_shown = true
         showPkg()
         $('#package_name').val("");
         $('#pkg_price').val("")
         $('#pkg_ret_price').val("")
-        pkg_shown=false
+        pkg_shown = false
 
       })
       .catch((err) => {
@@ -1058,7 +1058,7 @@
         }
         html += '</tbody>'
         $('#showPkgs').html(html)
-        if(pkg_shown!=true){
+        if (pkg_shown != true) {
           $('#hallPackages').modal('show')
 
         }
@@ -1150,7 +1150,7 @@
     $('#select_pkg_calculate_' + id).val($('#select_pkg_price_' + id).val() * $('#select_pkg_qty_' + id).val())
 
   }
-  
+
   const editPkg = (id) => {
     let pkg_namme = $('#pkg_name_' + id.slice(2)).html()
     $('#pkg_name_' + id.slice(2)).html('<input type="text" id="pkg_name_inp_' + id.slice(2) + '" value="' + pkg_namme + '">')
