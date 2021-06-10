@@ -29,21 +29,7 @@ if($action == 'save_user'){
 	if($save)
 		echo $save;
 }
-if($action == 'delete_user'){
-	$save = $crud->delete_user();
-	if($save)
-		echo $save;
-}
-if($action == 'signup'){
-	$save = $crud->signup();
-	if($save)
-		echo $save;
-}
-if($action == "save_settings"){
-	$save = $crud->save_settings();
-	if($save)
-		echo $save;
-}
+
 if($action == "save_employee"){
 	$save = $crud->save_employee();
 	if($save)
@@ -181,6 +167,18 @@ if($action == "calculate_payroll"){
 if($action == "save_utilities"){
 	
 	$save = $crud->save_utilities();
+	if($save)
+		echo $save;
+}
+if($action == "save_vender"){
+	
+	$save = $crud->save_vender();
+	if($save)
+		echo $save;
+}
+if($action == "del_vender"){
+	
+	$save = $crud->del_vender();
 	if($save)
 		echo $save;
 }
