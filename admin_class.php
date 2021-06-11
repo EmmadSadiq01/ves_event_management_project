@@ -550,6 +550,7 @@ class Action
 		$userid = $_SESSION['login_uid'];
 		$data = " name='$name' ";
 		$data .= ", contact='$contact' ";
+		$data .= ", cnic='$cnic' ";
 		$data .= ", description='$description' ";
 		$data .= ", address='$address' ";
 		$data .= ", hall_id='$hallid' ";
@@ -571,6 +572,39 @@ class Action
 		} else {
 			$save = $this->db->query("UPDATE venders set " . $data . " where id=" . $id);
 		}
+
+		if ($save)
+			return 1;
+	}
+	function add_ledger()
+	{
+		extract($_POST);
+		$hallid = $_SESSION['login_hid'];
+		$userid = $_SESSION['login_uid'];
+		$data = "type='$type' ";
+		$data .= ", amount='$amount' ";
+		$data .= ", description='$description' ";
+		$data .= ", hall_id='$hallid' ";
+		$data .= ", user_id='$userid' ";
+		$data .= ", vender_id='$id' ";
+
+
+		// if (empty($id)) {
+			// $i = 1;
+			// while ($i == 1) {
+			// 	$v_num = 'V' . '-' . mt_rand(1, 9999) . '-' . date('Y');
+			// 	$chk  = $this->db->query("SELECT * FROM venders where vender_no = '$v_num' ")->num_rows;
+			// 	if ($chk <= 0) {
+			// 		$i = 0;
+			// 	}
+			// }
+			// $data .= ", vender_no='$v_num' ";
+
+		// 	$save = $this->db->query("INSERT INTO venders set " . $data);
+		// } else {
+		// 	$save = $this->db->query("UPDATE venders set " . $data . " where id=" . $id);
+		// }
+		$save = $this->db->query("INSERT INTO vender_ledger set " . $data);
 
 		if ($save)
 			return 1;

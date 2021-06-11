@@ -176,6 +176,12 @@ if($action == "save_vender"){
 	if($save)
 		echo $save;
 }
+if($action == "add_ledger"){
+	
+	$save = $crud->add_ledger();
+	if($save)
+		echo $save;
+}
 if($action == "del_vender"){
 	
 	$save = $crud->del_vender();

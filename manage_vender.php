@@ -14,7 +14,7 @@ if(isset($_GET['id'])){
 		<div class="form-group">
 			<label>Name:</label>
 			<input type="hidden" name="id" value="<?php echo isset($id) ? $id : "" ?>" />
-			<input name="name" required="required" cols="30" rows="2" class="form-control" value="<?php 
+			<input name="name" required="required" class="form-control" value="<?php 
             echo isset($name) ? $name : "" 
             ?>" />
 		</div>
@@ -22,6 +22,12 @@ if(isset($_GET['id'])){
 			<label>Contact:</label>
 			<input type="text"  name="contact" required="required" class="form-control" value="<?php 
             echo isset($contact) ? $contact : "" 
+            ?>"/>
+		</div>
+		<div class="form-group">
+			<label>CNIC:</label>
+			<input type="text"  name="cnic" required="required" class="form-control" value="<?php 
+            echo isset($cnic) ? $cnic : "" 
             ?>"/>
 		</div>
 		<div class="form-group">

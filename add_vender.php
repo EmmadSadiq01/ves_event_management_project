@@ -18,6 +18,7 @@
                             <th>Vender No</th>
                             <th>Name</th>
                             <th>Contact</th>
+                            <th>CNIC</th>
                             <th>Address</th>
                             <th>Description</th>
                             <th>Action</th>
@@ -29,19 +30,20 @@
                         $p_arr[0] = "Unset";
                         $haid = $_SESSION['login_hid'];
 
-                        $employee_qry = $conn->query("SELECT * FROM venders WHERE hall_id= $haid ORDER BY id DESC;") or die(mysqli_error());
+                        $employee_qry = $conn->query("SELECT * FROM venders WHERE hall_id= $haid ORDER BY id DESC;") or die(mysqli_error($conn));
                         while ($row = $employee_qry->fetch_array()) {
                         ?>
                             <tr>
                                 <td><?php echo $row['vender_no'] ?></td>
                                 <td><?php echo $row['name'] ?></td>
                                 <td><?php echo $row['contact'] ?></td>
+                                <td><?php echo $row['cnic'] ?></td>
                                 <td><?php echo $row['address'] ?></td>
                                 <td><?php echo $row['description'] ?></td>
                                 <td>
                                     <button class="btn btn-sm btn-outline-primary edit_vender" data-id="<?php echo $row['id'] ?>" type="button"><i class="fa fa-edit"></i></button>
                                     <button class="btn btn-sm btn-outline-danger del_vender" data-id="<?php echo $row['id'] ?>" type="button"><i class="far fa-trash-alt"></i></button>
-                                    <button class="btn btn-sm btn-outline-warning0 view_ledger" data-id="<?php echo $row['id'] ?>" type="button"><i class="fas fa-money-check-alt"></i>View Ledger</button>
+                                    <button class="btn btn-sm btn-outline-warning view_ledger" data-id="<?php echo $row['id'] ?>" type="button"><i class="fas fa-money-check-alt"></i>View Ledger</button>
                                 </td>
 
 
@@ -68,20 +70,17 @@
     $(document).ready(function() {
 
         $('.edit_vender').click(function() {
-            var $id = $(this).attr('data-id');
-            uni_modal("Edit Utility", "manage_vender.php?id=" + $id)
+            var id = $(this).attr('data-id');
+            uni_modal("Edit Utility", "manage_vender.php?id=" + id)
 
         });
         $('.view_ledger').click(function() {
-            window.location='index.php?page=ledger&id=3';
+            var id = $(this).attr('data-id');
+            window.location = 'index.php?page=ledger&id=' + id;
 
         });
-        // $('.del_vender').click(function() {
-        //     var $id = $(this).attr('data-id');
-        //     uni_modal("Edit Utility", "manage_vender.php?id=" + $id)
-
-        // });
         $('.del_vender').click(function() {
+
             if (confirm("do you want to Delete this vender?")) {
                 remove_vender($(this).attr("data-id"))
             }

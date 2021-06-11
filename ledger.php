@@ -32,35 +32,31 @@
         border: 1px solid #000000;
     }
 
-    table {
+    /* ledger table */
+
+
+    .ledger_table table {
         border: 2px solid #787878;
-        width: 800px;
+        width: 100%;
         border-spacing: 0;
         margin: auto;
     }
 
-    th {
-        background-color: #00BE3F;
+    .ledger_table th {
+        background-color: #afa1d5;
     }
 
-    td,
-    th {
+    .ledger_table td,
+    .ledger_table th {
         padding: 25px;
         font-family: Arial, sans-serif;
     }
 
-    caption {
-        font-family: Verdana, sans-serif;
-        font-size: 2.0em;
-        font-weight: bold;
-        padding-bottom: 5px;
+    .ledger_table tr:nth-of-type(even) {
+        background-color: #dfdfdf;
     }
 
-    tr:nth-of-type(even) {
-        background-color: #FFF5CC;
-    }
-
-    tr:first-of-type {
+    .ledger_table tr:first-of-type {
         background-color: #009900;
         color: #0D0D0D;
     }
@@ -73,113 +69,120 @@
         <div class="card">
             <div class="card-header">
                 <span><b>Vender Cash Statements</b></span>
+                <button class="btn btn-primary btn-sm btn-block col-md-3 float-right" type="button" id="add_ledger"><span class="fa fa-plus"></span>Add Ledger</button>
+
             </div>
             <div class="card-body">
                 <table id="table" class="table table-bordered">
+                    <?php
+                    $sql = "SELECT * FROM venders WHERE id=" . $_GET['id'];
+                    $result = mysqli_query($conn, $sql);
+                    while ($row = mysqli_fetch_assoc($result)) {
 
-                    <tr>
-                        <td class="title">
-                            <h4>Vender No.</h4>
-                        </td>
-                        <td class="value">
-                            <p>V-949393929</p>
-                        </td>
-                        <td class="title">
-                            <h4>Name</h4>
-                        </td>
-                        <td class="value">
-                            <p>M.EMMAD SADIQ</p>
-                        </td>
 
-                    </tr>
-                    <tr>
-                        <td class="title">
-                            <h4>Contact</h4>
-                        </td>
-                        <td class="value">
-                            <p>030303003003</p>
-                        </td>
-                        <td class="title">
-                            <h4>Address</h4>
-                        </td>
-                        <td class="value">
-                            <p>north karachi</p>
-                        </td>
-                    </tr>
-                </table>
-                <!-- <table id="table" class="table table-bordered table-striped">
-                    <thead>
+                    ?>
                         <tr>
-                            <th>Vender No</th>
-                            <th>Name</th>
-                            <th>Contact</th>
-                            <th>Address</th>
-                            <th>Description</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $d_arr[0] = "Unset";
-                        $p_arr[0] = "Unset";
-                        $haid = $_SESSION['login_hid'];
+                            <td class="title">
+                                <h4>Vender No.</h4>
+                            </td>
+                            <td class="value">
+                                <p><?php echo $row['vender_no'] ?></p>
+                            </td>
+                            <td class="title">
+                                <h4>Name</h4>
+                            </td>
+                            <td class="value">
+                                <p><?php echo $row['name'] ?></p>
+                            </td>
 
-                        $employee_qry = $conn->query("SELECT * FROM venders WHERE hall_id= $haid ORDER BY id DESC;") or die(mysqli_error());
-                        while ($row = $employee_qry->fetch_array()) {
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                <h4>Contact</h4>
+                            </td>
+                            <td class="value">
+                                <p><?php echo $row['contact'] ?></p>
+                            </td>
+                            <td class="title">
+                                <h4>Address</h4>
+                            </td>
+                            <td class="value">
+                                <p><?php echo $row['address'] ?></p>
+                            </td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+                </table>
+                <div class="ledger_table container">
+
+                    <table><br>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                            <th>Balance</th>
+                        </tr>
+                        <?php
+                        $sql = "SELECT * FROM vender_ledger WHERE vender_id=" . $_GET['id'];
+                        $result = mysqli_query($conn, $sql);
+                        $balance = 0;
+                        $total_debit = 0;
+                        $total_credit = 0;
+                        while ($row = mysqli_fetch_assoc($result)) {
+
+
                         ?>
                             <tr>
-                                <td><?php echo $row['vender_no'] ?></td>
-                                <td><?php echo $row['name'] ?></td>
-                                <td><?php echo $row['contact'] ?></td>
-                                <td><?php echo $row['address'] ?></td>
-                                <td><?php echo $row['description'] ?></td>
+                                <td><?php echo $row['ledger_date'] ?></td>
+                                <td>  <?php echo $row['description'] ?></td>
+                                <!-- <td> <button class="btn btn-sm btn-outline-success add_img" data-id="<?php echo $row['id'] ?>" type="button"><i class="fas fa-plus"></i></button></td> -->
                                 <td>
-                                    <button class="btn btn-sm btn-outline-primary edit_vender" data-id="<?php echo $row['id'] ?>" type="button"><i class="fa fa-edit"></i></button>
-                                    <button class="btn btn-sm btn-outline-danger del_vender" data-id="<?php echo $row['id'] ?>" type="button"><i class="far fa-trash-alt"></i></button>
-                                    <button class="btn btn-sm btn-outline-warning0 view_ledger" data-id="<?php echo $row['id'] ?>" type="button"><i class="fas fa-money-check-alt"></i>View Ledger</button>
+                                    <span style="font-size: 12px !important;font-weight: 700 !important;">
+											<?php if($_SESSION['login_type'] == 1): ?>View Images<?php else: ?>Upload Images<?php endif ?></span>
+											<button class="btn btn-sm btn-outline-primary add_images" img-id="<?php echo $row['id']?>" type="button"><i class="fa fa-images"></i></button></td>
+                                <td><?php if ($row['type'] == 1) {
+                                        echo "Rs " . number_format($row['amount']);
+                                        $total_debit += $row['amount'];
+                                    } else {
+                                        echo  'Rs 0';
+                                    } ?></td>
+                                <td><?php
+                                    if ($row['type'] == 1) {
+                                        echo "Rs " . '0';
+                                    } else {
+                                        echo "Rs " . number_format($row['amount']);
+                                        $total_credit += $row['amount'];
+                                    };
+
+                                    ?></td>
+                                <td>
+                                    <?php
+                                    if ($row['type'] == 1) {
+                                        $balance -=  $row['amount'];
+                                    } else {
+                                        $balance +=  $row['amount'];
+                                    }
+                                    echo "Rs " . number_format($balance);
+                                    ?>
+
                                 </td>
-
-
-
                             </tr>
                         <?php
                         }
                         ?>
-                    </tbody>
-                </table> -->
-
-                <table width="300" height="200"><br>
-                    <tr>
-                        <th>Date</th>
-                        <th>Description</th>
-                        <th>Debit/Credit</th>
-                    </tr>
-                    <tr>
-                        <td>10/25/2015</td>
-                        <td>ATM Credit 4270 Broadway New York, NY</td>
-                        <td>$100.20</td>
-                    </tr>
-                    <tr>
-                        <td>10/20/2015</td>
-                        <td>ATM Withdraw 0033478 AT West 4 Street</td>
-                        <td>$100.00</td>
-                    </tr>
-                    <tr>
-                        <td>10/15/2015</td>
-                        <td>ATM Purchase at Starbuck E 25 Park Ave</td>
-                        <td>$10.50</td>
-                    </tr>
-                    <tr>
-                        <td>10/10/2015</td>
-                        <td>ATM Purchase at Eat Healthy Cafe 42 street Second Ave</td>
-                        <td>$200.00</td>
-                    </tr>
-                    <tr>
-                        <td>10/5/2015</td>
-                        <td>ATM Purchase at Whole Food Union Square 14 street</td>
-                        <td>$220.50</td>
-                    </tr>
-                </table>
+                        <tfoot>
+                            <tr>
+                                <th colspan="3" class="text-center">Total</th>
+                                <th><?php echo "Rs " . number_format($total_debit) ?></th>
+                                <th><?php echo "Rs " . number_format($total_credit) ?></th>
+                                <th><?php echo "Rs " . number_format($balance) ?></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -194,50 +197,32 @@
 </script>
 <script type="text/javascript">
     $(document).ready(function() {
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
 
-        $('.edit_vender').click(function() {
-            var $id = $(this).attr('data-id');
-            uni_modal("Edit Utility", "manage_vender.php?id=" + $id)
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
 
-        });
-        $('.view_ledger').click(function() {
-            window.location = 'index.php?page=ledger&id=3';
-
-        });
-        // $('.del_vender').click(function() {
-        //     var $id = $(this).attr('data-id');
-        //     uni_modal("Edit Utility", "manage_vender.php?id=" + $id)
-
-        // });
-        $('.del_vender').click(function() {
-            if (confirm("do you want to Delete this vender?")) {
-                remove_vender($(this).attr("data-id"))
-            }
-        })
-        $('#new_vender').click(function() {
-            uni_modal("New Vender", "manage_vender.php")
-        })
-
-        function remove_vender(id) {
-            start_load()
-            $.ajax({
-                url: 'ajax.php?action=del_vender',
-                method: "POST",
-                data: {
-                    id: id
-                },
-                error: err => console.log(err),
-                success: function(resp) {
-                    if (resp == 1) {
-                        alert_toast("Vender's data successfully deleted", "success");
-                        setTimeout(function() {
-                            location.reload();
-
-                        }, 1000)
-                    }
+                if (sParameterName[0] === sParam) {
+                    return typeof sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
                 }
-            })
-            // console.log("running"+id)
-        }
+            }
+            return false;
+        };
+        var vender_id = getUrlParameter('id');
+        $('#add_ledger').click(function() {
+            uni_modal("Add Ledger", "manage_ledger.php?id=" + vender_id)
+        })
+
+        $('.add_images').click(function(){
+				var id=$(this).attr('img-id');
+				location.href = "index.php?page=image_maintenance&id="+id;
+				
+			});
+
+
     });
 </script>
