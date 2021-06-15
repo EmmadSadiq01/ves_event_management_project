@@ -227,8 +227,19 @@ if($action == "save_procurement_image"){
 	if($save)
 		echo $save;
 }
+if($action == "save_vender_description"){
+	
+	$save = $crud->save_vender_description();
+	if($save)
+		echo $save;
+}
 if($action == "remove_procurement_image"){
 	$save = $crud->remove_procurement_image();
+	if($save)
+		echo $save;
+}
+if($action == "remove_vender_image"){
+	$save = $crud->remove_vender_image();
 	if($save)
 		echo $save;
 }

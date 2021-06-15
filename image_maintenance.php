@@ -74,7 +74,7 @@ $pay = $conn->query("SELECT * FROM maintenance where id = " . $_GET['id'])->fetc
 							<?php
 							}
 							?>
-						</tbody>
+						</tbody> 
 					</table>
 				</div>
 			</div>

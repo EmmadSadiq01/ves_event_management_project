@@ -1745,63 +1745,63 @@ const showBookings = (selectDate) => {
                     //     "<div class='event-container' id='eventBox_";
                     //     html += booking_id+"' role='button' data-event-index='19'>";
                     let hallShortCode = ''
-    fetch('./api/api-getHallShortCode.php')
-    .then(resonse=>resonse.json())
-    .then(hallCode=> {
-        hallShortCode=hallCode
-        // $("#edit_inq_id_concat").val("HMS-"+hallShortCode+"-" + (1000 + parseInt(editId)));
-        html +=
-        "<div class='event-container'";
-    html += (status === 'deactivate') ? 'style="background-color: #6e8ab3  !important"' : '';
-    html += "role='button' data-event-index='19'>";
+                    fetch('./api/api-getHallShortCode.php')
+                        .then(resonse => resonse.json())
+                        .then(hallCode => {
+                            hallShortCode = hallCode
+                            // $("#edit_inq_id_concat").val("HMS-"+hallShortCode+"-" + (1000 + parseInt(editId)));
+                            html +=
+                                "<div class='event-container'";
+                            html += (status === 'deactivate') ? 'style="background-color: #6e8ab3  !important"' : '';
+                            html += "role='button' data-event-index='19'>";
 
-    html += "<div class='event-icon'>";
-    html +=
-        "<div class='event-bullet-19' style='background-color: red'></div></div>";
+                            html += "<div class='event-icon'>";
+                            html +=
+                                "<div class='event-bullet-19' style='background-color: red'></div></div>";
 
-    html += "<div class='event-info'>";
-    html += "<p class='event-title'>" + eventName + "</p>";
-    
-    html +=
-        "<p class='event-desc'><b>HMS-"+hallShortCode+"-" + (1000 + parseInt(booking_id)) + "</b><br/>Name: " +
-        personName + "<br/>Hall: " +
-        hallportion +
-        "/" + eventShift + "<br />Booking Price: " +
-        booking_amnt +
-        " <br />Advance: " +
-        adv_amnt +
-        " <br />Conact:" +
-        personContact +
-        "</p>";
-        html+="<div class='row'>   "
-    if (status != 'deactivate') {
-        html +=
-            "<div class='col-lg-4 col-6'><button type='button' class='btn btn-success ' id='" +
-            booking_id +
-            "' onclick='bookEditEvent(this.id)'><i class='fas fa-edit'></i> Edit</button> </div><div class='col-lg-4 col-6'> <button type='button' class='btn btn-primary' id='" +
-            booking_id +
-            "' onclick='balancePayment(this.id)'><i class='fas fa-plus'></i> Balance</button> </div>";
+                            html += "<div class='event-info'>";
+                            html += "<p class='event-title'>" + eventName + "</p>";
 
-        html += "<div class='col-lg-4 col-6'><button type='button' class='btn btn-danger' id='" +
-            booking_id +
-            "' onclick='addPackages(this.id)'>Packges</button> </div>";
-        if (CashInStatus != 1) {
+                            html +=
+                                "<p class='event-desc'><b>HMS-" + hallShortCode + "-" + (1000 + parseInt(booking_id)) + "</b><br/>Name: " +
+                                personName + "<br/>Hall: " +
+                                hallportion +
+                                "/" + eventShift + "<br />Booking Price: " +
+                                booking_amnt +
+                                " <br />Advance: " +
+                                adv_amnt +
+                                " <br />Conact:" +
+                                personContact +
+                                "</p>";
+                            html += "<div class='row'>   "
+                            if (status != 'deactivate') {
+                                html +=
+                                    "<div class='col-lg-4 col-6'><button type='button' class='btn btn-success ' id='" +
+                                    booking_id +
+                                    "' onclick='bookEditEvent(this.id)'><i class='fas fa-edit'></i> Edit</button> </div><div class='col-lg-4 col-6'> <button type='button' class='btn btn-primary' id='" +
+                                    booking_id +
+                                    "' onclick='balancePayment(this.id)'><i class='fas fa-plus'></i> Balance</button> </div>";
 
-            html += "<div class='col-lg-4 col-6'><button type='button' class='btn btn-warning' id='" +
-                booking_id +
-                "' onclick='cashIn(this.id)'>Cash In</button></div>";
+                                html += "<div class='col-lg-4 col-6'><button type='button' class='btn btn-danger' id='" +
+                                    booking_id +
+                                    "' onclick='addPackages(this.id)'>Packges</button> </div>";
+                                if (CashInStatus != 1) {
 
-        }
-        html += "<div class='col-lg-4 col-6'><button class='btn btn-success' id='" +
-            booking_id +
-            "' onclick='floorInfoPrint(this.id)'><i class='fas fa-info'></i>Floor</button> </div> <div class='col-lg-4 col-6'> <button type='button' class='btn btn-primary' id='" +
-            booking_id +
-            "' onclick='cancelBooking(this.id)'>Cancel</button></div>";
-    }
-    html += "</div></div></div>";
-    $("#booking_view").html(html);
-    })
-                    
+                                    html += "<div class='col-lg-4 col-6'><button type='button' class='btn btn-warning' id='" +
+                                        booking_id +
+                                        "' onclick='cashIn(this.id)'>Cash In</button></div>";
+
+                                }
+                                html += "<div class='col-lg-4 col-6'><button class='btn btn-success' id='" +
+                                    booking_id +
+                                    "' onclick='floorInfoPrint(this.id)'><i class='fas fa-info'></i>Floor</button> </div> <div class='col-lg-4 col-6'> <button type='button' class='btn btn-primary' id='" +
+                                    booking_id +
+                                    "' onclick='cancelBooking(this.id)'>Cancel</button></div>";
+                            }
+                            html += "</div></div></div>";
+                            $("#booking_view").html(html);
+                        })
+
                 }
             }
             end_load()
@@ -1909,12 +1909,12 @@ const editInquiryEvent = (editId) => {
     };
     let hallShortCode = ''
     fetch('./api/api-getHallShortCode.php')
-    .then(resonse=>resonse.json())
-    .then(data=> {
-        hallShortCode=data
-        $("#edit_inq_id_concat").val("HMS-"+hallShortCode+"-" + (1000 + parseInt(editId)));
+        .then(resonse => resonse.json())
+        .then(data => {
+            hallShortCode = data
+            $("#edit_inq_id_concat").val("HMS-" + hallShortCode + "-" + (1000 + parseInt(editId)));
 
-    })
+        })
     // $("#edit_inq_id_concat").val("HMS-SM-" + (1000 + parseInt(editId)));
     $("#edit_id").val(editId);
     start_load()
@@ -2054,12 +2054,12 @@ const bookEditEvent = (editId) => {
             $("#edit_booking_id").val(data[0].booking_id);
             let hallShortCode = ''
             fetch('./api/api-getHallShortCode.php')
-            .then(resonse=>resonse.json())
-            .then(Hallcode=> {
-                hallShortCode=data
-                $("#edit_booking_id_concat").val("HMS-"+hallShortCode+"-" + (1000 + parseInt(editId)));
+                .then(resonse => resonse.json())
+                .then(Hallcode => {
+                    hallShortCode = data
+                    $("#edit_booking_id_concat").val("HMS-" + hallShortCode + "-" + (1000 + parseInt(editId)));
 
-            })
+                })
             $("#booking_edit_date").val(data[0].bookingDate);
             $("#booking_edit_program_date").val(data[0].eventDate);
             $("#booking_edit_program_day").val(data[0].eventDay);
@@ -2827,7 +2827,7 @@ window.end_load = function () {
 }
 
 
-const floorInfoPrint = (booking_id) =>{
-    let url = './manager/screen/floor_print.html?id=' + booking_id 
-    window.open(url,'_blank');
+const floorInfoPrint = (booking_id) => {
+    let url = './manager/screen/floor_print.html?id=' + booking_id
+    window.open(url, '_blank');
 }

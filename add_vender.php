@@ -6,7 +6,7 @@
         <br />
         <div class="card">
             <div class="card-header">
-                <span><b>Vender List</b></span>
+                <span><b>Vendor List</b></span>
                 <?php if ($_SESSION['login_type'] == 2) : ?>
                     <button class="btn btn-primary btn-sm btn-block col-md-3 float-right" type="button" id="new_vender"><span class="fa fa-plus"></span> Add New Vender</button>
                 <?php endif; ?>
@@ -15,12 +15,13 @@
                 <table id="table" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>Vender No</th>
+                            <th>Vendor No</th>
                             <th>Name</th>
                             <th>Contact</th>
                             <th>CNIC</th>
                             <th>Address</th>
                             <th>Description</th>
+                            <th>Balance</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -40,9 +41,22 @@
                                 <td><?php echo $row['cnic'] ?></td>
                                 <td><?php echo $row['address'] ?></td>
                                 <td><?php echo $row['description'] ?></td>
+                                <?php
+                                $balance_amnt = 0;
+                                $balance_qry = $conn->query("SELECT * FROM vender_ledger WHERE vender_id=" . $row['id']) or die(mysqli_error($conn));
+                                while ($balance_row = $balance_qry->fetch_array()) {
+                                    if ($balance_row['type'] == 1) {
+                                        $balance_amnt -=  $balance_row['amount'];
+                                    } else {
+                                        $balance_amnt +=  $balance_row['amount'];
+                                    }
+                                }
+                                ?>
+                                <td><?php echo $balance_amnt ?></td>
                                 <td>
                                     <button class="btn btn-sm btn-outline-primary edit_vender" data-id="<?php echo $row['id'] ?>" type="button"><i class="fa fa-edit"></i></button>
                                     <button class="btn btn-sm btn-outline-danger del_vender" data-id="<?php echo $row['id'] ?>" type="button"><i class="far fa-trash-alt"></i></button>
+                                    <button class="btn btn-sm btn-outline-success upload_img" data-id="<?php echo $row['id'] ?>" type="button"><i class="fa fa-images"></i>Upload Image</button>
                                     <button class="btn btn-sm btn-outline-warning view_ledger" data-id="<?php echo $row['id'] ?>" type="button"><i class="fas fa-money-check-alt"></i>View Ledger</button>
                                 </td>
 
@@ -81,13 +95,18 @@
         });
         $('.del_vender').click(function() {
 
-            if (confirm("do you want to Delete this vender?")) {
+            if (confirm("do you want to Delete this vendor?")) {
                 remove_vender($(this).attr("data-id"))
             }
         })
         $('#new_vender').click(function() {
             uni_modal("New Vender", "manage_vender.php")
         })
+        $('.upload_img').click(function(){
+				var $id=$(this).attr('data-id');
+				location.href = "index.php?page=image_venders&id="+$id;
+				
+			});
 
         function remove_vender(id) {
             start_load()
@@ -100,7 +119,7 @@
                 error: err => console.log(err),
                 success: function(resp) {
                     if (resp == 1) {
-                        alert_toast("Vender's data successfully deleted", "success");
+                        alert_toast("Vendor's data successfully deleted", "success");
                         setTimeout(function() {
                             location.reload();
 

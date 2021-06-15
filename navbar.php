@@ -24,7 +24,9 @@
 	<a href="index.php?page=procurements" class="nav-item nav-procurements"><span class='icon-field'><i class="fa fa-list"></i></span> Procurements Bill List</a>
 	<a href="index.php?page=cashin" class="nav-item nav-cashin"><span class='icon-field'><i class="fa fa-list"></i></span> Cashin Bill List</a>
 	<a href="index.php?page=cashout" class="nav-item nav-cashout"><span class='icon-field'><i class="fa fa-list"></i></span> Cashout Bill List</a>
-	<a href="index.php?page=add_vender" class="nav-item nav-vender"><span class='icon-field'><i class="fa fa-list"></i></span> Vender List</a>
+	<?php if ($_SESSION['login_type'] == 1) : ?>
+	<a href="index.php?page=add_vender" class="nav-item nav-vender"><span class='icon-field'><i class="fa fa-list"></i></span> Vendor List</a>
+	<?php endif; ?>
 
 
 </nav>

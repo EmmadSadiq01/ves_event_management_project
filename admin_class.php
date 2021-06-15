@@ -704,10 +704,30 @@ class Action
 		if ($save)
 			return 1;
 	}
+	function save_vender_description()
+	{
+		extract($_POST);
+		$data = " img_desc='$description' ";
+
+		if (empty($id)) {
+			$save = $this->db->query("INSERT INTO vender_img set " . $data);
+		} else {
+			$save = $this->db->query("UPDATE vender_img set " . $data . " where id=" . $id);
+		}
+		if ($save)
+			return 1;
+	}
 	function remove_procurement_image()
 	{
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM procurement_img where id = " . $id);
+		if ($delete)
+			return 1;
+	}
+	function remove_vender_image()
+	{
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM vender_img where id = " . $id);
 		if ($delete)
 			return 1;
 	}
