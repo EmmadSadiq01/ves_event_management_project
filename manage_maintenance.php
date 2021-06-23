@@ -4,7 +4,7 @@ include 'admin_class.php';
 if(isset($_GET['id'])){
 	$qry = $conn->query("SELECT * FROM maintenance where id = ".$_GET['id']." Order by id desc" )->fetch_array();
 	foreach($qry as $k => $v){
-		$$k = $v;
+		$k = $v;
 	}
 }
 ?>

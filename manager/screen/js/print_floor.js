@@ -69,6 +69,7 @@ window.onload = () => {
                         html_payment += '<tr>'
                         html_payment += '<td scope="row" class="text-center">' + (i + 1) + '</td>'
                         html_payment += '<td>' + data[i].pkg_name + '</td>'
+                        html_payment += '<td>' + ( parseInt(data[i].qty_pkg)-parseInt(data[i].return_qty)) + '</td>'
                         html_payment += '<td>' + data[i].pkg_desc + '</td>'
                         html_payment += '</tr>'
                     }

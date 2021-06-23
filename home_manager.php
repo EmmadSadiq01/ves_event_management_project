@@ -35,7 +35,7 @@
       <form action="" onsubmit="eventHandler()">
         <div class="modal-body">
           <div class="mb-3">
-            <label for="date" class="form-label">Booking Date</label>
+            <label for="date" class="form-label">Function Date</label>
             <input type="date" name="event_date" class="form-control" id="On_event_date" disabled require />
             <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
           </div>
@@ -130,7 +130,7 @@
           </div>
           <div class="mb-3">
             <input type="hidden" id="edit_id" class="form-control" />
-            <label for="editDate" class="form-label">Booking Date</label>
+            <label for="editDate" class="form-label">Function Date</label>
             <input type="date" name="event_date" class="form-control" id="Edit_On_event_date" disabled require />
           </div>
           <div class="mb-3">
@@ -218,7 +218,7 @@
               <input type="date" class="form-control" id="booking_date" disabled require />
             </div>
             <div class="col">
-              <small>Program Date</small>
+              <small>Function Date</small>
               <input type="date" id="booking_program_date" class="form-control" disabled require />
             </div>
             <div class="col">
@@ -348,7 +348,7 @@
               <input type="hidden" class="form-control" id="edit_booking_id" />
             </div>
             <div class="col">
-              <small>Program Date</small>
+              <small>Function Date</small>
               <input type="date" id="booking_edit_program_date" class="form-control" />
             </div>
             <div class="col">
@@ -426,7 +426,7 @@
 
           <div class="mb-3">
             <label for="bookAmnt" class="form-label">Book Amount</label>
-            <input type="number" name="editbookAmnt" class="form-control" id="editbookAmnt" onchange="editBalanceCal()" />
+            <input type="number" name="editbookAmnt" class="form-control" id="editbookAmnt" disabled onchange="editBalanceCal()" />
           </div>
           <div class="mb-3">
             <label for="advance" class="form-label">Advance</label>
@@ -466,7 +466,7 @@
           <div class="row">
             <div class="col">
               <input type="hidden" id="balBookId" />
-              <small>Program Date</small>
+              <small>Function Date</small>
               <input type="date" class="form-control" id="balProgramDate" disabled />
             </div>
             <div class="col">
@@ -730,6 +730,7 @@
     });
 
   function eventHandler() {
+    start_load()
     let date = document.getElementById("On_event_date").value;
     let islDate = document.getElementById("islDateInput").value;
     let partyName = document.getElementById("partyName").value;
@@ -782,10 +783,11 @@
       .catch((err) => {
         throw err;
       });
-
+    end_load()
     // console.log(myEvents);
   }
   const editEventHandler = () => {
+    start_load()
     let hall = "";
     let shift = "";
     let date = $("#Edit_On_event_date").val();
@@ -843,8 +845,10 @@
       .catch((err) => {
         throw err;
       });
+    end_load()
   };
   const convertBooking = () => {
+    start_load()
     let hall = ""
     let shift = ""
 
@@ -908,16 +912,12 @@
       .catch((err) => {
         throw err;
       });
+      end_load()
     location.reload();
+
   };
   const BookingSubmissionHandler = () => {
-    // let hallShift = "";
-    // let shiftOption = document.getElementsByName("shift");
-    // for (i = 0; i < shiftOption.length; i++) {
-    //   if (shiftOption[i].checked) {
-    //     hallShift = shiftOption[i].value;
-    //   }
-    // }
+    start_load()
     let shiftOption = document.getElementsByName("hallSlots");
     let shift_hall = ""
     for (i = 0; i < shiftOption.length; i++) {
@@ -966,7 +966,7 @@
         throw err;
       });
 
-
+    end_load()
   };
   const addPackageRow = () => {
     let html = '';
@@ -1096,6 +1096,7 @@
       })
   }
   const addPakages = () => {
+    start_load()
     let pkg_price = ''
     let selected_pk = ''
     let selected_pkg_name = ''
@@ -1143,7 +1144,8 @@
     //       add_package_price
 
     // $('[id^=add_]')
-    window.open("./manager/screen/print_packages.html?id=" + booking_id, "_blank");
+    end_load()
+    window.open("./manager/screen/print_packages.php?id=" + booking_id, "_blank");
 
   }
   const calculateTotal = (id) => {
@@ -1203,6 +1205,7 @@
         body: JSON.stringify(editPkgObj)
       })
       .then((res) => {
+        showPkg()
         return res.json()
       })
       .then(showPkg())

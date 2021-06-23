@@ -34,6 +34,9 @@
 *[contenteditable] {
     cursor: pointer;
 }
+p{
+    line-height: 18px;
+}
 
 
 /* *[contenteditable]:hover, *[contenteditable]:focus, td:hover *[contenteditable], td:focus *[contenteditable], img.hover { background: #DEF; box-shadow: 0 0 1em 0.5em #DEF; } */
@@ -69,7 +72,7 @@ table {
 th,
 td {
     border-width: 1px;
-    padding: 0.5em;
+    padding: 0px;
     position: relative;
     text-align: left;
 }
@@ -83,10 +86,13 @@ td {
 th {
     background: #EEE;
     border-color: #BBB;
+    padding: 3px 5px;
 }
 
 td {
     border-color: #DDD;
+    padding: 3px 5px;
+
 }
 
 
@@ -110,6 +116,7 @@ body {
     overflow: hidden;
     padding: 0.5in;
     width: 8.5in;
+    position: relative;
 }
 
 body {
@@ -187,7 +194,7 @@ article,
 article address,
 table.meta,
 table.inventory {
-    margin: 0 0 3em;
+    margin-bottom: 10px;
 }
 
 article:after {
@@ -350,6 +357,7 @@ aside h1 {
     body {
         box-shadow: none;
         margin: 0;
+        height: 5.5in;
     }
     span:empty {
         display: none;

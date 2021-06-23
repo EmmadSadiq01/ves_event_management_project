@@ -208,6 +208,7 @@ td.hijri_date {
 .booking_header h3 {
   color: white;
   font-weight: bolder;
+  text-transform: uppercase;
   text-decoration: underline;
   margin-bottom: 0px;
     font-size: 1.2rem;
@@ -301,4 +302,8 @@ padding-right: 5px;
 }
 .event-info .row{
   margin-right: -5px;
+}
+
+.modal-title{
+  text-transform: uppercase;
 }

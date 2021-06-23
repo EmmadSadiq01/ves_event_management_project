@@ -1,4 +1,5 @@
 <?php
+include '../../db_connect.php';
 include '../../admin_class.php';
 ?>
 
@@ -32,7 +33,7 @@ include '../../admin_class.php';
                     <div class="invoice-from">
                         <!-- <small>from</small> -->
                         <address class="m-t-5 m-b-5">
-                            <strong class="text-inverse">Client Info</strong>
+                            <strong class="text-inverse">Client Info:</strong>
                             <p class="mb-0"> <strong>Name: </strong><span id="party_name"></span></p>
                             <p class="mb-0"> <strong>Contact: </strong><span id="phone" class="mb-0"></span></p>
                             <div class="client_address">
@@ -48,13 +49,41 @@ include '../../admin_class.php';
                             <p class="mb-0"><strong>No. of Guest: </strong><span id="no_of_guest"></span></p>
                             <p class="mb-0"><strong>Portion & shift: </strong><span id="hall_portion"></span></p>
                             <p class="mb-0"><strong>Function Date: </strong> <span id="funtionDate"></span></p>
+                            <p class="mb-0"><strong>Provided By: </strong> <span id="providedBy">
+                                    <?php
+                                    $user_id = '';
+                                    $sql = "SELECT * FROM inquery WHERE iquery_id=" . $_GET['id'] . "  AND hall_code=" . $_SESSION['login_hid'];
+                                    $result = mysqli_query($conn, $sql);
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        $user_id = $row['userCode'];
+                                        break;
+                                    }
+                                    $sql = "SELECT * FROM users WHERE id=" . $user_id;
+                                    $result = mysqli_query($conn, $sql);
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        echo $row['name'];
+                                        break;
+                                    }
+                                    ?>
+                                </span></p>
                         </address>
                     </div>
                     <div class="invoice-date">
-                        <small>Inquiry</small>
-                        <div class="date text-inverse m-t-5"> <span id="todayDate"></span></div>
-                        <div class="invoice-detail">
-                            MHS-SM<span id="sno"></span><br>
+                        <small>Inquiry:</small>
+                        <div class="date text-inverse m-t-5"><strong>DOI: </strong> <span id="todayDate"></span></div>
+                        <div class="invoice-detail"><strong>Recipt No. : </strong>
+                            HMS-
+                            <?php
+                            // include '../../admin_class.php';
+                            // include "config.php";
+                            $hall_ShortCode = '';
+                            $splitName = explode(" ", $_SESSION['login_hall_name']);
+                            foreach ($splitName as $value) {
+                                $hall_ShortCode .=  substr($value, 0, 1);
+                            }
+                            echo $hall_ShortCode;
+                            ?>
+                            -<span id="sno"></span><br>
                         </div>
                     </div>
                 </div>

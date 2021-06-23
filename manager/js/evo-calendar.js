@@ -1673,12 +1673,13 @@ function hello(selectDate) {
             $("#islDateInput").val($(".hijri_date").html());
             $("#bookIslDate").val($(".hijri_date").html());
             $("#booking_program_day").val(dayName);
-            if (Date.parse(currentDate) > Date.parse(selectDate)) {
-                $(".action_btns").html("")
-            } else {
-                $(".action_btns").html('<button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="add_event">Inquiry</button><button  type="button" class="btn btn-success"style="margin-left:5px" data-bs-toggle="modal" data-bs-target="#booking_modal" id="add_event" onclick="BookingEventHandler()">Booking</button>')
+            // if (Date.parse(currentDate) > Date.parse(selectDate)) {
+            //     $(".action_btns").html("")
+            // } else {
+            //     $(".action_btns").html('<button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="add_event">Inquiry</button><button  type="button" class="btn btn-success"style="margin-left:5px" data-bs-toggle="modal" data-bs-target="#booking_modal" id="add_event" onclick="BookingEventHandler()">Booking</button>')
 
-            }
+            // }
+            $(".action_btns").html('<button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="add_event">Inquiry</button><button  type="button" class="btn btn-success"style="margin-left:5px" data-bs-toggle="modal" data-bs-target="#booking_modal" id="add_event" onclick="BookingEventHandler()">Booking</button>')
         })
         .catch((err) => {
             $(".hijri_date").html("not available");
@@ -1687,12 +1688,13 @@ function hello(selectDate) {
             $("#booking_program_date").val(year + "-" + month + "-" + date);
             $("#On_event_date").val(year + "-" + month + "-" + date);
             $("#booking_program_day").val(dayName);
-            if (Date.parse(currentDate) > Date.parse(selectDate)) {
-                $(".action_btns").html("")
-            } else {
-                $(".action_btns").html('<button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="add_event">Inquiry</button><button  type="button" class="btn btn-success"style="margin-left:5px" data-bs-toggle="modal" data-bs-target="#booking_modal" id="add_event" onclick="BookingEventHandler()">Booking</button>')
+            // if (Date.parse(currentDate) > Date.parse(selectDate)) {
+            //     $(".action_btns").html("")
+            // } else {
+            //     $(".action_btns").html('<button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="add_event">Inquiry</button><button  type="button" class="btn btn-success"style="margin-left:5px" data-bs-toggle="modal" data-bs-target="#booking_modal" id="add_event" onclick="BookingEventHandler()">Booking</button>')
 
-            }
+            // }
+            $(".action_btns").html('<button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="add_event">Inquiry</button><button  type="button" class="btn btn-success"style="margin-left:5px" data-bs-toggle="modal" data-bs-target="#booking_modal" id="add_event" onclick="BookingEventHandler()">Booking</button>')
             throw err;
         });
 
@@ -1700,6 +1702,9 @@ function hello(selectDate) {
     showEventsBar()
     $('#calendar').removeClass("event-hide");
     $('#calendar').addClass("sidebar-hide");
+
+    localStorage.setItem('selectedDate', selectDate)
+
 
 }
 
@@ -2056,7 +2061,7 @@ const bookEditEvent = (editId) => {
             fetch('./api/api-getHallShortCode.php')
                 .then(resonse => resonse.json())
                 .then(Hallcode => {
-                    hallShortCode = data
+                    hallShortCode = Hallcode
                     $("#edit_booking_id_concat").val("HMS-" + hallShortCode + "-" + (1000 + parseInt(editId)));
 
                 })
@@ -2074,6 +2079,8 @@ const bookEditEvent = (editId) => {
             $("#edit_booking_advance").val(data[0].advanceAmount);
             $("#edit_booking_no_of_guests").val(data[0].totalGuest);
             $("#edit_booking_remarks").val(data[0].remarks);
+
+            (data[0].cashIn_Status == 1) ? $('#edit_booking_advance').attr('disabled', true) : $('#edit_booking_advance').attr('disabled', false);
 
             let program_date = {
                 eventDate: data[0].eventDate
@@ -2338,6 +2345,7 @@ const changePayment = () => {
 }
 
 const addPayment = () => {
+    start_load()
     let balBookId = $("#balBookId").val();
     let balPaymentDate = $("#balPaymentDate").val();
     let balPayment = $("#balPaymentAmnt").val();
@@ -2358,8 +2366,8 @@ const addPayment = () => {
         .catch((err) => {
             throw err;
         });
-    window.open("manager/screen/print_balance.html?id=" + balBookId)
-
+    window.open("manager/screen/print_balance.php?id=" + balBookId)
+    end_load()
 
 }
 
@@ -2661,7 +2669,7 @@ const fetchBookPkgs = (bookID) => {
                 html += '<td class="totalPkg">' + ((data[i].included === 'included') ? '0' : (data[i].pkg_cost - data[i].return_amnt)) + '</td>'
                 html += '<td>' + data[i].pkg_desc + '</td>'
                 html += '<td>' + data[i].included + '</td>'
-                html += '<td>' + ((data[i].included === 'included') ? '' : '<a href="#" id="' + data[i].id + '" onclick="returnPkg(this.id)">Return</a>') + '</td>'
+                html += '<td>' + ((data[i].included === 'included' || data[i].return_status == 1) ? '' : '<a href="#" id="' + data[i].id + '" onclick="returnPkg(this.id)">Return</a>') + '</td>'
                 html += '</tr>'
             }
             html += '</tbody>'
@@ -2734,7 +2742,8 @@ const submitReturn = () => {
         pkg_booked_id: return_pak_pkgBookId,
         pkg_name: return_pak_name,
         pkg_cost: return_pak_total,
-        qty_pkg: return_pak_qty
+        qty_pkg: return_pak_qty,
+        return_status: 1
     }
     fetch('./api/api-returnPackage-insert.php', {
         method: "POST",
@@ -2828,6 +2837,6 @@ window.end_load = function () {
 
 
 const floorInfoPrint = (booking_id) => {
-    let url = './manager/screen/floor_print.html?id=' + booking_id
+    let url = './manager/screen/floor_print.php?id=' + booking_id
     window.open(url, '_blank');
 }

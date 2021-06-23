@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>mhs | Manager</title>
     <link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous" />
     <link href="../fontawesome/fontawesome-free-5.15.3-web/css/all.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/balance.css">
 </head>
@@ -24,10 +23,20 @@
         <table class="meta">
             <tr>
                 <th class="text-center"><span>Booking #</span></th>
-                <td class="text-center">MHS-SH-<span id="booking_id"></span></td>
+                <td class="text-center">HMS-
+                    <?php
+                    include '../../admin_class.php';
+                    $hall_ShortCode = '';
+                    $splitName = explode(" ", $_SESSION['login_hall_name']);
+                    foreach ($splitName as $value) {
+                        $hall_ShortCode .=  substr($value, 0, 1);
+                    }
+                    echo $hall_ShortCode;
+                    ?>
+                    -<span id="booking_id"></span></td>
             </tr>
             <tr>
-                <th class="text-center"><span>Booking Date</span></th>
+                <th class="text-center"><span>Function Date</span></th>
                 <td class="text-center"><span id="booking_date"></span></td>
             </tr>
             <tr>
@@ -60,7 +69,7 @@
     <aside>
         <h1><span>Additional Notes</span></h1>
         <div>
-            <p>one Line here which you want .</p>
+            <p>Amount Recieved By: __________________.</p>
         </div>
     </aside>
 
@@ -68,9 +77,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
     <script src="js/booking_balance.js"></script>
 </body>
 

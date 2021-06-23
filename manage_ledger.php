@@ -18,7 +18,6 @@ include 'admin_class.php';
                 <option value="1">recieved</option>
                 <option value="2">paid</option>
             </select>
-            </select>
         </div>
         <div class="form-group">
             <label>Amount:</label>

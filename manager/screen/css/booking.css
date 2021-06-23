@@ -84,15 +84,15 @@ body {
     font-size: 14px;
 }
 .rule h2 {
-    font-size: 24px;
+    font-size: 2px !important;
     text-align: center;
     color: black;
 }
 .rule{
-    margin-top: 20px;
+    margin-top: 15px;
 }
 .rule p {
-    font-size: 14px;
+    font-size: 12px;
     font-family: ui-sans-serif;
     color: black;
 

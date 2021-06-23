@@ -1,10 +1,10 @@
 <?php
 
-session_start();
+// session_start();
 header ('Content-Type: application/json');
 header ('Access-Control-Allow-Origin: *');
-
-include "config.php";
+include '../admin_class.php';
+// include "config.php";
 $hall_ShortCode ='';
 $splitName = explode(" ",$_SESSION['login_hall_name']);
  foreach ($splitName as $value) {

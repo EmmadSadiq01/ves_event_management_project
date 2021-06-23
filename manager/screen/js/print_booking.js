@@ -37,6 +37,8 @@ window.onload = () => {
       $("#advance_amnt").html(data[0].advanceAmount);
       $("#no_of_guest").html(data[0].totalGuest);
       $("#total_amnt").html(data[0].bookingAmount - data[0].advanceAmount)
+
+      
       //   if (data[0].hallportion === "a") {
       //     $("#edit_book_b").prop("checked", false);
       //     $("#edit_book_a").prop("checked", true);

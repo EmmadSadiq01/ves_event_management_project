@@ -1,6 +1,6 @@
 window.onload = () => {
 
-    $.urlParam = function(name) {
+    $.urlParam = function (name) {
         var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
         return results[1] || 0;
     }
@@ -14,9 +14,9 @@ window.onload = () => {
     let total_payment = 0;
 
     fetch("../../api/api-fetchId-booking.php", {
-            method: "POST",
-            body: JSON.stringify(fetchbookDetailObj),
-        })
+        method: "POST",
+        body: JSON.stringify(fetchbookDetailObj),
+    })
         .then((result) => {
             return result.json();
         }).then((data) => {
@@ -29,15 +29,15 @@ window.onload = () => {
             html_payment += '<tr>'
             html_payment += '<td scope="row" class="text-center">' + (1) + '</td>'
             html_payment += '<td class="text-center">' + bookingDate + '</td>'
-            html_payment += '<td>' + advAmnt + '</td>'
+            html_payment += '<td  class="text-center">' + advAmnt + '</td>'
             html_payment += '</tr>'
 
         })
         .then(() => {
             fetch("../../api/api-fetchpayments-booking.php", {
-                    method: "POST",
-                    body: JSON.stringify(fetchbookDetailObj),
-                })
+                method: "POST",
+                body: JSON.stringify(fetchbookDetailObj),
+            })
                 .then((result) => {
                     return result.json();
                 })
@@ -47,7 +47,7 @@ window.onload = () => {
                         html_payment += '<tr>'
                         html_payment += '<td scope="row" class="text-center">' + (i + 2) + '</td>'
                         html_payment += '<td class="text-center">' + split_date[0] + '</td>'
-                        html_payment += '<td>' + data[i].partial_payments + '</td>'
+                        html_payment += '<td class="text-center">' + data[i].partial_payments + '</td>'
                         html_payment += '</tr>'
                         total_payment += parseFloat(data[i].partial_payments)
                     }
@@ -74,8 +74,8 @@ window.onload = () => {
                 //     $("#partial_payment_table").html(html_payment)
 
 
-            // })
-            .then(() => {
+                // })
+                .then(() => {
                     $("#payments_table").html(html_payment)
                     $("#paid_amnt").html(total_recieved)
                     $("#balance").html(currentBalance)

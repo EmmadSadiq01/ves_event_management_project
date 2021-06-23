@@ -33,7 +33,7 @@ body{
 
 .invoice-date .date,
 .invoice-from strong,
-.invoice-to strong {
+.invoice-to strong,.invoice-date  strong  {
     font-size: 16px;
     font-weight: 600
 }
@@ -117,7 +117,7 @@ body{
 }
 
 .invoice>div:not(.invoice-footer) {
-    margin-bottom: 20px
+    margin-bottom: 5px
 }
 
 .btn.btn-white, .btn.btn-white.disabled, .btn.btn-white.disabled:focus, .btn.btn-white.disabled:hover, .btn.btn-white[disabled], .btn.btn-white[disabled]:focus, .btn.btn-white[disabled]:hover {
@@ -142,6 +142,22 @@ body{
         padding-bottom: 72px ;
     } */
 }
-#party_name, #event_name, #address {
+#party_name, #event_name, #address,#hall_portion,#event_shift,#providedBy {
     text-transform: capitalize;
+}
+
+
+.rule h2 {
+    font-size: 18px !important;
+    text-align: center;
+    color: black;
+}
+.rule{
+    margin-top: 15px;
+}
+.rule p {
+    font-size: 12px;
+    font-family: ui-sans-serif;
+    color: black;
+
 }

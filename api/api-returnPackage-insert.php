@@ -17,12 +17,13 @@ $pkg_booked_id = $data['pkg_booked_id'];
 $pkg_name = $data['pkg_name'];
 $pkg_cost = $data['pkg_cost'];
 $qty_pkg    = $data['qty_pkg'];
+$return_status  = $data['return_status'];
 $hallCode = $_SESSION['login_hid'];
 $userCode = $_SESSION['login_uid'];
 
 include "config.php";
 
-$sql = "UPDATE `booked_packages` SET `return_amnt` = '$pkg_cost', `return_qty` = '$qty_pkg' WHERE `booked_packages`.`id` = {$pkg_id};";
+$sql = "UPDATE `booked_packages` SET `return_amnt` = '$pkg_cost', `return_qty` = '$qty_pkg', `return_status`='$return_status' WHERE `booked_packages`.`id` = {$pkg_id};";
 
 if(mysqli_query($conn, $sql)){
 
