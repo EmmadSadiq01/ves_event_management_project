@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-header">
                 <span><b>Vendor List</b></span>
-                <?php if ($_SESSION['login_type'] == 2) : ?>
+                <?php if ($_SESSION['login_type'] == 1) : ?>
                     <button class="btn btn-primary btn-sm btn-block col-md-3 float-right" type="button" id="new_vender"><span class="fa fa-plus"></span> Add New Vender</button>
                 <?php endif; ?>
             </div>

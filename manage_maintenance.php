@@ -33,6 +33,10 @@ if(isset($_GET['id'])){
 				<option value="3" <?php echo isset($priority) && $priority == 3 ? 'selected': '' ?>>High</option>
 			</select>
 			</div>
+			<div class="form-group">
+			<label>Amount:</label>
+			<input type="number" name="amount" required="required" cols="30" rows="2" class="form-control" value="<?php echo isset($amount) ? $amount : "" ?>"/>
+		</div>
 		<div class="form-group">
 			<input type="hidden" name="owner_remarks" required="required" cols="30" rows="2" class="form-control" value="<?php echo isset($owner_remarks) ? $owner_remarks : "" ?>" />
 		</div>

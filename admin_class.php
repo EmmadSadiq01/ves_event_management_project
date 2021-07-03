@@ -20,7 +20,7 @@ class Action
 
 	function login()
 	{
-		extract($_POST);
+		extract($_POST);	
 		// $qry = $this->db->query("SELECT * FROM users where username = '".$username."' and password = '".$password."' ");
 		// $qry = $this->db->query("SELECT * FROM users Inner join userrelation ON users.id = userrelation.user_id where username = '".$username."' and password = '".$password."' ");
 
@@ -158,6 +158,7 @@ class Action
 		$data .= ", resolution='$resolution' ";
 		$data .= ", assign='$assign' ";
 		$data .= ", priority='$priority' ";
+		$data .= ", amount='$amount' ";
 		$data .= ", owner_remarks='$owner_remarks' ";
 		$data .= ", hallid='$hallid' ";
 		$data .= ", userid='$userid' ";
@@ -590,15 +591,15 @@ class Action
 
 
 		// if (empty($id)) {
-			// $i = 1;
-			// while ($i == 1) {
-			// 	$v_num = 'V' . '-' . mt_rand(1, 9999) . '-' . date('Y');
-			// 	$chk  = $this->db->query("SELECT * FROM venders where vender_no = '$v_num' ")->num_rows;
-			// 	if ($chk <= 0) {
-			// 		$i = 0;
-			// 	}
-			// }
-			// $data .= ", vender_no='$v_num' ";
+		// $i = 1;
+		// while ($i == 1) {
+		// 	$v_num = 'V' . '-' . mt_rand(1, 9999) . '-' . date('Y');
+		// 	$chk  = $this->db->query("SELECT * FROM venders where vender_no = '$v_num' ")->num_rows;
+		// 	if ($chk <= 0) {
+		// 		$i = 0;
+		// 	}
+		// }
+		// $data .= ", vender_no='$v_num' ";
 
 		// 	$save = $this->db->query("INSERT INTO venders set " . $data);
 		// } else {
@@ -821,6 +822,7 @@ class Action
 		$data2 = " description='$description' ";
 		$data2 .= ", bill_no='$maintenance_no' ";
 		$data2 .= ", priority='$priority' ";
+		$data2 .= ", amount='$amount' ";
 		$data2 .= ", hallid='$hallid' ";
 		$data2 .= ", userid='$userid' ";
 

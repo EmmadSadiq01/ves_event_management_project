@@ -25,7 +25,7 @@ include '../../admin_class.php';
                     <span class="pull-right hidden-print">
                         <a href="javascript:;" onclick="window.print()" class="btn btn-sm btn-white m-b-10 p-l-5"><i class="fa fa-print t-plus-1 fa-fw fa-lg"></i> Print</a>
                     </span>
-                    <h3 class="text-center">INQUIRY </h3>
+                    <h3 class="text-center">SHAHAB MEHAL (Banquet Hall)-ENQUIRY </h3>
                 </div>
                 <!-- end invoice-company -->
                 <!-- begin invoice-header -->
@@ -69,9 +69,9 @@ include '../../admin_class.php';
                         </address>
                     </div>
                     <div class="invoice-date">
-                        <small>Inquiry:</small>
+                        <small>Enquiry:</small>
                         <div class="date text-inverse m-t-5"><strong>DOI: </strong> <span id="todayDate"></span></div>
-                        <div class="invoice-detail"><strong>Recipt No. : </strong>
+                        <div class="invoice-detail"><strong>Receipt No. : </strong>
                             HMS-
                             <?php
                             // include '../../admin_class.php';

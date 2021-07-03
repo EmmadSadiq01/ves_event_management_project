@@ -419,9 +419,9 @@
                     new Date().getFullYear() : this.year,
                 date: _.formatDate(
                     _.initials.dates[_.defaults.language].months[new Date().getMonth()] +
-                    " " +
+                    "-" +
                     new Date().getDate() +
-                    " " +
+                    "-" +
                     new Date().getFullYear(),
                     _.options.format
                 ),
@@ -431,8 +431,10 @@
             _.$active = {
                 month: (localStorage.getItem("monthIndex") === null) ? _.$current.month : localStorage.getItem("monthIndex"),
                 year: _.$current.year,
-                date: _.$current.date,
-                event_date: _.$current.date,
+                // date:  _.$current.date,
+                // event_date:  _.$current.date,
+                date: (localStorage.getItem("selectedDate") === null) ? _.$current.date : localStorage.getItem("selectedDate"),
+                event_date: (localStorage.getItem("selectedDate") === null) ? _.$current.date : localStorage.getItem("selectedDate"),
                 events: [],
             };
 
@@ -1155,7 +1157,7 @@
                         "</div><span class='moon_icon' id='moon" + thisDay + "'></span></div>";
 
                     day++;
-                    changeTargetBorder(thisDay)
+                    // changeTargetBorder(thisDay)
                 } else {
                     markup += "<td>";
                 }
@@ -1698,12 +1700,12 @@ function hello(selectDate) {
             throw err;
         });
 
-    showBookings(selectDate);
+    localStorage.setItem('selectedDate', selectDate)
+    showBookings((localStorage.getItem("selectedDate") === null) ? selectDate : localStorage.getItem("selectedDate"));
     showEventsBar()
     $('#calendar').removeClass("event-hide");
     $('#calendar').addClass("sidebar-hide");
 
-    localStorage.setItem('selectedDate', selectDate)
 
 
 }
@@ -2133,6 +2135,7 @@ const bookEditEvent = (editId) => {
 const BookingEditSubmissionHandler = () => {
     // let hallAorB = "";
     // let EvenOrMorn = "";
+    start_load();
     let booking_current_date = $("#booking_edit_date").val();
     let date = $("#booking_edit_program_date").val();
     let day = $("#booking_edit_program_day").val();
@@ -2197,6 +2200,7 @@ const BookingEditSubmissionHandler = () => {
         .catch((err) => {
             throw err;
         });
+    end_load()
 };
 const bookDeleteEvent = (delId) => {
     let DelBookingObj = {
@@ -2383,7 +2387,7 @@ window.onload = () => {
         day +
         "-" +
         d.getFullYear();
-    hello(output);
+    hello((localStorage.getItem("selectedDate") === null) ? output : localStorage.getItem("selectedDate"));
     fetch("./api/api-fetch-all-booking.php")
         .then((result) => {
             return result.json();
@@ -2438,6 +2442,8 @@ window.onload = () => {
 
     //   }
     // })
+
+    fetchInquiry((localStorage.getItem("selectedDate") === null) ? output : localStorage.getItem("selectedDate"))
 
 };
 const monthChange = (monthIndex) => {
@@ -2518,34 +2524,34 @@ function showEventsBar() {
 
 }
 
-function changeTargetBorder(getTargetDate) {
-    let split_date = getTargetDate;
-    let mySplit = split_date.split("-");
-    let month = mySplit[0];
-    let date = mySplit[1];
-    let year = mySplit[2];
-    let change_format = year + "-" + month + "-" + date;
+// function changeTargetBorder(getTargetDate) {
+//     let split_date = getTargetDate;
+//     let mySplit = split_date.split("-");
+//     let month = mySplit[0];
+//     let date = mySplit[1];
+//     let year = mySplit[2];
+//     let change_format = year + "-" + month + "-" + date;
 
-    let pushTargetDateObj = {
-        targetDate: change_format
-    }
-    fetch("./api/api-target-fetch.php", {
-        method: "POST",
-        body: JSON.stringify(pushTargetDateObj),
-    })
-        .then((result) => {
-            return result.json();
-        })
-        .then((data) => {
-            if (data.length > 0) {
-                $("#" + getTargetDate).addClass("targetBookingBorder");
+//     let pushTargetDateObj = {
+//         targetDate: change_format
+//     }
+//     fetch("./api/api-target-fetch.php", {
+//         method: "POST",
+//         body: JSON.stringify(pushTargetDateObj),
+//     })
+//         .then((result) => {
+//             return result.json();
+//         })
+//         .then((data) => {
+//             if (data.length > 0) {
+//                 $("#" + getTargetDate).addClass("targetBookingBorder");
 
-            } else { }
-        })
-        .catch((err) => {
-            throw err;
-        });
-}
+//             } else { }
+//         })
+//         .catch((err) => {
+//             throw err;
+//         });
+// }
 
 const getTargetValue = () => {
     let hall = ""
@@ -2839,4 +2845,70 @@ window.end_load = function () {
 const floorInfoPrint = (booking_id) => {
     let url = './manager/screen/floor_print.php?id=' + booking_id
     window.open(url, '_blank');
+}
+
+const fetchInquiry = (selectDate) => {
+    let splitDate = selectDate.split("-");
+    let month = splitDate[0];
+    let date = splitDate[1];
+    let year = splitDate[2];
+    let convertDate = year + "-" + month + "-" + date;
+    let FetchEventObj = {
+        inquery_date: convertDate,
+    };
+    // start_load()
+    fetch("./api/api-fetch-inquiry-date.php", {
+        method: "POST",
+        body: JSON.stringify(FetchEventObj),
+    })
+        .then((result) => {
+            return result.json();
+        })
+        .then((data) => {
+            markup = "";
+            if (data.length > 0) {
+                for (let i = 0; i < data.length; i++) {
+                    let inquery_id = data[i].iquery_id;
+                    let personName = data[i].personName;
+                    let event_name = data[i].event_name;
+                    let hall_shift = data[i].hall_shift;
+                    let hallportion = data[i].hallportion;
+                    let personContact = data[i].personContact;
+                    let estimated_cost = data[i].estimated_cost;
+
+
+                    markup +=
+                        '<div class="event-container" role="button" data-event-index="' +
+                        inquery_id +
+                        '">';
+                    markup +=
+                        '<div class="event-icon"><div class="event-bullet-' +
+                        inquery_id +
+                        '"';
+                    // if (event_data.color) {
+                    markup += 'style="background-color: red"';
+                    // }
+                    markup +=
+                        '></div></div><div class="event-info"><p class="event-title">' + event_name;
+                    // if (event_data.badge) markup += "<span>" + event_data.badge + "</span>";
+                    markup += "</p>";
+                    // if (event_data.description)
+                    markup += '<p class="event-desc">' + "<b>HMS-SM-" + (1000 + parseInt(inquery_id)) + "</b><br/>Name:" +
+                        personName + "<br/>Hall/shift: " +
+                        hallportion +
+                        "/" + hall_shift + "</br>Cost: " +
+                        estimated_cost +
+                        "</br>Conact:" +
+                        personContact + "</p>";
+                    markup +=
+                        ' <button type="button" class="btn btn-success" id="' +
+                        inquery_id +
+                        '" onclick="editInquiryEvent(this.id)">Edit</button>';
+                    markup +=
+                        '</div>';
+                    markup += "</div>";
+                }
+            }
+            $('.event-list').html(markup)
+        })
 }

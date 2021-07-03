@@ -20,6 +20,7 @@
 									<th>Resolution</th>
 									<th>Assign To</th>
 									<th>Priority</th>
+									<th>Amount</th>
 									<th>Status</th>
 									<th>Images</th>
 									<th>Action</th>
@@ -31,7 +32,7 @@
 									$p_arr[0] = "Unset";
 									$haid = $_SESSION['login_hid'];
 									
-									$employee_qry=$conn->query("SELECT * FROM maintenance WHERE hallid= $haid ORDER BY id DESC") or die(mysqli_error());
+									$employee_qry=$conn->query("SELECT * FROM maintenance WHERE hallid= $haid ORDER BY id DESC") or die(mysqli_error($conn));
 									while($row=$employee_qry->fetch_array()){
 									?>
 									<input type="hidden" name="id" value="<?php echo isset($description) ? $description : "" ?>" />
@@ -50,7 +51,7 @@
 										elseif($row['priority'] == 3){
 											echo '<span class="badge badge-success">High</span>';
 										} ?></td>
-										
+										<td><?php echo $row['amount']?></td>
 										<?php if($row['status'] == 0): ?>
 										<td class="text-center"><span class="badge badge-danger">Not Approved</span>
 										<?php if($row['gen_cashout'] == 1): ?>

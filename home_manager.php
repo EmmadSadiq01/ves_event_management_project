@@ -912,7 +912,7 @@
       .catch((err) => {
         throw err;
       });
-      end_load()
+    end_load()
     location.reload();
 
   };

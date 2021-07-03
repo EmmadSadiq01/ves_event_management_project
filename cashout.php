@@ -32,7 +32,7 @@
 									$d_arr[0] = "Unset";
 									$p_arr[0] = "Unset";
 									$haid = $_SESSION['login_hid'];
-									$employee_qry=$conn->query("SELECT * FROM cashout WHERE hallid=$haid ORDER BY id DESC") or die(mysqli_error());
+									$employee_qry=$conn->query("SELECT * FROM cashout WHERE hallid=$haid ORDER BY id DESC") or die(mysqli_error($conn));
 									while($row=$employee_qry->fetch_array()){
 									?>
 									<tr>
@@ -67,14 +67,11 @@
 										<?php if($row['status'] == 0): ?>
 											<?php if($_SESSION['login_type'] == 1): ?>
 											<button class="btn btn-sm btn-outline-primary calculate_cashout" data-id="<?php echo $row['id']?>" type="button">Approved</button>
-											<!-- <button class="btn btn-sm btn-outline-primary view_cashout" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-eye"></i></button> -->
 											<?php endif; ?>
 										<?php else: ?>
 										<?php endif ?>
 											<button class="btn btn-sm btn-outline-success view_cashout" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-eye"></i></button>
 											<button class="btn btn-sm btn-outline-primary edit_cashout" data-id="<?php echo $row['id']?>" type="button"><i class="fa fa-edit"></i></button>
-										<?php if($_SESSION['login_type'] == 2): ?>
-											<?php endif; ?>
 										</center>
 										</td>
 									</tr>
